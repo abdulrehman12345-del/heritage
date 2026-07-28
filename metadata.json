@@ -1,0 +1,6 @@
+{
+  "name": "Heritage Antiques",
+  "description": "A luxury museum-inspired eCommerce platform and Curator Admin CMS for rare historical collectibles, sculptures, animal statues, antique vases, and metal artifacts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

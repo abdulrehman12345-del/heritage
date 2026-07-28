@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-main: #F8F5EF;
+    --dark-bg: #1F2328;
+    --card-dark: #2A3036;
+    --text-primary: #2B2622;
+    --text-secondary: #6B6258;
+    --antique-gold: #B68D40;
+    --copper: #A76B3F;
+    --dust-beige: #D9C7AE;
+    --border-gold: rgba(182, 141, 64, 0.18);
+    --navbar-bg: rgba(242, 236, 227, 0.78);
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+  }
+
+  h1, h2, h3, h4, h5, h6, .font-serif-heading {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .font-cinzel {
+    font-family: 'Cinzel', serif;
+  }
+}
+
+/* Custom Utilities for Luxury Theme */
+.bg-warm-offwhite {
+  background-color: #F8F5EF;
+}
+
+.bg-dark-section {
+  background-color: #1F2328;
+}
+
+.bg-card-dark {
+  background-color: #2A3036;
+}
+
+.text-gold {
+  color: #B68D40;
+}
+
+.text-copper {
+  color: #A76B3F;
+}
+
+.text-primary-dark {
+  color: #2B2622;
+}
+
+.text-secondary-dark {
+  color: #6B6258;
+}
+
+.bg-gold {
+  background-color: #B68D40;
+}
+
+.bg-copper {
+  background-color: #A76B3F;
+}
+
+.border-gold {
+  border-color: rgba(182, 141, 64, 0.18);
+}
+
+.border-gold-glow {
+  box-shadow: 0 0 15px rgba(182, 141, 64, 0.25);
+}
+
+.glass-nav {
+  background: rgba(242, 236, 227, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(182, 141, 64, 0.25);
+  box-shadow: 0 12px 32px -8px rgba(43, 38, 34, 0.08);
+}
+
+.glass-card {
+  background: rgba(253, 251, 247, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(182, 141, 64, 0.18);
+}
+
+/* Paper / Patina Subtle Grain Texture */
+.paper-texture {
+  background-image: radial-gradient(rgba(182, 141, 64, 0.04) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #B68D40 0%, #D9C7AE 50%, #A76B3F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.copper-gradient-text {
+  background: linear-gradient(135deg, #A76B3F 0%, #B68D40 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom luxury scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F8F5EF;
+}
+::-webkit-scrollbar-thumb {
+  background: #D9C7AE;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B68D40;
+}
+
