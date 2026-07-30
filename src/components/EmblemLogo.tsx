@@ -13,13 +13,15 @@ export const EmblemLogo: React.FC<EmblemLogoProps> = ({
 }) => {
   const isDark = variant === 'dark';
   
-  // Dimensions scaling
-  const scale = size === 'sm' ? 'scale-75' : size === 'lg' ? 'scale-110' : 'scale-100';
+  // Real DOM element dimensions for exact layout control
+  const iconDimensions = size === 'sm' ? 'w-8 h-8 sm:w-10 sm:h-10' : size === 'lg' ? 'w-12 h-12 sm:w-14 sm:h-14' : 'w-10 h-10 sm:w-12 sm:h-12';
+  const textTitleSize = size === 'sm' ? 'text-xs sm:text-sm md:text-base' : size === 'lg' ? 'text-lg md:text-xl' : 'text-base md:text-lg';
+  const textSubtitleSize = size === 'sm' ? 'text-[8px] sm:text-[9px]' : size === 'lg' ? 'text-[10px] md:text-[11px]' : 'text-[9px] md:text-[10px]';
 
   return (
-    <div className={`flex items-center gap-3.5 select-none ${scale} ${className}`}>
+    <div className={`flex items-center gap-2 sm:gap-3 select-none ${className}`}>
       {/* Handcrafted Emblem SVG */}
-      <div className="relative w-12 h-12 flex-shrink-0 group cursor-pointer">
+      <div className={`relative ${iconDimensions} flex-shrink-0 group cursor-pointer`}>
         {/* Soft Golden Ambient Glow on Hover */}
         <div className="absolute -inset-1 rounded-full bg-[#B68D40]/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         
@@ -103,13 +105,13 @@ export const EmblemLogo: React.FC<EmblemLogoProps> = ({
       {/* Brand Name Typography */}
       <div className="flex flex-col tracking-wider">
         <span
-          className={`font-cinzel text-base md:text-lg font-bold tracking-[0.22em] leading-tight ${
+          className={`font-cinzel ${textTitleSize} font-bold tracking-[0.18em] sm:tracking-[0.22em] leading-tight ${
             isDark ? 'text-[#F8F5EF]' : 'text-[#2B2622]'
           }`}
         >
           HERITAGE
         </span>
-        <span className="font-cinzel text-[9px] md:text-[10px] font-medium tracking-[0.42em] text-[#B68D40] uppercase leading-none mt-0.5">
+        <span className={`font-cinzel ${textSubtitleSize} font-medium tracking-[0.25em] sm:tracking-[0.38em] text-[#B68D40] uppercase leading-none mt-0.5 whitespace-nowrap`}>
           ANTIQUES • EST. 1892
         </span>
       </div>

@@ -77,10 +77,10 @@ export const Navbar: React.FC<NavbarProps> = ({
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1.0] }}
-      className="fixed top-2 sm:top-4 inset-x-0 z-50 px-2.5 sm:px-6 md:px-8 flex justify-center pointer-events-none"
+      className="fixed top-2 sm:top-4 inset-x-0 z-50 px-2 sm:px-6 md:px-8 flex justify-center pointer-events-none"
     >
       <div
-        className={`pointer-events-auto w-full max-w-7xl min-h-[60px] sm:min-h-[72px] rounded-full px-3 sm:px-6 py-2 flex items-center justify-between gap-2 sm:gap-4 transition-all duration-300 glass-nav ${
+        className={`pointer-events-auto w-full max-w-7xl min-h-[56px] sm:min-h-[72px] rounded-full px-3 sm:px-6 py-1.5 sm:py-2 flex items-center justify-between gap-1.5 sm:gap-4 transition-all duration-300 glass-nav overflow-hidden ${
           isAtTop
             ? 'shadow-xl border-opacity-50'
             : 'shadow-2xl border-opacity-80 bg-[#121417]/98 backdrop-blur-2xl'
