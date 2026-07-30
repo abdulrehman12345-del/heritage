@@ -47,13 +47,13 @@ export const MasterpieceSpotlight: React.FC<MasterpieceSpotlightProps> = ({
   };
 
   return (
-    <section className="py-20 md:py-32 bg-[#1F2328] text-white relative overflow-hidden my-16">
+    <section className="py-12 sm:py-20 md:py-32 bg-[#1F2328] text-white relative overflow-hidden my-12 sm:my-16">
       {/* Background Gold Ambient Glows */}
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#B68D40]/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-10 w-80 h-80 bg-[#A76B3F]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-[#B68D40]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-10 w-60 sm:w-80 h-60 sm:h-80 bg-[#A76B3F]/15 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
           
           {/* Left Column Image Presentation (6 cols) */}
           <motion.div
@@ -63,8 +63,8 @@ export const MasterpieceSpotlight: React.FC<MasterpieceSpotlightProps> = ({
             transition={{ duration: 0.8 }}
             className="lg:col-span-6 relative flex justify-center"
           >
-            <div className="relative w-full max-w-[500px] rounded-[32px] overflow-hidden p-3 bg-[#2A3036] border border-[#B68D40]/40 shadow-2xl group cursor-pointer" onClick={() => onSelectArtifact(masterpiece)}>
-              <div className="relative h-[480px] sm:h-[540px] w-full rounded-[24px] overflow-hidden bg-black">
+            <div className="relative w-full max-w-[500px] rounded-[24px] sm:rounded-[32px] overflow-hidden p-2.5 sm:p-3 bg-[#2A3036] border border-[#B68D40]/40 shadow-2xl group cursor-pointer" onClick={() => onSelectArtifact(masterpiece)}>
+              <div className="relative h-[320px] sm:h-[480px] lg:h-[540px] w-full rounded-[18px] sm:rounded-[24px] overflow-hidden bg-black">
                 <img
                   src={masterpiece.image || 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200'}
                   alt={masterpiece.title}
@@ -83,18 +83,18 @@ export const MasterpieceSpotlight: React.FC<MasterpieceSpotlightProps> = ({
                     e.stopPropagation();
                     toggleAmbientAudio();
                   }}
-                  className="absolute top-4 right-4 px-4 py-2 rounded-full bg-[#1F2328]/80 backdrop-blur-md border border-[#B68D40]/40 text-[#D9C7AE] text-xs font-serif-heading font-medium tracking-wide flex items-center gap-2 hover:bg-[#B68D40] hover:text-white transition-all shadow-xl"
+                  className="absolute top-3 right-3 sm:top-4 sm:right-4 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-[#1F2328]/85 backdrop-blur-md border border-[#B68D40]/40 text-[#D9C7AE] text-[10px] sm:text-xs font-serif-heading font-medium tracking-wide flex items-center gap-1.5 sm:gap-2 hover:bg-[#B68D40] hover:text-white transition-all shadow-xl cursor-pointer"
                 >
-                  {isPlayingAudio ? <Volume2 className="w-4 h-4 text-[#B68D40] animate-pulse" /> : <VolumeX className="w-4 h-4 text-[#D9C7AE]" />}
-                  <span>{isPlayingAudio ? 'Playing Resonances...' : 'Listen to Resonances'}</span>
+                  {isPlayingAudio ? <Volume2 className="w-3.5 h-3.5 text-[#B68D40] animate-pulse" /> : <VolumeX className="w-3.5 h-3.5 text-[#D9C7AE]" />}
+                  <span>{isPlayingAudio ? 'Resonances...' : 'Listen to Resonances'}</span>
                 </button>
 
                 {/* Bottom Overlay Label */}
-                <div className="absolute bottom-6 left-6 right-6">
-                  <span className="px-3 py-1 rounded-full bg-[#B68D40]/20 border border-[#B68D40]/50 text-[#D9C7AE] text-[10px] font-mono uppercase tracking-widest inline-block mb-2">
+                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6">
+                  <span className="px-2.5 py-1 rounded-full bg-[#B68D40]/20 border border-[#B68D40]/50 text-[#D9C7AE] text-[9px] sm:text-[10px] font-mono uppercase tracking-widest inline-block mb-1 sm:mb-2">
                     Imperial Archive: {masterpiece.certificateNumber}
                   </span>
-                  <h3 className="font-serif-heading text-2xl font-bold text-[#F8F5EF] group-hover:text-[#B68D40] transition-colors">
+                  <h3 className="font-serif-heading text-lg sm:text-2xl font-bold text-[#F8F5EF] group-hover:text-[#B68D40] transition-colors truncate">
                     {masterpiece.title}
                   </h3>
                 </div>

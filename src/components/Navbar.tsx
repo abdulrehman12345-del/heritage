@@ -77,13 +77,13 @@ export const Navbar: React.FC<NavbarProps> = ({
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1.0] }}
-      className="fixed top-3 sm:top-4 inset-x-0 z-50 px-3 sm:px-6 md:px-8 flex justify-center pointer-events-none"
+      className="fixed top-2 sm:top-4 inset-x-0 z-50 px-2.5 sm:px-6 md:px-8 flex justify-center pointer-events-none"
     >
       <div
-        className={`pointer-events-auto w-full max-w-7xl min-h-[64px] sm:min-h-[72px] rounded-full px-3.5 sm:px-6 py-2 flex items-center justify-between gap-2 sm:gap-4 transition-all duration-500 glass-nav ${
+        className={`pointer-events-auto w-full max-w-7xl min-h-[60px] sm:min-h-[72px] rounded-full px-3 sm:px-6 py-2 flex items-center justify-between gap-2 sm:gap-4 transition-all duration-300 glass-nav ${
           isAtTop
-            ? 'shadow-xl border-opacity-40'
-            : 'shadow-2xl border-opacity-70 bg-[#121417]/95 backdrop-blur-2xl'
+            ? 'shadow-xl border-opacity-50'
+            : 'shadow-2xl border-opacity-80 bg-[#121417]/98 backdrop-blur-2xl'
         }`}
       >
         {/* Logo */}
@@ -130,7 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
 
-        {/* Right Action: Customer Auth + Saved Shortlist + Admin Panel + Explore Collection */}
+        {/* Right Actions: Responsive Actions Layout */}
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {onOpenSavedModal && (
             <motion.button
@@ -154,11 +154,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
               onClick={onOpenCustomerAuth}
-              className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full bg-[#22272E] hover:bg-[#2C333B] text-[#DECFAF] hover:text-[#FFE270] text-xs font-semibold uppercase tracking-wider border border-[#A87C32]/40 transition-all flex items-center gap-1.5 sm:gap-2 shadow-md whitespace-nowrap cursor-pointer"
+              className="hidden sm:flex px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full bg-[#22272E] hover:bg-[#2C333B] text-[#DECFAF] hover:text-[#FFE270] text-xs font-semibold uppercase tracking-wider border border-[#A87C32]/40 transition-all items-center gap-1.5 sm:gap-2 shadow-md whitespace-nowrap cursor-pointer"
               title="Customer Login & Signup"
             >
               <UserCheck className="w-3.5 h-3.5 text-[#FFE270] shrink-0" />
-              <span className="hidden sm:inline max-w-[110px] truncate">
+              <span className="max-w-[100px] md:max-w-[130px] truncate">
                 {customerUser ? (customerUser.fullName || 'Customer') : 'Login'}
               </span>
             </motion.button>
@@ -181,10 +181,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             whileHover={{ y: -1, scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             onClick={onExploreClick}
-            className="group relative px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-[#A87C32] via-[#966C2A] to-[#8C5D26] text-white font-bold text-xs tracking-wider uppercase shadow-lg hover:shadow-[0_0_20px_rgba(168,124,50,0.5)] transition-all duration-300 flex items-center gap-1.5 whitespace-nowrap cursor-pointer border border-[#FFE270]/30"
+            className="hidden sm:flex group relative px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-[#A87C32] via-[#966C2A] to-[#8C5D26] text-white font-bold text-xs tracking-wider uppercase shadow-lg hover:shadow-[0_0_20px_rgba(168,124,50,0.5)] transition-all duration-300 items-center gap-1.5 whitespace-nowrap cursor-pointer border border-[#FFE270]/30"
           >
             <Compass className="w-3.5 h-3.5 text-[#FFE270] group-hover:rotate-45 transition-transform duration-500 shrink-0" />
-            <span className="hidden xs:inline">Explore</span>
+            <span>Explore</span>
           </motion.button>
 
           {/* Mobile & Tablet Hamburger Toggle */}
@@ -206,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.98 }}
             transition={{ duration: 0.25 }}
-            className="pointer-events-auto absolute top-[76px] sm:top-[84px] left-3 right-3 sm:left-6 sm:right-6 max-w-7xl mx-auto bg-[#16191D]/98 backdrop-blur-2xl rounded-[28px] p-5 sm:p-6 border border-[#A87C32]/50 shadow-2xl flex flex-col gap-3 xl:hidden text-[#E6DFD5] z-50"
+            className="pointer-events-auto absolute top-[68px] sm:top-[80px] left-2.5 right-2.5 sm:left-6 sm:right-6 max-w-7xl mx-auto bg-[#16191D]/98 backdrop-blur-2xl rounded-[24px] sm:rounded-[28px] p-4 sm:p-6 border border-[#A87C32]/50 shadow-2xl flex flex-col gap-2.5 xl:hidden text-[#E6DFD5] z-50 max-h-[85vh] overflow-y-auto"
           >
             {navItems.map((item) => (
               <motion.button

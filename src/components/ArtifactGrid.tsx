@@ -62,39 +62,39 @@ export const ArtifactGrid: React.FC<ArtifactGridProps> = ({
   }, [artifacts, activeCategory, selectedEra, searchQuery, sortBy]);
 
   return (
-    <section id="catalog" className="py-16 md:py-24 max-w-7xl mx-auto px-6 md:px-12">
+    <section id="catalog" className="py-12 sm:py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
       {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-10">
-        <span className="text-xs uppercase tracking-[0.35em] font-mono text-[#B68D40] block mb-2 font-medium">
+      <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+        <span className="text-[10px] sm:text-xs uppercase tracking-[0.25em] sm:tracking-[0.35em] font-mono text-[#B68D40] block mb-2 font-medium">
           The Vault & Gallery Collection
         </span>
-        <h2 className="font-serif-heading text-3xl md:text-5xl font-bold text-[#2B2622]">
+        <h2 className="font-serif-heading text-2xl sm:text-4xl md:text-5xl font-bold text-[#2B2622]">
           Curated Antiquities & Artifacts
         </h2>
-        <div className="w-20 h-[2px] bg-[#B68D40] mx-auto mt-4 mb-4" />
-        <p className="text-sm md:text-base text-[#6B6258] font-light leading-relaxed">
+        <div className="w-16 sm:w-20 h-[2px] bg-[#B68D40] mx-auto mt-3 sm:mt-4 mb-3 sm:mb-4" />
+        <p className="text-xs sm:text-sm md:text-base text-[#6B6258] font-light leading-relaxed">
           Search and inspect certified animal statues, ancient bronzes, historical sculptures, and copper masterpieces.
         </p>
       </div>
 
       {/* Interactive Controls Bar: Search & Sorting */}
-      <div className="bg-[#2A3036] rounded-[24px] p-4 sm:p-6 mb-10 border border-[#B68D40]/30 shadow-xl text-white">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-[#2A3036] rounded-[20px] sm:rounded-[24px] p-3.5 sm:p-6 mb-8 sm:mb-10 border border-[#B68D40]/30 shadow-xl text-white">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-3 sm:gap-4">
           
           {/* Live Search Input */}
           <div className="relative w-full md:w-1/2">
-            <Search className="w-4 h-4 text-[#B68D40] absolute left-4 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-[#B68D40] absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search by title, origin, era (e.g. Edo, Bronze, Vase)..."
-              className="w-full pl-11 pr-10 py-3 rounded-full bg-[#1F2328] border border-[#B68D40]/30 text-xs sm:text-sm text-[#F8F5EF] placeholder-[#D9C7AE]/50 focus:outline-none focus:border-[#B68D40] focus:ring-1 focus:ring-[#B68D40] transition-all font-sans"
+              placeholder="Search by title, origin, era..."
+              className="w-full pl-10 sm:pl-11 pr-9 sm:pr-10 py-2.5 sm:py-3 rounded-full bg-[#1F2328] border border-[#B68D40]/30 text-xs sm:text-sm text-[#F8F5EF] placeholder-[#D9C7AE]/50 focus:outline-none focus:border-[#B68D40] focus:ring-1 focus:ring-[#B68D40] transition-all font-sans"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#D9C7AE] hover:text-white p-1"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#D9C7AE] hover:text-white p-1 cursor-pointer"
                 title="Clear search"
               >
                 <X className="w-4 h-4" />
@@ -103,16 +103,16 @@ export const ArtifactGrid: React.FC<ArtifactGridProps> = ({
           </div>
 
           {/* Sort & Count Indicator */}
-          <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
-            <div className="flex items-center gap-2 text-xs text-[#D9C7AE] font-mono whitespace-nowrap">
+          <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto justify-between md:justify-end">
+            <div className="flex items-center gap-1.5 text-xs text-[#D9C7AE] font-mono whitespace-nowrap">
               <Filter className="w-3.5 h-3.5 text-[#B68D40]" />
-              <span>Sort By:</span>
+              <span>Sort:</span>
             </div>
 
             <select
               value={sortBy}
               onChange={(e: any) => setSortBy(e.target.value)}
-              className="px-4 py-2.5 rounded-full bg-[#1F2328] border border-[#B68D40]/30 text-xs text-[#F8F5EF] font-serif-heading focus:outline-none focus:border-[#B68D40] cursor-pointer"
+              className="px-3 sm:px-4 py-2 sm:py-2.5 rounded-full bg-[#1F2328] border border-[#B68D40]/30 text-xs text-[#F8F5EF] font-serif-heading focus:outline-none focus:border-[#B68D40] cursor-pointer"
             >
               <option value="featured">Featured First</option>
               <option value="price-desc">Valuation: High to Low</option>
@@ -125,15 +125,15 @@ export const ArtifactGrid: React.FC<ArtifactGridProps> = ({
 
         {/* Historical Era Filter Badges */}
         {eras.length > 2 && (
-          <div className="mt-4 pt-4 border-t border-white/10 flex items-center gap-2 overflow-x-auto no-scrollbar">
-            <span className="text-[11px] uppercase font-mono tracking-wider text-[#B68D40] shrink-0 mr-1">
-              Historical Era:
+          <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/10 flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <span className="text-[10px] sm:text-[11px] uppercase font-mono tracking-wider text-[#B68D40] shrink-0 mr-1">
+              Era:
             </span>
             {eras.map(era => (
               <button
                 key={era}
                 onClick={() => setSelectedEra(era)}
-                className={`px-3 py-1 rounded-full text-[11px] font-mono transition-all shrink-0 ${
+                className={`px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-mono transition-all shrink-0 cursor-pointer ${
                   selectedEra === era
                     ? 'bg-[#B68D40] text-white font-bold shadow-md'
                     : 'bg-[#1F2328] text-[#D9C7AE]/80 hover:text-white border border-[#B68D40]/20'
@@ -146,7 +146,7 @@ export const ArtifactGrid: React.FC<ArtifactGridProps> = ({
         )}
 
         {/* Results Counter Bar */}
-        <div className="mt-3 flex items-center justify-between text-[11px] text-[#D9C7AE]/70 font-mono">
+        <div className="mt-3 flex items-center justify-between text-[10px] sm:text-[11px] text-[#D9C7AE]/70 font-mono">
           <span>Displaying <strong className="text-[#B68D40]">{filteredAndSortedArtifacts.length}</strong> authenticated pieces</span>
           {(searchQuery || selectedEra !== 'All' || activeCategory !== 'All') && (
             <button
@@ -154,7 +154,7 @@ export const ArtifactGrid: React.FC<ArtifactGridProps> = ({
                 setSearchQuery('');
                 setSelectedEra('All');
               }}
-              className="text-[#B68D40] hover:underline"
+              className="text-[#B68D40] hover:underline cursor-pointer"
             >
               Reset Filters
             </button>
