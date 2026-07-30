@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'motion/react';
 import { EmblemLogo } from './EmblemLogo';
-import { Menu, X, Compass, ShieldCheck, UserCheck } from 'lucide-react';
+import { Menu, X, Compass, ShieldCheck, UserCheck, Heart } from 'lucide-react';
 
 interface NavbarProps {
   activeCategory: string;
@@ -11,6 +11,8 @@ interface NavbarProps {
   onOpenAdmin?: () => void;
   onOpenCustomerAuth?: () => void;
   customerUser?: any;
+  savedCount?: number;
+  onOpenSavedModal?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -21,6 +23,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenAdmin,
   onOpenCustomerAuth,
   customerUser,
+  savedCount = 0,
+  onOpenSavedModal
 }) => {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
@@ -120,8 +124,25 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
 
-        {/* Right Action: Customer Auth + Admin Panel + Explore Collection */}
+        {/* Right Action: Customer Auth + Saved Shortlist + Admin Panel + Explore Collection */}
         <div className="hidden sm:flex items-center gap-2 shrink-0">
+          {onOpenSavedModal && (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onOpenSavedModal}
+              className="relative p-2 rounded-full bg-[#F8F5EF] hover:bg-[#B68D40]/10 text-[#2B2622] border border-[#B68D40]/40 transition-all flex items-center justify-center shadow-sm"
+              title="View Collector Saved Shortlist"
+            >
+              <Heart className={`w-4 h-4 ${savedCount > 0 ? 'text-[#B68D40] fill-[#B68D40]' : 'text-[#2B2622]'}`} />
+              {savedCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#B68D40] text-white text-[10px] font-bold font-mono flex items-center justify-center shadow-sm">
+                  {savedCount}
+                </span>
+              )}
+            </motion.button>
+          )}
+
           {onOpenCustomerAuth && (
             <motion.button
               whileHover={{ scale: 1.03 }}

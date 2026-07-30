@@ -127,59 +127,60 @@ export const Hero: React.FC<HeroProps> = ({
 
             {/* Main Floating Antique Card */}
             <motion.div
-              animate={{ y: [0, -12, 0] }}
+              animate={{ y: [0, -10, 0] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="relative w-full max-w-[480px] rounded-[32px] overflow-hidden p-3 bg-[#FDFBF7] border border-[#B68D40]/30 shadow-2xl group cursor-pointer"
+              className="relative w-full max-w-[480px] rounded-[32px] p-3 bg-[#1F2328] border border-[#B68D40]/40 shadow-2xl group cursor-pointer"
               onClick={() => onSelectFeaturedArtifact('ha-01')}
             >
               {/* Image Frame Container */}
-              <div className="relative h-[440px] sm:h-[500px] w-full rounded-[24px] overflow-hidden bg-[#1F2328]">
+              <div className="relative h-[480px] sm:h-[530px] w-full rounded-[24px] overflow-hidden bg-[#15181C]">
                 <img
-                  src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=1200&auto=format&fit=crop"
+                  src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=80&w=1200"
                   alt="Edo Period Imperial Bronze Falcon"
-                  className="w-full h-full object-cover object-center transform group-hover:scale-108 transition-transform duration-700 filter brightness-95 contrast-105"
+                  className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 filter brightness-95 contrast-105"
                   referrerPolicy="no-referrer"
                 />
                 
                 {/* Gold Lighting Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1F2328] via-transparent to-black/20 opacity-80" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#15181C] via-[#15181C]/30 to-black/40 opacity-90" />
 
-                {/* Top Badge Overlay */}
-                <div className="absolute top-4 left-4 flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1F2328]/80 backdrop-blur-md border border-[#B68D40]/40 text-[#D9C7AE] text-xs font-medium tracking-wide">
-                  <Sparkles className="w-3.5 h-3.5 text-[#B68D40]" />
-                  <span>Curator’s Featured Masterpiece</span>
+                {/* Top Badges Bar */}
+                <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-10">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1F2328]/85 backdrop-blur-md border border-[#B68D40]/50 text-[#D9C7AE] text-[11px] font-medium tracking-wide shadow-md">
+                    <Sparkles className="w-3.5 h-3.5 text-[#B68D40]" />
+                    <span>Curator’s Featured Masterpiece</span>
+                  </div>
+
+                  <div className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-[#1F2328]/85 backdrop-blur-md border border-[#B68D40]/50 text-[#D9C7AE] text-[10px] font-mono tracking-wider shadow-md">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#B68D40]" />
+                    <span>HA-1840</span>
+                  </div>
                 </div>
 
                 {/* Bottom Card Title Overlay */}
-                <div className="absolute bottom-6 left-6 right-6 text-white">
-                  <span className="text-[#D9C7AE] text-xs uppercase tracking-widest font-mono">
-                    Edo Period • Japan c. 1840 AD
-                  </span>
-                  <h3 className="font-serif-heading text-xl sm:text-2xl font-semibold text-[#F8F5EF] mt-1 group-hover:text-[#B68D40] transition-colors">
+                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 text-white bg-[#1F2328]/90 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-[#B68D40]/30 shadow-xl">
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <span className="text-[#D9C7AE] text-[11px] uppercase tracking-widest font-mono">
+                      Edo Period • Japan c. 1840 AD
+                    </span>
+                    <span className="text-[10px] font-mono text-[#B68D40] uppercase">
+                      Vault Verified
+                    </span>
+                  </div>
+
+                  <h3 className="font-serif-heading text-xl sm:text-2xl font-semibold text-[#F8F5EF] group-hover:text-[#B68D40] transition-colors leading-snug">
                     Imperial Bronze Falcon Statue
                   </h3>
+
                   <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/15">
-                    <span className="text-sm font-light text-[#D9C7AE]">Certified Authentic</span>
-                    <span className="font-serif-heading text-lg font-bold text-[#B68D40]">$34,500</span>
+                    <div className="flex items-center gap-1.5 text-xs text-[#D9C7AE] font-mono">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#B68D40]" />
+                      <span>Certified Authentic</span>
+                    </div>
+                    <span className="font-serif-heading text-xl font-bold text-[#B68D40]">$34,500</span>
                   </div>
                 </div>
               </div>
-
-              {/* Floating Certificate Badge */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.8 }}
-                className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 p-4 rounded-2xl bg-[#1F2328] border border-[#B68D40]/50 shadow-2xl flex items-center gap-3 backdrop-blur-xl text-white max-w-[220px]"
-              >
-                <div className="w-10 h-10 rounded-full bg-[#B68D40]/20 flex items-center justify-center flex-shrink-0 text-[#B68D40] border border-[#B68D40]/40">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-[10px] text-[#D9C7AE] font-mono uppercase tracking-wider">Vault ID: HA-1840</p>
-                  <p className="text-xs font-semibold text-[#F8F5EF]">Heritage Sealed</p>
-                </div>
-              </motion.div>
             </motion.div>
 
           </motion.div>

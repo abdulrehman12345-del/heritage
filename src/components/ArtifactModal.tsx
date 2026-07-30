@@ -67,8 +67,12 @@ export const ArtifactModal: React.FC<ArtifactModalProps> = ({
             <div className="lg:col-span-5 flex flex-col gap-4">
               <div className="relative h-80 sm:h-96 w-full rounded-2xl overflow-hidden bg-[#1F2328] border border-[#B68D40]/30 shadow-md">
                 <img
-                  src={images[activeImageIndex]}
+                  src={images[activeImageIndex] || 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200'}
                   alt={artifact.title}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200';
+                  }}
                   className="w-full h-full object-cover object-center filter brightness-95"
                   referrerPolicy="no-referrer"
                 />

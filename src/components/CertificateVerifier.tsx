@@ -130,7 +130,16 @@ export const CertificateVerifier: React.FC<CertificateVerifierProps> = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 items-center">
               <div className="h-32 rounded-xl overflow-hidden bg-[#1F2328]">
-                <img src={searchedArtifact.image} alt={searchedArtifact.title} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                <img
+                  src={searchedArtifact.image || 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200'}
+                  alt={searchedArtifact.title}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200';
+                  }}
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
               </div>
 
               <div className="sm:col-span-2">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { CategoryFilter } from './components/CategoryFilter';
@@ -12,6 +12,7 @@ import { Testimonials } from './components/Testimonials';
 import { Newsletter } from './components/Newsletter';
 import { InquiryModal } from './components/InquiryModal';
 import { CustomerAuthModal } from './components/CustomerAuthModal';
+import { SavedShortlistModal } from './components/SavedShortlistModal';
 import { Footer } from './components/Footer';
 
 import { ARTIFACTS_DATA } from './data/artifacts';
@@ -56,6 +57,31 @@ export default function App() {
   const [selectedArtifact, setSelectedArtifact] = useState<Artifact | null>(null);
   const [inquiryArtifact, setInquiryArtifact] = useState<Artifact | null>(null);
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
+  const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
+
+  // Saved / Bookmarked Shortlist State (persisted in localStorage)
+  const [savedIds, setSavedIds] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('ha_saved_artifacts');
+      return saved ? JSON.parse(saved) : ['ha-01'];
+    } catch {
+      return ['ha-01'];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('ha_saved_artifacts', JSON.stringify(savedIds));
+    } catch {}
+  }, [savedIds]);
+
+  const handleToggleSave = (artifactId: string) => {
+    setSavedIds(prev => 
+      prev.includes(artifactId) 
+        ? prev.filter(id => id !== artifactId) 
+        : [...prev, artifactId]
+    );
+  };
 
   // Fetch initial data from backend API
   useEffect(() => {
@@ -63,22 +89,31 @@ export default function App() {
     productsApi.getProducts()
       .then((res) => {
         if (res.success && res.products && res.products.length > 0) {
-          const mapped = res.products.map((p: any) => ({
+          const defaultFallbackImage = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200';
+          const mapped: Artifact[] = res.products.map((p: any) => ({
             id: p._id || p.id,
-            title: p.productName || p.title,
+            title: p.productName || p.title || 'Untitled Masterpiece',
             category: p.categoryName || 'Sculptures',
-            period: p.historicalEra || '18th Century',
+            era: p.historicalEra || '18th Century',
             origin: p.origin || 'Europe',
-            estimatedValue: `$${(p.price || 0).toLocaleString()}`,
-            imageUrl: p.thumbnail || p.imageUrl,
-            description: p.description,
-            provenance: p.provenance,
-            status: p.status || 'Available',
-            year: p.historicalEra || '18th Century',
+            periodYear: p.historicalEra || '18th Century',
+            price: p.price || 0,
+            priceFormatted: p.price ? `$${Number(p.price).toLocaleString()}` : '$0',
+            image: p.thumbnail || p.imageUrl || p.image || defaultFallbackImage,
+            secondaryImages: p.images && p.images.length > 0 ? p.images : [defaultFallbackImage],
+            dimensions: p.dimensions || '50cm x 30cm x 25cm',
+            weight: p.weight || '6.5 kg',
+            material: p.material || 'Cast Bronze & Fine Alloy',
+            condition: p.condition || 'Museum Conservation Status',
+            certificateNumber: p.certificateId || `HA-VAULT-${p._id ? p._id.substring(0, 6).toUpperCase() : '1892'}`,
+            description: p.description || 'Rare certified antiquarian artifact from private heritage vault.',
+            curatorNotes: p.curatorNotes || p.provenance || 'Verified by Heritage Vault Curators.',
+            provenance: Array.isArray(p.provenance) ? p.provenance : [
+              { year: '18th Century', event: typeof p.provenance === 'string' && p.provenance ? p.provenance : 'Acquired into private vault collection', location: p.origin || 'London, UK' }
+            ],
             featured: p.featured || false,
             stock: p.stock !== undefined ? p.stock : 1,
-            sku: p.sku,
-            certificateId: p.certificateId,
+            sku: p.sku || 'HA-SKU-001'
           }));
           setArtifacts(mapped);
         }
@@ -295,6 +330,10 @@ export default function App() {
     );
   }
 
+  const savedArtifacts = useMemo(() => {
+    return artifacts.filter((a) => savedIds.includes(a.id));
+  }, [artifacts, savedIds]);
+
   // Otherwise render Public Storefront with live CMS configuration values
   return (
     <div className="min-h-screen bg-[#F8F5EF] text-[#2B2622] font-sans antialiased selection:bg-[#B68D40]/30 selection:text-[#2B2622]">
@@ -307,6 +346,8 @@ export default function App() {
         onOpenAdmin={handleOpenAdminRequest}
         onOpenCustomerAuth={() => setIsCustomerAuthOpen(true)}
         customerUser={customerUser}
+        savedCount={savedIds.length}
+        onOpenSavedModal={() => setIsSavedModalOpen(true)}
       />
 
       {/* Hero Section */}
@@ -327,6 +368,8 @@ export default function App() {
           artifacts={artifacts}
           activeCategory={activeCategory}
           onSelectArtifact={(artifact) => setSelectedArtifact(artifact)}
+          savedIds={savedIds}
+          onToggleSave={handleToggleSave}
         />
       </div>
 
@@ -363,6 +406,19 @@ export default function App() {
         artifact={selectedArtifact}
         onClose={() => setSelectedArtifact(null)}
         onInquireClick={handleInquireClick}
+      />
+
+      {/* Saved Shortlist Drawer / Modal */}
+      <SavedShortlistModal
+        isOpen={isSavedModalOpen}
+        onClose={() => setIsSavedModalOpen(false)}
+        savedArtifacts={savedArtifacts}
+        onSelectArtifact={(art) => setSelectedArtifact(art)}
+        onRemoveSaved={(id) => handleToggleSave(id)}
+        onInquireArtifact={(art) => {
+          setInquiryArtifact(art);
+          setIsInquiryOpen(true);
+        }}
       />
 
       {/* Private Acquisition Consultation Modal */}
