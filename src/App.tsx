@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { CategoryFilter } from './components/CategoryFilter';
@@ -129,12 +130,12 @@ export default function App() {
           if (res.user.role === 'Admin') {
             setIsAuthorized(true);
             setCurrentUser({
-              id: res.user._id,
-              name: res.user.fullName,
-              email: res.user.email,
-              role: 'Super Admin',
-              avatar: res.user.profileImage,
-              lastLogin: 'Just now',
+              id: res.user.id || res.user._id || 'adm-1',
+              name: res.user.fullName || res.user.name || 'abdul rehman',
+              email: res.user.email || 'admin@heritageantiques.com',
+              role: 'Master Curator',
+              avatar: res.user.profileImage || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400',
+              lastActive: 'Just now',
               status: 'Active',
             });
           } else {
@@ -280,59 +281,73 @@ export default function App() {
     }
   };
 
-  const handleAuthSuccess = () => {
+  const handleAuthSuccess = (userData?: any) => {
     setIsAuthorized(true);
     setIsAdminAuthOpen(false);
     setIsAdminView(true);
-  };
 
-  // Render Admin Dashboard layout if in admin mode
-  if (isAdminView) {
-    return (
-      <AdminDashboardLayout
-        artifacts={artifacts}
-        categories={categories}
-        orders={orders}
-        customers={customers}
-        reviews={reviews}
-        mediaFiles={mediaFiles}
-        discounts={discounts}
-        inquiries={inquiries}
-        admins={admins}
-        homepageConfig={homepageConfig}
-        websiteSettings={websiteSettings}
-        currentUser={currentUser}
-        onAddArtifact={handleAddArtifact}
-        onUpdateArtifact={handleUpdateArtifact}
-        onDeleteArtifact={handleDeleteArtifact}
-        onAddCategory={handleAddCategory}
-        onUpdateCategory={handleUpdateCategory}
-        onDeleteCategory={handleDeleteCategory}
-        onUpdateOrderStatus={handleUpdateOrderStatus}
-        onUpdateStock={handleUpdateStock}
-        onUploadMedia={handleUploadMedia}
-        onDeleteMedia={handleDeleteMedia}
-        onAddDiscount={handleAddDiscount}
-        onDeleteDiscount={handleDeleteDiscount}
-        onSaveHomepageCMS={setHomepageConfig}
-        onSaveWebsiteSettings={setWebsiteSettings}
-        onApproveReview={(id) =>
-          setReviews(
-            reviews.map((r) => (r.id === id ? { ...r, status: 'Published' } : r))
-          )
-        }
-        onDeleteReview={(id) => setReviews(reviews.filter((r) => r.id !== id))}
-        onMarkInquiryReplied={handleMarkInquiryReplied}
-        onUpdateCurrentUser={setCurrentUser}
-        onExitAdmin={handleExitAdmin}
-        onSelectArtifactToPreviewPublic={handleSelectArtifactToPreviewPublic}
-      />
-    );
-  }
+    if (userData) {
+      setCurrentUser({
+        id: userData.id || userData._id || 'adm-1',
+        name: userData.fullName || userData.name || 'abdul rehman',
+        email: userData.email || 'admin@heritageantiques.com',
+        role: 'Master Curator',
+        avatar: userData.profileImage || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400',
+        lastActive: 'Active Now',
+        status: 'Active',
+      });
+    }
+  };
 
   const savedArtifacts = useMemo(() => {
     return artifacts.filter((a) => savedIds.includes(a.id));
   }, [artifacts, savedIds]);
+
+  // Render Admin Dashboard layout if in admin mode
+  if (isAdminView) {
+    return (
+      <ErrorBoundary fallbackTitle="Admin Console Reset" onReset={() => setIsAdminView(false)}>
+        <AdminDashboardLayout
+          artifacts={artifacts || []}
+          categories={categories || []}
+          orders={orders || []}
+          customers={customers || []}
+          reviews={reviews || []}
+          mediaFiles={mediaFiles || []}
+          discounts={discounts || []}
+          inquiries={inquiries || []}
+          admins={admins || []}
+          homepageConfig={homepageConfig}
+          websiteSettings={websiteSettings}
+          currentUser={currentUser}
+          onAddArtifact={handleAddArtifact}
+          onUpdateArtifact={handleUpdateArtifact}
+          onDeleteArtifact={handleDeleteArtifact}
+          onAddCategory={handleAddCategory}
+          onUpdateCategory={handleUpdateCategory}
+          onDeleteCategory={handleDeleteCategory}
+          onUpdateOrderStatus={handleUpdateOrderStatus}
+          onUpdateStock={handleUpdateStock}
+          onUploadMedia={handleUploadMedia}
+          onDeleteMedia={handleDeleteMedia}
+          onAddDiscount={handleAddDiscount}
+          onDeleteDiscount={handleDeleteDiscount}
+          onSaveHomepageCMS={setHomepageConfig}
+          onSaveWebsiteSettings={setWebsiteSettings}
+          onApproveReview={(id) =>
+            setReviews(
+              reviews.map((r) => (r.id === id ? { ...r, status: 'Published' } : r))
+            )
+          }
+          onDeleteReview={(id) => setReviews(reviews.filter((r) => r.id !== id))}
+          onMarkInquiryReplied={handleMarkInquiryReplied}
+          onUpdateCurrentUser={setCurrentUser}
+          onExitAdmin={handleExitAdmin}
+          onSelectArtifactToPreviewPublic={handleSelectArtifactToPreviewPublic}
+        />
+      </ErrorBoundary>
+    );
+  }
 
   // Otherwise render Public Storefront with live CMS configuration values
   return (

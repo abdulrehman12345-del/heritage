@@ -2,122 +2,123 @@
 
 @layer base {
   :root {
-    --bg-main: #F8F5EF;
-    --dark-bg: #1F2328;
-    --card-dark: #2A3036;
-    --text-primary: #2B2622;
-    --text-secondary: #6B6258;
-    --antique-gold: #B68D40;
-    --copper: #A76B3F;
-    --dust-beige: #D9C7AE;
-    --border-gold: rgba(182, 141, 64, 0.18);
-    --navbar-bg: rgba(242, 236, 227, 0.78);
+    --bg-main: #FAF7F2;
+    --dark-bg: #1B1E22;
+    --card-dark: #24292F;
+    --text-primary: #2C2723;
+    --text-secondary: #635A50;
+    --antique-gold: #A87C32;
+    --copper: #9E5E32;
+    --dust-beige: #DECFAF;
+    --border-gold: rgba(168, 124, 50, 0.16);
+    --navbar-bg: rgba(250, 247, 242, 0.88);
   }
 
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: var(--bg-main);
     color: var(--text-primary);
+    line-height: 1.6;
+    letter-spacing: -0.01em;
   }
 
   h1, h2, h3, h4, h5, h6, .font-serif-heading {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Lora', Georgia, serif;
+    letter-spacing: -0.015em;
   }
 
-  .font-cinzel {
-    font-family: 'Cinzel', serif;
+  .font-cinzel, .font-display {
+    font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   }
 }
 
-/* Custom Utilities for Luxury Theme */
+/* Custom Utilities for Soft Luxury Theme */
 .bg-warm-offwhite {
-  background-color: #F8F5EF;
+  background-color: #FAF7F2;
 }
 
 .bg-dark-section {
-  background-color: #1F2328;
+  background-color: #1B1E22;
 }
 
 .bg-card-dark {
-  background-color: #2A3036;
+  background-color: #24292F;
 }
 
 .text-gold {
-  color: #B68D40;
+  color: #A87C32;
 }
 
 .text-copper {
-  color: #A76B3F;
+  color: #9E5E32;
 }
 
 .text-primary-dark {
-  color: #2B2622;
+  color: #2C2723;
 }
 
 .text-secondary-dark {
-  color: #6B6258;
+  color: #635A50;
 }
 
 .bg-gold {
-  background-color: #B68D40;
+  background-color: #A87C32;
 }
 
 .bg-copper {
-  background-color: #A76B3F;
+  background-color: #9E5E32;
 }
 
 .border-gold {
-  border-color: rgba(182, 141, 64, 0.18);
+  border-color: rgba(168, 124, 50, 0.16);
 }
 
 .border-gold-glow {
-  box-shadow: 0 0 15px rgba(182, 141, 64, 0.25);
+  box-shadow: 0 0 16px rgba(168, 124, 50, 0.12);
 }
 
 .glass-nav {
-  background: rgba(242, 236, 227, 0.78);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(182, 141, 64, 0.25);
-  box-shadow: 0 12px 32px -8px rgba(43, 38, 34, 0.08);
+  background: rgba(22, 25, 29, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(168, 124, 50, 0.38);
+  box-shadow: 0 12px 36px -6px rgba(0, 0, 0, 0.45), 0 0 20px rgba(168, 124, 50, 0.15);
 }
 
 .glass-card {
-  background: rgba(253, 251, 247, 0.85);
+  background: rgba(255, 253, 249, 0.95);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(182, 141, 64, 0.18);
+  border: 1px solid rgba(168, 124, 50, 0.14);
 }
 
-/* Paper / Patina Subtle Grain Texture */
+/* Paper / Patina Soft Grain Texture */
 .paper-texture {
-  background-image: radial-gradient(rgba(182, 141, 64, 0.04) 1px, transparent 0);
+  background-image: radial-gradient(rgba(168, 124, 50, 0.03) 1px, transparent 0);
   background-size: 24px 24px;
 }
 
 .gold-gradient-text {
-  background: linear-gradient(135deg, #B68D40 0%, #D9C7AE 50%, #A76B3F 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #966C2A;
+  font-weight: 600;
 }
 
 .copper-gradient-text {
-  background: linear-gradient(135deg, #A76B3F 0%, #B68D40 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #8C4D26;
+  font-weight: 600;
 }
 
-/* Custom luxury scrollbar */
+/* Custom soft smooth scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #F8F5EF;
+  background: #FAF7F2;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D9C7AE;
+  background: #DECFAF;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #B68D40;
+  background: #A87C32;
 }
 

@@ -8,10 +8,10 @@ interface ProfileViewProps {
 }
 
 export const ProfileView: React.FC<ProfileViewProps> = ({ currentUser, onUpdateUser }) => {
-  const [name, setName] = useState(currentUser.name);
-  const [email, setEmail] = useState(currentUser.email);
-  const [role, setRole] = useState(currentUser.role);
-  const [avatar, setAvatar] = useState(currentUser.avatar);
+  const [name, setName] = useState(currentUser?.name || 'Abdul Rehman');
+  const [email, setEmail] = useState(currentUser?.email || 'admin@heritageantiques.com');
+  const [role, setRole] = useState(currentUser?.role || 'Master Curator');
+  const [avatar, setAvatar] = useState(currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200');
   const [saved, setSaved] = useState(false);
 
   const handleSave = () => {

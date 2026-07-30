@@ -147,16 +147,16 @@ export const AdminTopbar: React.FC<AdminTopbarProps> = ({
         {/* User Curator Profile Widget */}
         <div className="flex items-center gap-3 pl-3 border-l border-[#B68D40]/20">
           <img
-            src={currentUser.avatar}
-            alt={currentUser.name}
+            src={currentUser?.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200'}
+            alt={currentUser?.name || 'Curator'}
             className="w-9 h-9 rounded-full object-cover border-2 border-[#B68D40]"
           />
           <div className="hidden xl:flex flex-col">
             <span className="text-xs font-bold text-[#2B2622]">
-              {currentUser.name}
+              {currentUser?.name || 'abdul rehman'}
             </span>
             <span className="text-[10px] text-[#6A6158] font-mono">
-              {currentUser.role}
+              {currentUser?.role || 'Master Curator'}
             </span>
           </div>
         </div>

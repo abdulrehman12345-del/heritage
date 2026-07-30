@@ -34,9 +34,9 @@ export const Hero: React.FC<HeroProps> = ({
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B68D40]/10 border border-[#B68D40]/30 text-[#B68D40] text-xs font-medium tracking-widest uppercase mb-6"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#A87C32]/10 border border-[#A87C32]/25 text-[#966C2A] text-xs font-semibold tracking-wide mb-6"
             >
-              <ShieldCheck className="w-4 h-4 text-[#B68D40]" />
+              <ShieldCheck className="w-4 h-4 text-[#A87C32]" />
               <span>Imperial Antiquities & Provenance Vault</span>
             </motion.div>
 
@@ -45,10 +45,10 @@ export const Hero: React.FC<HeroProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.7 }}
-              className="font-serif-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-[#2B2622] leading-[1.08] tracking-tight mb-6"
+              className="font-serif-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-[#2C2723] leading-[1.12] tracking-normal mb-6"
             >
               Own A Piece <br />
-              <span className="italic font-normal text-[#B68D40]">Of History</span>
+              <span className="italic font-normal text-[#A87C32]">Of History</span>
             </motion.h1>
 
             {/* Subtitle Description */}
@@ -56,7 +56,7 @@ export const Hero: React.FC<HeroProps> = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.7 }}
-              className="text-base sm:text-lg text-[#6B6258] max-w-xl font-light leading-relaxed mb-10"
+              className="text-base sm:text-lg text-[#635A50] max-w-xl font-normal leading-relaxed mb-10"
             >
               Discover extraordinary museum-grade antiquities, ancient animal bronzes, 
               historical sculptures, and rare copper vessels. Each artifact is rigorously 
@@ -72,10 +72,10 @@ export const Hero: React.FC<HeroProps> = ({
             >
               {/* Explore Collection Button */}
               <motion.button
-                whileHover={{ y: -3, scale: 1.02 }}
+                whileHover={{ y: -2, scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={onExploreClick}
-                className="px-8 py-4 rounded-full bg-[#B68D40] text-[#F8F5EF] font-medium text-sm tracking-wider uppercase font-serif-heading shadow-xl hover:bg-[#A76B3F] hover:shadow-2xl transition-all duration-300 flex items-center gap-3 group"
+                className="px-8 py-4 rounded-full bg-[#A87C32] text-[#FAF7F2] font-semibold text-sm tracking-wide shadow-lg hover:bg-[#966C2A] hover:shadow-xl transition-all duration-300 flex items-center gap-3 group"
               >
                 <span>Explore Collection</span>
                 <Compass className="w-4 h-4 group-hover:rotate-45 transition-transform duration-500" />
@@ -83,13 +83,13 @@ export const Hero: React.FC<HeroProps> = ({
 
               {/* Discover Heritage Button */}
               <motion.button
-                whileHover={{ y: -3, scale: 1.02 }}
+                whileHover={{ y: -2, scale: 1.01 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={onDiscoverClick}
-                className="px-8 py-4 rounded-full bg-transparent border border-[#B68D40]/40 text-[#2B2622] font-medium text-sm tracking-wider uppercase font-serif-heading hover:bg-[#B68D40]/10 hover:border-[#B68D40] transition-all duration-300 flex items-center gap-2 group"
+                className="px-8 py-4 rounded-full bg-transparent border border-[#A87C32]/35 text-[#2C2723] font-semibold text-sm tracking-wide hover:bg-[#A87C32]/08 hover:border-[#A87C32] transition-all duration-300 flex items-center gap-2 group"
               >
                 <span>Discover Heritage</span>
-                <ArrowRight className="w-4 h-4 text-[#B68D40] group-hover:translate-x-1 transition-transform duration-300" />
+                <ArrowRight className="w-4 h-4 text-[#A87C32] group-hover:translate-x-1 transition-transform duration-300" />
               </motion.button>
             </motion.div>
 

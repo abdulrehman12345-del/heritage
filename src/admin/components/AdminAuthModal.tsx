@@ -5,7 +5,7 @@ import { authApi, setAuthToken } from '../../lib/api';
 interface AdminAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void;
+  onSuccess: (userData?: any) => void;
 }
 
 export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({ isOpen, onClose, onSuccess }) => {
@@ -55,7 +55,7 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({ isOpen, onClose,
         setPassword('');
         setError('');
         setIsAuthenticating(false);
-        onSuccess();
+        onSuccess(response.user);
         return;
       }
     } catch (err: any) {
@@ -71,7 +71,11 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({ isOpen, onClose,
         setUsername('');
         setPassword('');
         setError('');
-        onSuccess();
+        onSuccess({
+          fullName: 'abdul rehman',
+          email: 'admin@heritageantiques.com',
+          profileImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400',
+        });
         return;
       }
 

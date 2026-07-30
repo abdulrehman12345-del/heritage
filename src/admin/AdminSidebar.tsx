@@ -101,10 +101,10 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
             <button
               key={item.id}
               onClick={() => onSelectTab(item.id)}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs uppercase tracking-wider font-medium transition-all relative group ${
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium tracking-normal transition-all relative group ${
                 isActive
-                  ? 'bg-[#B68D40] text-white font-bold shadow-md shadow-[#B68D40]/20'
-                  : 'text-[#D9C7AE]/80 hover:text-white hover:bg-[#2A3036]'
+                  ? 'bg-[#A87C32] text-white font-semibold shadow-md'
+                  : 'text-[#DECFAF]/90 hover:text-white hover:bg-[#24292F]'
               }`}
               title={collapsed ? item.label : undefined}
             >
