@@ -77,10 +77,10 @@ export const Navbar: React.FC<NavbarProps> = ({
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1.0] }}
-      className="fixed top-2 sm:top-4 inset-x-0 z-50 px-2 sm:px-6 md:px-8 flex justify-center pointer-events-none"
+      className="fixed top-2 sm:top-4 inset-x-0 z-50 px-2 sm:px-6 md:px-8 flex justify-center pointer-events-none max-w-full overflow-hidden"
     >
       <div
-        className={`pointer-events-auto w-full max-w-7xl min-h-[56px] sm:min-h-[72px] rounded-full px-3 sm:px-6 py-1.5 sm:py-2 flex items-center justify-between gap-1.5 sm:gap-4 transition-all duration-300 glass-nav overflow-hidden ${
+        className={`pointer-events-auto w-full max-w-7xl min-h-[52px] sm:min-h-[72px] rounded-full px-2.5 sm:px-6 py-1 sm:py-2 flex items-center justify-between gap-1 sm:gap-4 transition-all duration-300 glass-nav overflow-hidden ${
           isAtTop
             ? 'shadow-xl border-opacity-50'
             : 'shadow-2xl border-opacity-80 bg-[#121417]/98 backdrop-blur-2xl'
@@ -88,7 +88,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       >
         {/* Logo */}
         <div 
-          className="cursor-pointer shrink-0 flex items-center" 
+          className="cursor-pointer shrink min-w-0 flex items-center" 
           onClick={() => {
             onSelectCategory('All');
             onNavigateSection('hero');
@@ -131,13 +131,13 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* Right Actions: Responsive Actions Layout */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        <div className="flex items-center gap-1 sm:gap-2.5 shrink-0">
           {onOpenSavedModal && (
             <motion.button
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
               onClick={onOpenSavedModal}
-              className="relative p-2 sm:p-2.5 rounded-full bg-[#22272E] hover:bg-[#2C333B] text-[#DECFAF] border border-[#A87C32]/40 transition-all flex items-center justify-center shadow-md cursor-pointer"
+              className="relative p-1.5 sm:p-2.5 rounded-full bg-[#22272E] hover:bg-[#2C333B] text-[#DECFAF] border border-[#A87C32]/40 transition-all flex items-center justify-center shadow-md cursor-pointer shrink-0"
               title="View Collector Saved Shortlist"
             >
               <Heart className={`w-4 h-4 ${savedCount > 0 ? 'text-[#FFE270] fill-[#FFE270]' : 'text-[#DECFAF]'}`} />
@@ -190,7 +190,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Mobile & Tablet Hamburger Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="xl:hidden p-2 sm:p-2.5 rounded-full bg-[#22272E] border border-[#A87C32]/40 text-[#FFE270] hover:text-white transition-colors shrink-0 flex items-center justify-center cursor-pointer ml-1"
+            className="xl:hidden p-1.5 sm:p-2.5 rounded-full bg-[#22272E] border border-[#A87C32]/40 text-[#FFE270] hover:text-white transition-colors shrink-0 flex items-center justify-center cursor-pointer"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}

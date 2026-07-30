@@ -14,12 +14,12 @@ export const EmblemLogo: React.FC<EmblemLogoProps> = ({
   const isDark = variant === 'dark';
   
   // Real DOM element dimensions for exact layout control
-  const iconDimensions = size === 'sm' ? 'w-8 h-8 sm:w-10 sm:h-10' : size === 'lg' ? 'w-12 h-12 sm:w-14 sm:h-14' : 'w-10 h-10 sm:w-12 sm:h-12';
-  const textTitleSize = size === 'sm' ? 'text-xs sm:text-sm md:text-base' : size === 'lg' ? 'text-lg md:text-xl' : 'text-base md:text-lg';
-  const textSubtitleSize = size === 'sm' ? 'text-[8px] sm:text-[9px]' : size === 'lg' ? 'text-[10px] md:text-[11px]' : 'text-[9px] md:text-[10px]';
+  const iconDimensions = size === 'sm' ? 'w-7 h-7 sm:w-10 sm:h-10' : size === 'lg' ? 'w-12 h-12 sm:w-14 sm:h-14' : 'w-10 h-10 sm:w-12 sm:h-12';
+  const textTitleSize = size === 'sm' ? 'text-[13px] sm:text-sm md:text-base' : size === 'lg' ? 'text-lg md:text-xl' : 'text-base md:text-lg';
+  const textSubtitleSize = size === 'sm' ? 'text-[7.5px] sm:text-[9px]' : size === 'lg' ? 'text-[10px] md:text-[11px]' : 'text-[9px] md:text-[10px]';
 
   return (
-    <div className={`flex items-center gap-2 sm:gap-3 select-none ${className}`}>
+    <div className={`flex items-center gap-1.5 sm:gap-3 select-none ${className}`}>
       {/* Handcrafted Emblem SVG */}
       <div className={`relative ${iconDimensions} flex-shrink-0 group cursor-pointer`}>
         {/* Soft Golden Ambient Glow on Hover */}
@@ -103,16 +103,16 @@ export const EmblemLogo: React.FC<EmblemLogoProps> = ({
       </div>
 
       {/* Brand Name Typography */}
-      <div className="flex flex-col tracking-wider">
+      <div className="flex flex-col tracking-wider min-w-0">
         <span
-          className={`font-cinzel ${textTitleSize} font-bold tracking-[0.18em] sm:tracking-[0.22em] leading-tight ${
+          className={`font-cinzel ${textTitleSize} font-bold tracking-[0.12em] sm:tracking-[0.22em] leading-tight truncate ${
             isDark ? 'text-[#F8F5EF]' : 'text-[#2B2622]'
           }`}
         >
           HERITAGE
         </span>
-        <span className={`font-cinzel ${textSubtitleSize} font-medium tracking-[0.25em] sm:tracking-[0.38em] text-[#B68D40] uppercase leading-none mt-0.5 whitespace-nowrap`}>
-          ANTIQUES • EST. 1892
+        <span className={`font-cinzel ${textSubtitleSize} font-medium tracking-[0.18em] sm:tracking-[0.38em] text-[#B68D40] uppercase leading-none mt-0.5 whitespace-nowrap`}>
+          ANTIQUES<span className="hidden xs:inline"> • EST. 1892</span>
         </span>
       </div>
     </div>
