@@ -112,7 +112,7 @@ export const EmblemLogo: React.FC<EmblemLogoProps> = ({
           HERITAGE
         </span>
         <span className={`font-cinzel ${textSubtitleSize} font-medium tracking-[0.18em] sm:tracking-[0.38em] text-[#B68D40] uppercase leading-none mt-0.5 whitespace-nowrap`}>
-          ANTIQUES<span className="hidden xs:inline"> • EST. 1892</span>
+          ANTIQUES<span className="hidden sm:inline"> • EST. 1892</span>
         </span>
       </div>
     </div>

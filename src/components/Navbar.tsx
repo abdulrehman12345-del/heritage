@@ -77,10 +77,10 @@ export const Navbar: React.FC<NavbarProps> = ({
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1.0] }}
-      className="fixed top-2 sm:top-4 inset-x-0 z-50 px-2 sm:px-6 md:px-8 flex justify-center pointer-events-none max-w-full overflow-hidden"
+      className="fixed top-2 sm:top-4 inset-x-2 sm:inset-x-6 md:inset-x-8 z-50 flex justify-center pointer-events-none max-w-full"
     >
       <div
-        className={`pointer-events-auto w-full max-w-7xl min-h-[52px] sm:min-h-[72px] rounded-full px-2.5 sm:px-6 py-1 sm:py-2 flex items-center justify-between gap-1 sm:gap-4 transition-all duration-300 glass-nav overflow-hidden ${
+        className={`pointer-events-auto w-full max-w-7xl min-h-[50px] sm:min-h-[72px] rounded-full px-3.5 sm:px-6 py-1.5 sm:py-2 flex items-center justify-between gap-2 sm:gap-4 transition-all duration-300 glass-nav overflow-hidden ${
           isAtTop
             ? 'shadow-xl border-opacity-50'
             : 'shadow-2xl border-opacity-80 bg-[#121417]/98 backdrop-blur-2xl'
@@ -131,13 +131,13 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* Right Actions: Responsive Actions Layout */}
-        <div className="flex items-center gap-1 sm:gap-2.5 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {onOpenSavedModal && (
             <motion.button
               whileHover={{ scale: 1.08 }}
               whileTap={{ scale: 0.95 }}
               onClick={onOpenSavedModal}
-              className="relative p-1.5 sm:p-2.5 rounded-full bg-[#22272E] hover:bg-[#2C333B] text-[#DECFAF] border border-[#A87C32]/40 transition-all flex items-center justify-center shadow-md cursor-pointer shrink-0"
+              className="relative p-2 sm:p-2.5 rounded-full bg-[#22272E] hover:bg-[#2C333B] text-[#DECFAF] border border-[#A87C32]/40 transition-all flex items-center justify-center shadow-md cursor-pointer shrink-0"
               title="View Collector Saved Shortlist"
             >
               <Heart className={`w-4 h-4 ${savedCount > 0 ? 'text-[#FFE270] fill-[#FFE270]' : 'text-[#DECFAF]'}`} />
@@ -206,7 +206,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.98 }}
             transition={{ duration: 0.25 }}
-            className="pointer-events-auto absolute top-[68px] sm:top-[80px] left-2.5 right-2.5 sm:left-6 sm:right-6 max-w-7xl mx-auto bg-[#16191D]/98 backdrop-blur-2xl rounded-[24px] sm:rounded-[28px] p-4 sm:p-6 border border-[#A87C32]/50 shadow-2xl flex flex-col gap-2.5 xl:hidden text-[#E6DFD5] z-50 max-h-[85vh] overflow-y-auto"
+            className="pointer-events-auto absolute top-[58px] sm:top-[80px] left-0 right-0 max-w-7xl mx-auto bg-[#16191D]/98 backdrop-blur-2xl rounded-[24px] sm:rounded-[28px] p-4 sm:p-6 border border-[#A87C32]/50 shadow-2xl flex flex-col gap-2.5 xl:hidden text-[#E6DFD5] z-50 max-h-[85vh] overflow-y-auto"
           >
             {navItems.map((item) => (
               <motion.button
