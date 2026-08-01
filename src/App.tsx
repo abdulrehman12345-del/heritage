@@ -5,7 +5,6 @@ import { Hero } from './components/Hero';
 import { CategoryFilter } from './components/CategoryFilter';
 import { ArtifactGrid } from './components/ArtifactGrid';
 import { ArtifactModal } from './components/ArtifactModal';
-import { CertificateVerifier } from './components/CertificateVerifier';
 import { HeritageStory } from './components/HeritageStory';
 import { WhyChooseUs } from './components/WhyChooseUs';
 import { Testimonials } from './components/Testimonials';
@@ -386,11 +385,6 @@ export default function App() {
           onToggleSave={handleToggleSave}
         />
       </div>
-
-      {/* Certificate Authenticity Verifier */}
-      <CertificateVerifier
-        onSelectArtifact={(artifact) => setSelectedArtifact(artifact)}
-      />
 
       {/* Heritage Editorial Story */}
       <HeritageStory />
