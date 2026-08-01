@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Artifact } from '../types';
 import { X, ShieldCheck, CheckCircle2, Lock, Send, Phone, Mail, Building2 } from 'lucide-react';
+import { supabaseService } from '../lib/supabaseService';
 
 interface InquiryModalProps {
   isOpen: boolean;
@@ -28,16 +29,27 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const inquiryPayload = {
+      collectorName: formData.name || 'Anonymous Collector',
+      email: formData.email,
+      phone: formData.phone || '+44 20 7946 0912',
+      artifactTitle: artifact ? artifact.title : 'General Collection Inquiry',
+      message: formData.message || `Inquiry type: ${formData.inquiryType}`,
+    };
+
+    // Save into Supabase 'inquiries' table
+    try {
+      await supabaseService.saveInquiry(inquiryPayload);
+    } catch (spErr) {
+      console.warn('[Supabase Inquiry Save Fallback]:', spErr);
+    }
+
     if (onAddInquiry) {
       onAddInquiry({
         id: `inq-${Date.now()}`,
-        collectorName: formData.name || 'Anonymous Collector',
-        email: formData.email,
-        phone: formData.phone || '+44 20 7946 0912',
-        artifactTitle: artifact ? artifact.title : 'General Collection Inquiry',
-        message: formData.message || `Inquiry type: ${formData.inquiryType}`,
+        ...inquiryPayload,
         date: new Date().toISOString().replace('T', ' ').slice(0, 16),
         status: 'Unread',
         preferredContact: 'Private Viewing'

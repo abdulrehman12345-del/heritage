@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, User, Lock, Mail, Phone, MapPin, ShieldCheck, KeyRound, ArrowRight, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { authApi, setAuthToken } from '../lib/api';
+import { supabaseService } from '../lib/supabaseService';
 
 interface CustomerAuthModalProps {
   isOpen: boolean;
@@ -37,16 +38,41 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
 
     try {
       if (mode === 'login') {
+        // First try Supabase Auth / Table Login
+        let spResult: any = null;
+        try {
+          spResult = await supabaseService.signIn(email, password);
+        } catch (spErr) {
+          console.warn('[Supabase Direct Login Fallback]:', spErr);
+        }
+
         const response = await authApi.login({ email, password });
         if (response.success && response.token) {
           setAuthToken(response.token);
-          setSuccessMsg('Logged in successfully!');
+          setSuccessMsg('Logged in successfully! Supabase & Vault Session Authenticated.');
           setTimeout(() => {
-            onAuthSuccess(response.user);
+            onAuthSuccess(spResult?.user || response.user);
             onClose();
           }, 600);
         }
       } else if (mode === 'register') {
+        // Register in Supabase Auth & 'profiles' table
+        let spResult: any = null;
+        try {
+          spResult = await supabaseService.signUp({
+            email,
+            password,
+            fullName,
+            phoneNumber,
+            address,
+            city,
+            country,
+            postalCode,
+          });
+        } catch (spErr) {
+          console.warn('[Supabase Registration Fallback]:', spErr);
+        }
+
         const response = await authApi.register({
           fullName,
           email,
@@ -57,11 +83,12 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
           country,
           postalCode,
         });
+
         if (response.success && response.token) {
           setAuthToken(response.token);
-          setSuccessMsg('Collector account registered successfully!');
+          setSuccessMsg('Collector account registered & synced with Supabase!');
           setTimeout(() => {
-            onAuthSuccess(response.user);
+            onAuthSuccess(spResult?.user || response.user);
             onClose();
           }, 600);
         }

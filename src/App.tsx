@@ -5,7 +5,6 @@ import { Hero } from './components/Hero';
 import { CategoryFilter } from './components/CategoryFilter';
 import { ArtifactGrid } from './components/ArtifactGrid';
 import { ArtifactModal } from './components/ArtifactModal';
-import { MasterpieceSpotlight } from './components/MasterpieceSpotlight';
 import { CertificateVerifier } from './components/CertificateVerifier';
 import { HeritageStory } from './components/HeritageStory';
 import { WhyChooseUs } from './components/WhyChooseUs';
@@ -387,11 +386,6 @@ export default function App() {
           onToggleSave={handleToggleSave}
         />
       </div>
-
-      {/* Masterpiece Spotlight Section */}
-      <MasterpieceSpotlight
-        onSelectArtifact={(artifact) => setSelectedArtifact(artifact)}
-      />
 
       {/* Certificate Authenticity Verifier */}
       <CertificateVerifier

@@ -25,7 +25,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
   return (
     <div className="w-full flex flex-col items-center mb-12">
       {/* Category Navigation Pills */}
-      <div className="flex items-center gap-2 md:gap-3 overflow-x-auto pb-4 max-w-full px-4 no-scrollbar scroll-smooth">
+      <div className="flex items-center gap-2 md:gap-3 overflow-x-auto pb-2 max-w-full px-4 no-scrollbar scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
         {CATEGORIES_LIST.map((cat) => {
           const Icon = cat.icon;
           const isActive = activeCategory === cat.name;
