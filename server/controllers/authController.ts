@@ -130,10 +130,13 @@ export const adminLogin = async (req: Request, res: Response) => {
     }
 
     // Support both username (full name) or email matching
+    const trimmedUser = username.trim();
     const user = await User.findOne({
       $or: [
-        { email: username.toLowerCase().trim() },
-        { fullName: new RegExp(`^${username.trim()}$`, 'i') },
+        { email: trimmedUser.toLowerCase() },
+        { fullName: new RegExp(`^${trimmedUser}$`, 'i') },
+        { fullName: new RegExp(`^${trimmedUser.replace(/\s+/g, '')}$`, 'i') },
+        { fullName: new RegExp(`^${trimmedUser.replace(/([a-z])([A-Z])/g, '$1 $2')}$`, 'i') },
       ],
       role: 'Admin',
     }).select('+password');

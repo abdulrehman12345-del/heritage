@@ -348,10 +348,10 @@ export const INITIAL_INQUIRIES: CustomerInquiryMessage[] = [
 export const INITIAL_ADMINS: AdminUser[] = [
   {
     id: 'adm-1',
-    name: 'Julian Vance, Master Curator',
-    email: 'julian@heritageantiques.com',
+    name: 'Abdulrehman, Master Curator',
+    email: 'abdulrehman@heritageantiques.com',
     role: 'Master Curator',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200',
     lastActive: 'Active Now',
     status: 'Active'
   },

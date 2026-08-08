@@ -27,3 +27,15 @@ export const inquiries = pgTable('inquiries', {
   status: text('status').notNull().default('Pending'),
   createdAt: timestamp('created_at').defaultNow(),
 });
+
+export const categories = pgTable('categories', {
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+  categoryName: text('category_name'),
+  slug: text('slug').notNull(),
+  description: text('description').default(''),
+  image: text('image').default(''),
+  status: text('status').default('Active'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+

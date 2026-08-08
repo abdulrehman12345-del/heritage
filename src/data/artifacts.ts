@@ -10,10 +10,10 @@ export const ARTIFACTS_DATA: Artifact[] = [
     periodYear: 'c. 1840 AD',
     price: 34500,
     priceFormatted: '$34,500',
-    image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=70&w=600&auto=format&fit=crop',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1544717305-2782549b5136?q=70&w=400&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=70&w=400&auto=format&fit=crop'
     ],
     dimensions: '42cm H x 28cm W x 19cm D',
     weight: '8.4 kg',
@@ -39,9 +39,9 @@ export const ARTIFACTS_DATA: Artifact[] = [
     periodYear: 'c. 220 BC',
     price: 78000,
     priceFormatted: '$78,000',
-    image: 'https://images.unsplash.com/photo-1569172122301-bc5008bc09c5?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1569172122301-bc5008bc09c5?q=70&w=600&auto=format&fit=crop',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=70&w=400&auto=format&fit=crop'
     ],
     dimensions: '31cm H x 56cm L x 22cm W',
     weight: '14.2 kg',
@@ -67,9 +67,9 @@ export const ARTIFACTS_DATA: Artifact[] = [
     periodYear: 'c. 1620 AD',
     price: 92000,
     priceFormatted: '$92,000',
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=70&w=600&auto=format&fit=crop',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=70&w=400&auto=format&fit=crop'
     ],
     dimensions: '58cm H x 34cm Diameter',
     weight: '18.6 kg',
@@ -95,9 +95,9 @@ export const ARTIFACTS_DATA: Artifact[] = [
     periodYear: 'c. 150 AD',
     price: 65000,
     priceFormatted: '$65,000',
-    image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=70&w=600&auto=format&fit=crop',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1569172122301-bc5008bc09c5?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1569172122301-bc5008bc09c5?q=70&w=400&auto=format&fit=crop'
     ],
     dimensions: '38cm H x 24cm W',
     weight: '9.8 kg',
@@ -123,9 +123,9 @@ export const ARTIFACTS_DATA: Artifact[] = [
     periodYear: 'c. 1680 AD',
     price: 26500,
     priceFormatted: '$26,500',
-    image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=70&w=600&auto=format&fit=crop',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=70&w=400&auto=format&fit=crop'
     ],
     dimensions: '48cm H x 30cm Diameter',
     weight: '11.5 kg',
@@ -151,9 +151,9 @@ export const ARTIFACTS_DATA: Artifact[] = [
     periodYear: 'c. 1150 AD',
     price: 86000,
     priceFormatted: '$86,000',
-    image: 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=70&w=600&auto=format&fit=crop',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=70&w=400&auto=format&fit=crop'
     ],
     dimensions: '46cm H x 26cm W x 18cm D',
     weight: '13.1 kg',
@@ -179,9 +179,9 @@ export const ARTIFACTS_DATA: Artifact[] = [
     periodYear: 'c. 450 BC',
     price: 52000,
     priceFormatted: '$52,000',
-    image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=70&w=600&auto=format&fit=crop',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1569172122301-bc5008bc09c5?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1569172122301-bc5008bc09c5?q=70&w=400&auto=format&fit=crop'
     ],
     dimensions: '29cm H x 22cm L',
     weight: '4.8 kg',
@@ -207,9 +207,9 @@ export const ARTIFACTS_DATA: Artifact[] = [
     periodYear: 'c. 950 AD',
     price: 64000,
     priceFormatted: '$64,000',
-    image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1544717305-2782549b5136?q=70&w=600&auto=format&fit=crop',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=70&w=400&auto=format&fit=crop'
     ],
     dimensions: '22cm H x 32cm W x 20cm D',
     weight: '6.5 kg',
@@ -235,9 +235,9 @@ export const ARTIFACTS_DATA: Artifact[] = [
     periodYear: 'c. 1520 AD',
     price: 48500,
     priceFormatted: '$48,500',
-    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=70&w=600&auto=format&fit=crop',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=70&w=400&auto=format&fit=crop'
     ],
     dimensions: '52cm H x 29cm W',
     weight: '10.2 kg',
@@ -263,9 +263,9 @@ export const ARTIFACTS_DATA: Artifact[] = [
     periodYear: 'c. 520 BC',
     price: 115000,
     priceFormatted: '$115,000',
-    image: 'https://images.unsplash.com/photo-1569172122301-bc5008bc09c5?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1569172122301-bc5008bc09c5?q=70&w=600&auto=format&fit=crop',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1544717305-2782549b5136?q=70&w=400&auto=format&fit=crop'
     ],
     dimensions: '32cm H x 24cm Depth',
     weight: '2.9 kg',
@@ -291,9 +291,9 @@ export const ARTIFACTS_DATA: Artifact[] = [
     periodYear: 'c. 1875 AD',
     price: 19800,
     priceFormatted: '$19,800',
-    image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=1200&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=70&w=600&auto=format&fit=crop',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=70&w=400&auto=format&fit=crop'
     ],
     dimensions: '62cm H x 38cm W',
     weight: '9.1 kg',
@@ -319,9 +319,9 @@ export const ARTIFACTS_DATA: Artifact[] = [
     periodYear: 'c. 100 BC',
     price: 42000,
     priceFormatted: '$42,000',
-    image: 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=800&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=70&w=600&auto=format&fit=crop',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1569172122301-bc5008bc09c5?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1569172122301-bc5008bc09c5?q=70&w=400&auto=format&fit=crop'
     ],
     dimensions: '18cm H x 28cm L',
     weight: '3.7 kg',
@@ -347,7 +347,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     author: 'Lord Alistair Sterling',
     role: 'Senior Trustee, International Antiquities Trust',
     location: 'London, United Kingdom',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop'
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=70&w=150&auto=format&fit=crop'
   },
   {
     id: 't-2',
@@ -355,7 +355,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     author: 'Dr. Elena Rostova',
     role: 'Former Curator of Classical Sculpture',
     location: 'Vienna, Austria',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop'
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=70&w=150&auto=format&fit=crop'
   },
   {
     id: 't-3',
@@ -363,6 +363,6 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     author: 'Henrik Von Bergmann',
     role: 'Private Art Collector & Patron',
     location: 'Zurich, Switzerland',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop'
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=70&w=150&auto=format&fit=crop'
   }
 ];

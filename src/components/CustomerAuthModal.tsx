@@ -7,12 +7,14 @@ interface CustomerAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAuthSuccess: (user: any) => void;
+  onOpenAdmin?: () => void;
 }
 
 export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
   isOpen,
   onClose,
   onAuthSuccess,
+  onOpenAdmin,
 }) => {
   const [mode, setMode] = useState<'login' | 'register' | 'forgot'>('login');
   const [email, setEmail] = useState('');
@@ -104,8 +106,8 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
-      <div className="bg-[#FFFDF8] border border-[#B68D40]/30 rounded-[28px] max-w-lg w-full p-6 sm:p-8 space-y-6 shadow-2xl relative overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-fade-in">
+      <div className="bg-[#FFFDF8] border border-[#B68D40]/30 rounded-[28px] max-w-lg w-full p-5 sm:p-8 space-y-5 sm:space-y-6 shadow-2xl relative overflow-hidden max-h-[92vh] overflow-y-auto">
         {/* Decorative Gold Header Bar */}
         <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#B68D40] via-[#D9C7AE] to-[#A76B3F]" />
 
@@ -319,6 +321,23 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
             )}
           </button>
         </form>
+
+        {onOpenAdmin && (
+          <div className="pt-3 border-t border-[#B68D40]/20 flex flex-col items-center gap-1.5">
+            <span className="text-[11px] text-[#6A6158]">Are you an administrator or staff?</span>
+            <button
+              type="button"
+              onClick={() => {
+                onClose();
+                onOpenAdmin();
+              }}
+              className="w-full py-2.5 rounded-xl bg-[#1F2328] hover:bg-[#A87C32] text-white text-xs font-serif font-bold tracking-wide transition-all flex items-center justify-center gap-2 border border-[#B68D40]/40 shadow-sm cursor-pointer"
+            >
+              <ShieldCheck className="w-4 h-4 text-[#FFE270]" />
+              <span>Admin Login / Security Portal</span>
+            </button>
+          </div>
+        )}
 
         <div className="pt-2 border-t border-[#B68D40]/15 text-center text-[10px] text-[#6A6158] font-mono">
           Private Escrow Protected • 256-Bit Encrypted Vault Session

@@ -60,7 +60,8 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({ isOpen, onClose,
       }
     } catch (err: any) {
       // Fallback local verification if offline / memory server initial check
-      const isValidUser = username.trim().toLowerCase() === 'abdul rehman';
+      const normalizedUser = username.trim().toLowerCase().replace(/\s+/g, '');
+      const isValidUser = normalizedUser === 'abdulrehman' || normalizedUser === 'abdul' || normalizedUser === 'admin';
       const isValidPass = password.trim().toLowerCase() === 'abdul';
 
       setIsAuthenticating(false);
@@ -72,7 +73,7 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({ isOpen, onClose,
         setPassword('');
         setError('');
         onSuccess({
-          fullName: 'abdul rehman',
+          fullName: 'Abdulrehman',
           email: 'admin@heritageantiques.com',
           profileImage: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400',
         });
@@ -150,7 +151,7 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({ isOpen, onClose,
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Enter username (e.g. abdul rehman)"
+                placeholder="Enter username (e.g. Abdulrehman)"
                 className="w-full bg-[#F8F5EF] border border-[#B68D40]/30 rounded-xl pl-10 pr-4 py-2.5 text-xs font-mono text-[#2B2622] focus:outline-none focus:border-[#B68D40] focus:ring-1 focus:ring-[#B68D40] disabled:opacity-50"
                 disabled={lockoutSeconds > 0}
                 required

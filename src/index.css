@@ -14,20 +14,32 @@
     --navbar-bg: rgba(250, 247, 242, 0.88);
   }
 
-  * {
-    font-family: 'Times New Roman', Times, serif !important;
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    font-family: 'Times New Roman', Times, serif !important;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: var(--bg-main);
     color: var(--text-primary);
     line-height: 1.6;
     letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, h4, h5, h6, .font-serif-heading, .font-cinzel, .font-display, .font-mono, .font-sans, .font-serif {
-    font-family: 'Times New Roman', Times, serif !important;
+  h1, h2, h3, h4, h5, h6, .font-serif-heading, .font-cinzel, .font-serif {
+    font-family: 'Lora', Georgia, 'Times New Roman', serif;
+  }
+
+  .font-display {
+    font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  }
+
+  /* Smooth focus rings */
+  button, input, select, textarea {
+    transition: all 0.2s ease-in-out;
   }
 }
 
@@ -77,6 +89,9 @@
 }
 
 .glass-nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
   background: rgba(22, 25, 29, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -92,7 +107,7 @@
 
 /* Paper / Patina Soft Grain Texture */
 .paper-texture {
-  background-image: radial-gradient(rgba(168, 124, 50, 0.03) 1px, transparent 0);
+  background-image: radial-gradient(rgba(168, 124, 50, 0.035) 1px, transparent 0);
   background-size: 24px 24px;
 }
 
@@ -109,14 +124,15 @@
 /* Custom soft smooth scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
-  height: 6px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #FAF7F2;
+  background: #15181C;
 }
 ::-webkit-scrollbar-thumb {
-  background: #DECFAF;
+  background: #3A332A;
   border-radius: 4px;
+  border: 2px solid #15181C;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #A87C32;

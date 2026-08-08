@@ -37,8 +37,10 @@ export const HeritageStory: React.FC = () => {
             <div className="relative rounded-[32px] overflow-hidden border border-[#B68D40]/30 shadow-2xl p-3 bg-[#FDFBF7]">
               <div className="h-[480px] md:h-[560px] w-full rounded-[24px] overflow-hidden bg-[#1F2328]">
                 <img
-                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=1200&auto=format&fit=crop"
+                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=70&w=600&auto=format&fit=crop"
                   alt="Ancient Roman Sculpture in Museum Setting"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover object-center filter contrast-105 brightness-95"
                   referrerPolicy="no-referrer"
                 />

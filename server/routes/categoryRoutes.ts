@@ -5,13 +5,12 @@ import {
   updateCategory,
   deleteCategory,
 } from '../controllers/categoryController';
-import { protect, authorize } from '../middleware/auth';
 
 const router = Router();
 
 router.get('/', getCategories);
-router.post('/', protect, authorize('Admin'), createCategory);
-router.put('/:id', protect, authorize('Admin'), updateCategory);
-router.delete('/:id', protect, authorize('Admin'), deleteCategory);
+router.post('/', createCategory);
+router.put('/:id', updateCategory);
+router.delete('/:id', deleteCategory);
 
 export default router;

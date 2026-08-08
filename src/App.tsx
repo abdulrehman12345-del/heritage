@@ -17,6 +17,7 @@ import { Footer } from './components/Footer';
 import { ARTIFACTS_DATA } from './data/artifacts';
 import { Artifact, CategoryType } from './types';
 import { authApi, productsApi, categoriesApi, ordersApi } from './lib/api';
+import { supabaseService } from './lib/supabaseService';
 
 import { AdminDashboardLayout } from './admin/AdminDashboardLayout';
 import { AdminAuthModal } from './admin/components/AdminAuthModal';
@@ -82,13 +83,38 @@ export default function App() {
     );
   };
 
-  // Fetch initial data from backend API
+  // Fetch initial data from backend API & Database
   useEffect(() => {
-    // 1. Fetch products from API
+    // 1. Fetch categories from backend API database
+    categoriesApi.getCategories()
+      .then((res) => {
+        if (res.success && res.categories && res.categories.length > 0) {
+          const dbCategories: CategoryCMS[] = res.categories.map((c: any) => ({
+            id: c._id || c.id || `cat-${Date.now()}`,
+            name: c.categoryName || c.name,
+            description: c.description || '',
+            image: c.image || 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?auto=format&fit=crop&q=70&w=400',
+            slug: c.slug || (c.categoryName || c.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+            itemCount: c.itemCount || 0,
+            status: c.status || 'Active'
+          }));
+          
+          setCategories(prev => {
+            const existingNames = new Set(dbCategories.map(cat => cat.name));
+            const extraLocal = prev.filter(cat => !existingNames.has(cat.name));
+            const merged = [...dbCategories, ...extraLocal];
+            try { localStorage.setItem('ha_categories', JSON.stringify(merged)); } catch {}
+            return merged;
+          });
+        }
+      })
+      .catch(() => {});
+
+    // 2. Fetch products from backend API database
     productsApi.getProducts()
       .then((res) => {
         if (res.success && res.products && res.products.length > 0) {
-          const defaultFallbackImage = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200';
+          const defaultFallbackImage = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=70&w=600';
           const mapped: Artifact[] = res.products.map((p: any) => ({
             id: p._id || p.id,
             title: p.productName || p.title || 'Untitled Masterpiece',
@@ -114,14 +140,19 @@ export default function App() {
             stock: p.stock !== undefined ? p.stock : 1,
             sku: p.sku || 'HA-SKU-001'
           }));
-          setArtifacts(mapped);
+
+          setArtifacts(prev => {
+            const dbIds = new Set(mapped.map(item => item.id));
+            const extraLocal = prev.filter(item => !dbIds.has(item.id));
+            const merged = [...mapped, ...extraLocal];
+            try { localStorage.setItem('ha_artifacts', JSON.stringify(merged)); } catch {}
+            return merged;
+          });
         }
       })
-      .catch(() => {
-        // Keeps default fallback artifacts
-      });
+      .catch(() => {});
 
-    // 2. Fetch logged in user profile if token present
+    // 3. Fetch logged in user profile if token present
     authApi.getMe()
       .then((res) => {
         if (res.success && res.user) {
@@ -129,7 +160,7 @@ export default function App() {
             setIsAuthorized(true);
             setCurrentUser({
               id: res.user.id || res.user._id || 'adm-1',
-              name: res.user.fullName || res.user.name || 'abdul rehman',
+              name: res.user.fullName || res.user.name || 'Abdulrehman',
               email: res.user.email || 'admin@heritageantiques.com',
               role: 'Master Curator',
               avatar: res.user.profileImage || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400',
@@ -145,8 +176,23 @@ export default function App() {
   }, []);
 
   // Core CMS Data States
-  const [artifacts, setArtifacts] = useState<Artifact[]>(ARTIFACTS_DATA);
-  const [categories, setCategories] = useState<CategoryCMS[]>(INITIAL_CATEGORIES);
+  const [artifacts, setArtifacts] = useState<Artifact[]>(() => {
+    try {
+      const saved = localStorage.getItem('ha_artifacts');
+      return saved ? JSON.parse(saved) : ARTIFACTS_DATA;
+    } catch {
+      return ARTIFACTS_DATA;
+    }
+  });
+
+  const [categories, setCategories] = useState<CategoryCMS[]>(() => {
+    try {
+      const saved = localStorage.getItem('ha_categories');
+      return saved ? JSON.parse(saved) : INITIAL_CATEGORIES;
+    } catch {
+      return INITIAL_CATEGORIES;
+    }
+  });
   const [orders, setOrders] = useState<Order[]>(INITIAL_ORDERS);
   const [customers, setCustomers] = useState<Customer[]>(INITIAL_CUSTOMERS);
   const [reviews, setReviews] = useState<Review[]>(INITIAL_REVIEWS);
@@ -158,30 +204,190 @@ export default function App() {
   const [websiteSettings, setWebsiteSettings] = useState<WebsiteSettingsConfig>(INITIAL_WEBSITE_SETTINGS);
   const [currentUser, setCurrentUser] = useState<AdminUser>(INITIAL_ADMINS[0]);
 
-  // Handlers for Artifact CRUD
-  const handleAddArtifact = (newArt: Artifact) => {
-    setArtifacts([newArt, ...artifacts]);
+  // Handlers for Artifact CRUD with Database persistence (MongoDB & Supabase)
+  const handleAddArtifact = async (newArt: Artifact) => {
+    const updated = [newArt, ...artifacts];
+    setArtifacts(updated);
+    try { localStorage.setItem('ha_artifacts', JSON.stringify(updated)); } catch {}
+
+    // Save to Supabase DB directly
+    supabaseService.saveProduct({
+      id: newArt.id,
+      title: newArt.title,
+      category: newArt.category,
+      description: newArt.description,
+      price: newArt.price,
+      image: newArt.image,
+      secondaryImages: newArt.secondaryImages,
+      material: newArt.material,
+      origin: newArt.origin,
+      era: newArt.era || newArt.periodYear,
+      dimensions: newArt.dimensions,
+      condition: newArt.condition,
+      featured: newArt.featured,
+      certificateNumber: newArt.certificateNumber,
+      curatorNotes: newArt.curatorNotes
+    });
+
+    try {
+      const res = await productsApi.createProduct({
+        productName: newArt.title,
+        categoryName: newArt.category,
+        description: newArt.description,
+        price: newArt.price,
+        thumbnail: newArt.image,
+        images: newArt.secondaryImages || [newArt.image],
+        material: newArt.material,
+        origin: newArt.origin,
+        historicalEra: newArt.era || newArt.periodYear,
+        dimensions: newArt.dimensions,
+        condition: newArt.condition,
+        featured: newArt.featured,
+        certificateId: newArt.certificateNumber,
+        provenance: newArt.curatorNotes
+      });
+      if (res.success && res.product) {
+        const dbId = res.product._id || res.product.id;
+        if (dbId) {
+          setArtifacts(prev => prev.map(a => a.id === newArt.id ? { ...a, id: dbId } : a));
+        }
+      }
+    } catch (err) {
+      console.error('Database write error for product:', err);
+    }
   };
 
-  const handleUpdateArtifact = (updatedArt: Artifact) => {
-    setArtifacts(artifacts.map((a) => (a.id === updatedArt.id ? updatedArt : a)));
+  const handleUpdateArtifact = async (updatedArt: Artifact) => {
+    const updated = artifacts.map((a) => (a.id === updatedArt.id ? updatedArt : a));
+    setArtifacts(updated);
+    try { localStorage.setItem('ha_artifacts', JSON.stringify(updated)); } catch {}
+
+    // Update in Supabase DB directly
+    supabaseService.updateProduct(updatedArt.id, {
+      title: updatedArt.title,
+      category: updatedArt.category,
+      description: updatedArt.description,
+      price: updatedArt.price,
+      image: updatedArt.image,
+      material: updatedArt.material,
+      origin: updatedArt.origin,
+      era: updatedArt.era || updatedArt.periodYear,
+      dimensions: updatedArt.dimensions,
+      condition: updatedArt.condition,
+      featured: updatedArt.featured,
+      certificateNumber: updatedArt.certificateNumber,
+      curatorNotes: updatedArt.curatorNotes
+    });
+
+    try {
+      await productsApi.updateProduct(updatedArt.id, {
+        productName: updatedArt.title,
+        categoryName: updatedArt.category,
+        description: updatedArt.description,
+        price: updatedArt.price,
+        thumbnail: updatedArt.image,
+        images: updatedArt.secondaryImages || [updatedArt.image],
+        material: updatedArt.material,
+        origin: updatedArt.origin,
+        historicalEra: updatedArt.era || updatedArt.periodYear,
+        dimensions: updatedArt.dimensions,
+        condition: updatedArt.condition,
+        featured: updatedArt.featured,
+        certificateId: updatedArt.certificateNumber,
+        provenance: updatedArt.curatorNotes
+      });
+    } catch (err) {
+      console.error('Database update error for product:', err);
+    }
   };
 
-  const handleDeleteArtifact = (id: string) => {
-    setArtifacts(artifacts.filter((a) => a.id !== id));
+  const handleDeleteArtifact = async (id: string) => {
+    const updated = artifacts.filter((a) => a.id !== id);
+    setArtifacts(updated);
+    try { localStorage.setItem('ha_artifacts', JSON.stringify(updated)); } catch {}
+
+    // Delete in Supabase DB directly
+    supabaseService.deleteProduct(id);
+
+    try {
+      await productsApi.deleteProduct(id);
+    } catch (err) {
+      console.error('Database delete error for product:', err);
+    }
   };
 
-  // Handlers for Category CRUD
-  const handleAddCategory = (newCat: CategoryCMS) => {
-    setCategories([...categories, newCat]);
+  // Handlers for Category CRUD with Database persistence (MongoDB & Supabase)
+  const handleAddCategory = async (newCat: CategoryCMS) => {
+    const updated = [...categories, newCat];
+    setCategories(updated);
+    try { localStorage.setItem('ha_categories', JSON.stringify(updated)); } catch {}
+
+    // Save to Supabase DB directly
+    supabaseService.saveCategory({
+      id: newCat.id,
+      name: newCat.name,
+      description: newCat.description,
+      image: newCat.image,
+      slug: newCat.slug,
+      status: newCat.status
+    });
+
+    try {
+      const res = await categoriesApi.createCategory({
+        categoryName: newCat.name,
+        description: newCat.description,
+        image: newCat.image,
+        status: newCat.status || 'Active'
+      });
+      if (res.success && res.category) {
+        const dbId = res.category._id || res.category.id;
+        if (dbId) {
+          setCategories(prev => prev.map(c => c.id === newCat.id ? { ...c, id: dbId } : c));
+        }
+      }
+    } catch (err) {
+      console.error('Database write error for category:', err);
+    }
   };
 
-  const handleUpdateCategory = (updatedCat: CategoryCMS) => {
-    setCategories(categories.map((c) => (c.id === updatedCat.id ? updatedCat : c)));
+  const handleUpdateCategory = async (updatedCat: CategoryCMS) => {
+    const updated = categories.map((c) => (c.id === updatedCat.id ? updatedCat : c));
+    setCategories(updated);
+    try { localStorage.setItem('ha_categories', JSON.stringify(updated)); } catch {}
+
+    // Update in Supabase DB directly
+    supabaseService.updateCategory(updatedCat.id, {
+      name: updatedCat.name,
+      description: updatedCat.description,
+      image: updatedCat.image,
+      status: updatedCat.status
+    });
+
+    try {
+      await categoriesApi.updateCategory(updatedCat.id, {
+        categoryName: updatedCat.name,
+        description: updatedCat.description,
+        image: updatedCat.image,
+        status: updatedCat.status
+      });
+    } catch (err) {
+      console.error('Database update error for category:', err);
+    }
   };
 
-  const handleDeleteCategory = (id: string) => {
-    setCategories(categories.filter((c) => c.id !== id));
+  const handleDeleteCategory = async (id: string) => {
+    const updated = categories.filter((c) => c.id !== id);
+    setCategories(updated);
+    try { localStorage.setItem('ha_categories', JSON.stringify(updated)); } catch {}
+
+    // Delete in Supabase DB directly
+    supabaseService.deleteCategory(id);
+
+    try {
+      await categoriesApi.deleteCategory(id);
+    } catch (err) {
+      console.error('Database delete error for category:', err);
+    }
   };
 
   // Handler for Orders
@@ -287,7 +493,7 @@ export default function App() {
     if (userData) {
       setCurrentUser({
         id: userData.id || userData._id || 'adm-1',
-        name: userData.fullName || userData.name || 'abdul rehman',
+        name: userData.fullName || userData.name || 'Abdulrehman',
         email: userData.email || 'admin@heritageantiques.com',
         role: 'Master Curator',
         avatar: userData.profileImage || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400',
@@ -356,7 +562,6 @@ export default function App() {
         onSelectCategory={(cat) => setActiveCategory(cat as CategoryType)}
         onExploreClick={handleExploreClick}
         onNavigateSection={handleNavigateSection}
-        onOpenAdmin={handleOpenAdminRequest}
         onOpenCustomerAuth={() => setIsCustomerAuthOpen(true)}
         customerUser={customerUser}
         savedCount={savedIds.length}
@@ -375,6 +580,7 @@ export default function App() {
         <CategoryFilter
           activeCategory={activeCategory}
           onSelectCategory={(cat) => setActiveCategory(cat)}
+          categoriesList={categories}
         />
 
         <ArtifactGrid
@@ -437,6 +643,7 @@ export default function App() {
         isOpen={isCustomerAuthOpen}
         onClose={() => setIsCustomerAuthOpen(false)}
         onAuthSuccess={(u) => setCustomerUser(u)}
+        onOpenAdmin={handleOpenAdminRequest}
       />
 
       {/* Curator Security Clearance Authentication Modal */}

@@ -153,7 +153,7 @@ export const AdminTopbar: React.FC<AdminTopbarProps> = ({
           />
           <div className="hidden xl:flex flex-col">
             <span className="text-xs font-bold text-[#2B2622]">
-              {currentUser?.name || 'abdul rehman'}
+              {currentUser?.name || 'Abdulrehman'}
             </span>
             <span className="text-[10px] text-[#6A6158] font-mono">
               {currentUser?.role || 'Master Curator'}

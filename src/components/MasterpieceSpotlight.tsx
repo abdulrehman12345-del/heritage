@@ -66,11 +66,13 @@ export const MasterpieceSpotlight: React.FC<MasterpieceSpotlightProps> = ({
             <div className="relative w-full max-w-[500px] rounded-[24px] sm:rounded-[32px] overflow-hidden p-2.5 sm:p-3 bg-[#2A3036] border border-[#B68D40]/40 shadow-2xl group cursor-pointer" onClick={() => onSelectArtifact(masterpiece)}>
               <div className="relative h-[320px] sm:h-[480px] lg:h-[540px] w-full rounded-[18px] sm:rounded-[24px] overflow-hidden bg-black">
                 <img
-                  src={masterpiece.image || 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200'}
+                  src={masterpiece.image || 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=70&w=700'}
                   alt={masterpiece.title}
+                  loading="lazy"
+                  decoding="async"
                   onError={(e) => {
                     e.currentTarget.onerror = null;
-                    e.currentTarget.src = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200';
+                    e.currentTarget.src = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=70&w=700';
                   }}
                   className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700 filter brightness-95 contrast-105"
                   referrerPolicy="no-referrer"

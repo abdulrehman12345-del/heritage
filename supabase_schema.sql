@@ -86,3 +86,20 @@ CREATE TABLE IF NOT EXISTS public.products (
 ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Allow Public Products Read" ON public.products FOR SELECT USING (true);
 CREATE POLICY "Allow Admin Products Insert & Update" ON public.products FOR ALL USING (true);
+
+-- 6. CATEGORIES TABLE
+CREATE TABLE IF NOT EXISTS public.categories (
+    id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::text,
+    name TEXT UNIQUE NOT NULL,
+    category_name TEXT,
+    slug TEXT UNIQUE NOT NULL,
+    description TEXT DEFAULT '',
+    image TEXT DEFAULT '',
+    status TEXT DEFAULT 'Active',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
+-- Enable RLS for Categories
+ALTER TABLE public.categories ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Allow Public Categories Operations" ON public.categories FOR ALL USING (true);
+

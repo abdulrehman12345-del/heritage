@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tags, Plus, Edit3, Trash2, Eye, Check, Image as ImageIcon } from 'lucide-react';
+import { Tags, Plus, Edit3, Trash2, Eye, Check, Image as ImageIcon, Upload } from 'lucide-react';
 import { CategoryCMS } from '../types';
 
 interface CategoriesViewProps {
@@ -167,14 +167,52 @@ export const CategoriesView: React.FC<CategoriesViewProps> = ({
                 />
               </div>
 
-              <div className="space-y-1">
-                <label className="text-[10px] font-bold uppercase text-[#2B2622]">Image URL</label>
-                <input
-                  type="text"
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
-                  className="w-full bg-[#F8F5EF] border border-[#B68D40]/30 rounded-xl px-3 py-2 text-xs text-[#2B2622]"
-                />
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold uppercase text-[#2B2622] flex items-center justify-between">
+                  <span>Category Image</span>
+                  <span className="text-[9px] text-[#B68D40] font-normal normal-case">Select Image File</span>
+                </label>
+
+                <div className="flex items-center gap-3 p-3 bg-[#F8F5EF] border border-[#B68D40]/30 rounded-xl">
+                  {image ? (
+                    <div className="relative w-16 h-16 rounded-lg overflow-hidden border border-[#B68D40]/40 shrink-0 bg-black/10">
+                      <img src={image} alt="Preview" className="w-full h-full object-cover" />
+                    </div>
+                  ) : (
+                    <div className="w-16 h-16 rounded-lg border border-dashed border-[#B68D40]/40 flex flex-col items-center justify-center text-[#B68D40] bg-white shrink-0">
+                      <ImageIcon className="w-5 h-5" />
+                      <span className="text-[8px] mt-0.5">No File</span>
+                    </div>
+                  )}
+
+                  <div className="flex-1 space-y-1.5">
+                    <label className="flex items-center justify-center gap-2 px-4 py-2 bg-[#B68D40] hover:bg-[#A76B3F] text-white text-xs font-bold rounded-lg cursor-pointer transition-colors shadow-xs w-full text-center">
+                      <Upload className="w-4 h-4" />
+                      <span>Choose File</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (event) => {
+                              if (event.target?.result) {
+                                setImage(event.target.result as string);
+                              }
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                        className="hidden"
+                      />
+                    </label>
+
+                    <div className="text-[9px] text-[#6A6158]">
+                      Pick any image file from your computer (PNG, JPG, WEBP).
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-1">

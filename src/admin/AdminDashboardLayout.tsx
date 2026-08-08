@@ -133,7 +133,7 @@ export const AdminDashboardLayout: React.FC<AdminDashboardLayoutProps> = ({
       {/* Main Content Workspace Area */}
       <div
         className={`flex-1 flex flex-col min-w-0 transition-all duration-300 ${
-          sidebarCollapsed ? 'ml-20' : 'ml-64'
+          sidebarCollapsed ? 'ml-16 sm:ml-20' : 'ml-16 sm:ml-64'
         }`}
       >
         {/* Topbar */}
@@ -147,7 +147,7 @@ export const AdminDashboardLayout: React.FC<AdminDashboardLayoutProps> = ({
         />
 
         {/* View Workspace */}
-        <main className="flex-1 p-6 sm:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-3 sm:p-6 md:p-8 max-w-7xl w-full mx-auto">
           {activeTab === 'dashboard' && (
             <DashboardHomeView
               artifacts={artifacts}

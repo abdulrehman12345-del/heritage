@@ -74,11 +74,13 @@ export const SavedShortlistModal: React.FC<SavedShortlistModalProps> = ({
                   <div className="flex items-center gap-4 cursor-pointer" onClick={() => { onSelectArtifact(artifact); onClose(); }}>
                     <div className="w-20 h-20 rounded-xl overflow-hidden bg-[#15181C] shrink-0 border border-[#B68D40]/30">
                       <img
-                        src={artifact.image || 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200'}
+                        src={artifact.image || 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=70&w=250'}
                         alt={artifact.title}
+                        loading="lazy"
+                        decoding="async"
                         onError={(e) => {
                           e.currentTarget.onerror = null;
-                          e.currentTarget.src = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200';
+                          e.currentTarget.src = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=70&w=250';
                         }}
                         className="w-full h-full object-cover"
                         referrerPolicy="no-referrer"

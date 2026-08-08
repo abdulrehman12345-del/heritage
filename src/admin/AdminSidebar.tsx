@@ -60,7 +60,7 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   return (
     <aside
       className={`fixed top-0 left-0 bottom-0 z-40 bg-[#1F2328] text-white flex flex-col border-r border-[#B68D40]/20 transition-all duration-300 ${
-        collapsed ? 'w-20' : 'w-64'
+        collapsed ? 'w-16 sm:w-20' : 'w-16 sm:w-64'
       }`}
     >
       {/* Header Logo & Collapse Toggle */}

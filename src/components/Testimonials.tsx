@@ -52,6 +52,8 @@ export const Testimonials: React.FC = () => {
                 <img
                   src={t.avatar}
                   alt={t.author}
+                  loading="lazy"
+                  decoding="async"
                   className="w-12 h-12 rounded-full object-cover border-2 border-[#B68D40]"
                   referrerPolicy="no-referrer"
                 />

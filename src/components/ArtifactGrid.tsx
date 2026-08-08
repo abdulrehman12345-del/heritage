@@ -62,7 +62,99 @@ export const ArtifactGrid: React.FC<ArtifactGridProps> = ({
   }, [artifacts, activeCategory, selectedEra, searchQuery, sortBy]);
 
   return (
-    <section id="catalog" className="py-12 sm:py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+    <section id="catalog" className="py-8 sm:py-12 md:py-16 max-w-7xl mx-auto px-4 sm:px-6 md:px-12">
+      {/* Search, Filter & Sort Toolbar */}
+      <div className="bg-[#1F2328] rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-8 border border-[#B68D40]/30 shadow-xl space-y-4">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+          
+          {/* Search Bar */}
+          <div className="relative flex-1 min-w-[240px]">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#B68D40]" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by title, material, origin, era, or keyword..."
+              className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-[#15181C] border border-[#B68D40]/30 text-white placeholder-[#8C8275] text-sm focus:outline-none focus:border-[#FFE270] transition-all"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#8C8275] hover:text-white p-1 rounded-full cursor-pointer"
+                title="Clear search"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          {/* Filters & Sort Controls Group */}
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Era Selector */}
+            {eras.length > 1 && (
+              <div className="flex items-center gap-2 bg-[#15181C] px-3 py-2 rounded-xl border border-[#B68D40]/30">
+                <Filter className="w-3.5 h-3.5 text-[#B68D40] shrink-0" />
+                <span className="text-xs text-[#8C8275] hidden sm:inline">Era:</span>
+                <select
+                  value={selectedEra}
+                  onChange={(e) => setSelectedEra(e.target.value)}
+                  className="bg-transparent text-xs text-white font-medium focus:outline-none cursor-pointer pr-1"
+                >
+                  {eras.map(era => (
+                    <option key={era} value={era} className="bg-[#1F2328] text-white">
+                      {era === 'All' ? 'All Eras' : era}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+            {/* Sort Selector */}
+            <div className="flex items-center gap-2 bg-[#15181C] px-3 py-2 rounded-xl border border-[#B68D40]/30">
+              <SlidersHorizontal className="w-3.5 h-3.5 text-[#B68D40] shrink-0" />
+              <span className="text-xs text-[#8C8275] hidden sm:inline">Sort:</span>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="bg-transparent text-xs text-white font-medium focus:outline-none cursor-pointer pr-1"
+              >
+                <option value="featured" className="bg-[#1F2328] text-white">Featured First</option>
+                <option value="price-asc" className="bg-[#1F2328] text-white">Price: Low to High</option>
+                <option value="price-desc" className="bg-[#1F2328] text-white">Price: High to Low</option>
+                <option value="title" className="bg-[#1F2328] text-white">Name: A to Z</option>
+              </select>
+            </div>
+
+            {/* Clear Filters Button (if active) */}
+            {(searchQuery || selectedEra !== 'All' || activeCategory !== 'All') && (
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  setSelectedEra('All');
+                }}
+                className="px-3 py-2 rounded-xl bg-[#A87C32]/20 hover:bg-[#A87C32]/40 text-[#FFE270] border border-[#A87C32]/40 text-xs font-medium transition-all cursor-pointer flex items-center gap-1.5"
+              >
+                <X className="w-3.5 h-3.5" />
+                <span>Reset Filters</span>
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Counter and Active Filter Tags */}
+        <div className="flex items-center justify-between text-xs text-[#8C8275] pt-2 border-t border-[#B68D40]/15">
+          <span>
+            Showing <strong className="text-[#FFE270] font-mono">{filteredAndSortedArtifacts.length}</strong> of{' '}
+            <strong className="text-white font-mono">{artifacts.length}</strong> artifacts
+          </span>
+          {activeCategory !== 'All' && (
+            <span className="text-[#D9C7AE]">
+              Category: <strong className="text-[#FFE270]">{activeCategory}</strong>
+            </span>
+          )}
+        </div>
+      </div>
+
       {/* Grid of Artifact Cards */}
       {filteredAndSortedArtifacts.length === 0 ? (
         <div className="py-20 text-center bg-[#F2ECE3]/60 rounded-3xl border border-[#B68D40]/30 shadow-inner">
@@ -102,11 +194,13 @@ export const ArtifactGrid: React.FC<ArtifactGridProps> = ({
                   <div>
                     <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-[#15181C] cursor-pointer" onClick={() => onSelectArtifact(artifact)}>
                       <img
-                        src={artifact.image || 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200'}
+                        src={artifact.image || 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=70&w=600'}
                         alt={artifact.title}
+                        loading="lazy"
+                        decoding="async"
                         onError={(e) => {
                           e.currentTarget.onerror = null;
-                          e.currentTarget.src = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=80&w=1200';
+                          e.currentTarget.src = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&q=70&w=600';
                         }}
                         className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 filter brightness-95"
                         referrerPolicy="no-referrer"

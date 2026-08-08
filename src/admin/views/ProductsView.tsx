@@ -574,18 +574,56 @@ export const ProductsView: React.FC<ProductsViewProps> = ({
                 </div>
               </div>
 
-              {/* Images URLs */}
+              {/* Image Upload File Picker */}
               <div className="space-y-2">
-                <label className="text-[11px] font-bold text-[#2B2622] uppercase tracking-wider flex items-center gap-2">
-                  <Upload className="w-3.5 h-3.5 text-[#B68D40]" />
-                  Primary Image URL *
+                <label className="text-[11px] font-bold text-[#2B2622] uppercase tracking-wider flex items-center justify-between">
+                  <span className="flex items-center gap-2">
+                    <Upload className="w-3.5 h-3.5 text-[#B68D40]" />
+                    Artifact Primary Image *
+                  </span>
+                  <span className="text-[9px] text-[#B68D40] font-normal normal-case">Select Image File</span>
                 </label>
-                <input
-                  type="text"
-                  value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  className="w-full bg-[#F8F5EF] border border-[#B68D40]/30 rounded-xl px-3.5 py-2 text-xs text-[#2B2622] focus:outline-none focus:border-[#B68D40]"
-                />
+
+                <div className="flex flex-col sm:flex-row items-center gap-4 p-3.5 bg-[#F8F5EF] border border-[#B68D40]/30 rounded-2xl">
+                  {formData.image ? (
+                    <div className="relative w-24 h-24 rounded-xl overflow-hidden border border-[#B68D40]/40 shrink-0 bg-black/10">
+                      <img src={formData.image} alt="Artifact Preview" className="w-full h-full object-cover" />
+                    </div>
+                  ) : (
+                    <div className="w-24 h-24 rounded-xl border-2 border-dashed border-[#B68D40]/40 flex flex-col items-center justify-center text-[#B68D40] bg-white shrink-0">
+                      <Upload className="w-6 h-6" />
+                      <span className="text-[9px] mt-1">No Image</span>
+                    </div>
+                  )}
+
+                  <div className="flex-1 w-full space-y-2">
+                    <label className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[#B68D40] hover:bg-[#A76B3F] text-white text-xs font-bold rounded-xl cursor-pointer transition-all shadow-xs w-full text-center">
+                      <Upload className="w-4 h-4" />
+                      <span>Choose File</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (event) => {
+                              if (event.target?.result) {
+                                setFormData(prev => ({ ...prev, image: event.target!.result as string }));
+                              }
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                        className="hidden"
+                      />
+                    </label>
+
+                    <p className="text-[10px] text-[#6A6158]">
+                      Choose an image file from your device. It will be stored directly with the artifact record in the database.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* Descriptions */}

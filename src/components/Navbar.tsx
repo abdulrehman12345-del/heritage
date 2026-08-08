@@ -32,20 +32,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious() ?? 0;
-    
-    // Always show at top of page (within first 30px)
     if (latest <= 30) {
-      setHidden(false);
       setIsAtTop(true);
     } else {
       setIsAtTop(false);
-      // Hide when scrolling down, show when scrolling up
-      if (latest > previous && latest > 100) {
-        setHidden(true);
-      } else if (latest < previous) {
-        setHidden(false);
-      }
     }
   });
 
@@ -77,7 +67,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1.0] }}
-      className="fixed top-2 sm:top-4 inset-x-2 sm:inset-x-6 md:inset-x-8 z-50 flex justify-center pointer-events-none max-w-full"
+      className="fixed top-2 sm:top-4 inset-x-2 sm:inset-x-6 md:inset-x-8 z-50 flex items-center justify-center pointer-events-none max-w-full"
     >
       <div
         className={`pointer-events-auto w-full max-w-7xl min-h-[50px] sm:min-h-[72px] rounded-full px-3.5 sm:px-6 py-1.5 sm:py-2 flex items-center justify-between gap-2 sm:gap-4 transition-all duration-300 glass-nav overflow-hidden ${
@@ -88,14 +78,14 @@ export const Navbar: React.FC<NavbarProps> = ({
       >
         {/* Logo */}
         <div 
-          className="cursor-pointer shrink min-w-0 flex items-center" 
+          className="cursor-pointer shrink min-w-0 flex items-center shrink-0" 
           onClick={() => {
             onSelectCategory('All');
             onNavigateSection('hero');
           }}
         >
-          <EmblemLogo variant="dark" size="sm" className="sm:hidden" />
-          <EmblemLogo variant="dark" size="md" className="hidden sm:flex" />
+          <EmblemLogo variant="dark" size="sm" className="sm:hidden flex items-center" />
+          <EmblemLogo variant="dark" size="md" className="hidden sm:flex items-center" />
         </div>
 
         {/* Desktop Navigation Links (XL screens 1280px+) */}
@@ -161,19 +151,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="max-w-[100px] md:max-w-[130px] truncate">
                 {customerUser ? (customerUser.fullName || 'Customer') : 'Login'}
               </span>
-            </motion.button>
-          )}
-
-          {onOpenAdmin && (
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              onClick={onOpenAdmin}
-              className="hidden lg:flex px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full bg-[#A87C32] hover:bg-[#966C2A] text-white text-xs font-bold uppercase tracking-wider border border-[#FFE270]/30 transition-all items-center gap-1.5 shadow-md whitespace-nowrap cursor-pointer"
-              title="Open Admin Panel"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#FFE270] shrink-0" />
-              <span>Admin</span>
             </motion.button>
           )}
 
@@ -246,19 +223,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 >
                   <UserCheck className="w-4 h-4 text-[#FFE270]" />
                   <span>{customerUser ? (customerUser.fullName || 'Customer Profile') : 'Customer Login / Signup'}</span>
-                </button>
-              )}
-
-              {onOpenAdmin && (
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    onOpenAdmin();
-                  }}
-                  className="w-full py-3 rounded-xl bg-[#A87C32] text-white font-bold text-xs tracking-wider uppercase border border-[#FFE270]/30 flex items-center justify-center gap-2 cursor-pointer shadow-md"
-                >
-                  <ShieldCheck className="w-4 h-4 text-[#FFE270]" />
-                  <span>Admin Panel</span>
                 </button>
               )}
 
