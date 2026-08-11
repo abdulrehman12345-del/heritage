@@ -1,17 +1,13 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { CategoryFilter } from './components/CategoryFilter';
 import { ArtifactGrid } from './components/ArtifactGrid';
-import { ArtifactModal } from './components/ArtifactModal';
 import { HeritageStory } from './components/HeritageStory';
 import { WhyChooseUs } from './components/WhyChooseUs';
 import { Testimonials } from './components/Testimonials';
 import { Newsletter } from './components/Newsletter';
-import { InquiryModal } from './components/InquiryModal';
-import { CustomerAuthModal } from './components/CustomerAuthModal';
-import { SavedShortlistModal } from './components/SavedShortlistModal';
 import { Footer } from './components/Footer';
 
 import { ARTIFACTS_DATA } from './data/artifacts';
@@ -19,8 +15,14 @@ import { Artifact, CategoryType } from './types';
 import { authApi, productsApi, categoriesApi, ordersApi } from './lib/api';
 import { supabaseService } from './lib/supabaseService';
 
-import { AdminDashboardLayout } from './admin/AdminDashboardLayout';
-import { AdminAuthModal } from './admin/components/AdminAuthModal';
+// Lazy loading heavy components & modals for 100% Performance bundle optimization
+const ArtifactModal = lazy(() => import('./components/ArtifactModal').then(m => ({ default: m.ArtifactModal })));
+const InquiryModal = lazy(() => import('./components/InquiryModal').then(m => ({ default: m.InquiryModal })));
+const CustomerAuthModal = lazy(() => import('./components/CustomerAuthModal').then(m => ({ default: m.CustomerAuthModal })));
+const SavedShortlistModal = lazy(() => import('./components/SavedShortlistModal').then(m => ({ default: m.SavedShortlistModal })));
+const AdminDashboardLayout = lazy(() => import('./admin/AdminDashboardLayout').then(m => ({ default: m.AdminDashboardLayout })));
+const AdminAuthModal = lazy(() => import('./admin/components/AdminAuthModal').then(m => ({ default: m.AdminAuthModal })));
+
 import { 
   INITIAL_ORDERS, 
   INITIAL_CUSTOMERS, 
@@ -511,44 +513,46 @@ export default function App() {
   if (isAdminView) {
     return (
       <ErrorBoundary fallbackTitle="Admin Console Reset" onReset={() => setIsAdminView(false)}>
-        <AdminDashboardLayout
-          artifacts={artifacts || []}
-          categories={categories || []}
-          orders={orders || []}
-          customers={customers || []}
-          reviews={reviews || []}
-          mediaFiles={mediaFiles || []}
-          discounts={discounts || []}
-          inquiries={inquiries || []}
-          admins={admins || []}
-          homepageConfig={homepageConfig}
-          websiteSettings={websiteSettings}
-          currentUser={currentUser}
-          onAddArtifact={handleAddArtifact}
-          onUpdateArtifact={handleUpdateArtifact}
-          onDeleteArtifact={handleDeleteArtifact}
-          onAddCategory={handleAddCategory}
-          onUpdateCategory={handleUpdateCategory}
-          onDeleteCategory={handleDeleteCategory}
-          onUpdateOrderStatus={handleUpdateOrderStatus}
-          onUpdateStock={handleUpdateStock}
-          onUploadMedia={handleUploadMedia}
-          onDeleteMedia={handleDeleteMedia}
-          onAddDiscount={handleAddDiscount}
-          onDeleteDiscount={handleDeleteDiscount}
-          onSaveHomepageCMS={setHomepageConfig}
-          onSaveWebsiteSettings={setWebsiteSettings}
-          onApproveReview={(id) =>
-            setReviews(
-              reviews.map((r) => (r.id === id ? { ...r, status: 'Published' } : r))
-            )
-          }
-          onDeleteReview={(id) => setReviews(reviews.filter((r) => r.id !== id))}
-          onMarkInquiryReplied={handleMarkInquiryReplied}
-          onUpdateCurrentUser={setCurrentUser}
-          onExitAdmin={handleExitAdmin}
-          onSelectArtifactToPreviewPublic={handleSelectArtifactToPreviewPublic}
-        />
+        <Suspense fallback={<div className="min-h-screen bg-[#121417] text-[#FFE270] flex items-center justify-center font-mono text-sm">Loading Curator Vault Console...</div>}>
+          <AdminDashboardLayout
+            artifacts={artifacts || []}
+            categories={categories || []}
+            orders={orders || []}
+            customers={customers || []}
+            reviews={reviews || []}
+            mediaFiles={mediaFiles || []}
+            discounts={discounts || []}
+            inquiries={inquiries || []}
+            admins={admins || []}
+            homepageConfig={homepageConfig}
+            websiteSettings={websiteSettings}
+            currentUser={currentUser}
+            onAddArtifact={handleAddArtifact}
+            onUpdateArtifact={handleUpdateArtifact}
+            onDeleteArtifact={handleDeleteArtifact}
+            onAddCategory={handleAddCategory}
+            onUpdateCategory={handleUpdateCategory}
+            onDeleteCategory={handleDeleteCategory}
+            onUpdateOrderStatus={handleUpdateOrderStatus}
+            onUpdateStock={handleUpdateStock}
+            onUploadMedia={handleUploadMedia}
+            onDeleteMedia={handleDeleteMedia}
+            onAddDiscount={handleAddDiscount}
+            onDeleteDiscount={handleDeleteDiscount}
+            onSaveHomepageCMS={setHomepageConfig}
+            onSaveWebsiteSettings={setWebsiteSettings}
+            onApproveReview={(id) =>
+              setReviews(
+                reviews.map((r) => (r.id === id ? { ...r, status: 'Published' } : r))
+              )
+            }
+            onDeleteReview={(id) => setReviews(reviews.filter((r) => r.id !== id))}
+            onMarkInquiryReplied={handleMarkInquiryReplied}
+            onUpdateCurrentUser={setCurrentUser}
+            onExitAdmin={handleExitAdmin}
+            onSelectArtifactToPreviewPublic={handleSelectArtifactToPreviewPublic}
+          />
+        </Suspense>
       </ErrorBoundary>
     );
   }
@@ -610,48 +614,60 @@ export default function App() {
         onSelectCategory={(cat) => setActiveCategory(cat as CategoryType)}
       />
 
-      {/* Museum Artifact Inspection Modal */}
-      <ArtifactModal
-        artifact={selectedArtifact}
-        onClose={() => setSelectedArtifact(null)}
-        onInquireClick={handleInquireClick}
-      />
+      <Suspense fallback={null}>
+        {/* Museum Artifact Inspection Modal */}
+        {selectedArtifact && (
+          <ArtifactModal
+            artifact={selectedArtifact}
+            onClose={() => setSelectedArtifact(null)}
+            onInquireClick={handleInquireClick}
+          />
+        )}
 
-      {/* Saved Shortlist Drawer / Modal */}
-      <SavedShortlistModal
-        isOpen={isSavedModalOpen}
-        onClose={() => setIsSavedModalOpen(false)}
-        savedArtifacts={savedArtifacts}
-        onSelectArtifact={(art) => setSelectedArtifact(art)}
-        onRemoveSaved={(id) => handleToggleSave(id)}
-        onInquireArtifact={(art) => {
-          setInquiryArtifact(art);
-          setIsInquiryOpen(true);
-        }}
-      />
+        {/* Saved Shortlist Drawer / Modal */}
+        {isSavedModalOpen && (
+          <SavedShortlistModal
+            isOpen={isSavedModalOpen}
+            onClose={() => setIsSavedModalOpen(false)}
+            savedArtifacts={savedArtifacts}
+            onSelectArtifact={(art) => setSelectedArtifact(art)}
+            onRemoveSaved={(id) => handleToggleSave(id)}
+            onInquireArtifact={(art) => {
+              setInquiryArtifact(art);
+              setIsInquiryOpen(true);
+            }}
+          />
+        )}
 
-      {/* Private Acquisition Consultation Modal */}
-      <InquiryModal
-        isOpen={isInquiryOpen}
-        artifact={inquiryArtifact}
-        onClose={() => setIsInquiryOpen(false)}
-        onAddInquiry={handleAddInquiry}
-      />
+        {/* Private Acquisition Consultation Modal */}
+        {isInquiryOpen && (
+          <InquiryModal
+            isOpen={isInquiryOpen}
+            artifact={inquiryArtifact}
+            onClose={() => setIsInquiryOpen(false)}
+            onAddInquiry={handleAddInquiry}
+          />
+        )}
 
-      {/* Customer / Collector Authentication Modal */}
-      <CustomerAuthModal
-        isOpen={isCustomerAuthOpen}
-        onClose={() => setIsCustomerAuthOpen(false)}
-        onAuthSuccess={(u) => setCustomerUser(u)}
-        onOpenAdmin={handleOpenAdminRequest}
-      />
+        {/* Customer / Collector Authentication Modal */}
+        {isCustomerAuthOpen && (
+          <CustomerAuthModal
+            isOpen={isCustomerAuthOpen}
+            onClose={() => setIsCustomerAuthOpen(false)}
+            onAuthSuccess={(u) => setCustomerUser(u)}
+            onOpenAdmin={handleOpenAdminRequest}
+          />
+        )}
 
-      {/* Curator Security Clearance Authentication Modal */}
-      <AdminAuthModal
-        isOpen={isAdminAuthOpen}
-        onClose={() => setIsAdminAuthOpen(false)}
-        onSuccess={handleAuthSuccess}
-      />
+        {/* Curator Security Clearance Authentication Modal */}
+        {isAdminAuthOpen && (
+          <AdminAuthModal
+            isOpen={isAdminAuthOpen}
+            onClose={() => setIsAdminAuthOpen(false)}
+            onSuccess={handleAuthSuccess}
+          />
+        )}
+      </Suspense>
     </div>
   );
 }

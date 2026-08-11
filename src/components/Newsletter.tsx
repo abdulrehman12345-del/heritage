@@ -55,6 +55,7 @@ export const Newsletter: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your confidential email"
+                aria-label="Enter your confidential email"
                 className="w-full sm:flex-1 px-6 py-4 rounded-full bg-[#2A3036] text-[#F8F5EF] placeholder:text-[#D9C7AE]/50 border border-[#B68D40]/30 focus:outline-none focus:border-[#B68D40] text-sm font-light"
               />
               <button
