@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Artifact, CategoryType } from '../types';
-import { ShieldCheck, Eye, Compass, Calendar, MapPin, Search, SlidersHorizontal, Heart, X, Sparkles, Filter } from 'lucide-react';
+import { ShieldCheck, Eye, Compass, Calendar, MapPin, Search, SlidersHorizontal, Heart, X, Sparkles, Filter, ShoppingBag } from 'lucide-react';
 
 interface ArtifactGridProps {
   artifacts: Artifact[];
@@ -9,6 +9,8 @@ interface ArtifactGridProps {
   onSelectArtifact: (artifact: Artifact) => void;
   savedIds?: string[];
   onToggleSave?: (artifactId: string) => void;
+  onAddToCart?: (artifact: Artifact) => void;
+  onBuyNow?: (artifact: Artifact) => void;
 }
 
 export const ArtifactGrid: React.FC<ArtifactGridProps> = ({
@@ -16,7 +18,9 @@ export const ArtifactGrid: React.FC<ArtifactGridProps> = ({
   activeCategory,
   onSelectArtifact,
   savedIds = [],
-  onToggleSave
+  onToggleSave,
+  onAddToCart,
+  onBuyNow
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedEra, setSelectedEra] = useState<string>('All');
@@ -242,7 +246,7 @@ export const ArtifactGrid: React.FC<ArtifactGridProps> = ({
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-xs">
                         <span className="px-5 py-2.5 rounded-full bg-[#B68D40] text-white font-serif-heading text-xs uppercase tracking-widest font-semibold flex items-center gap-2 shadow-2xl transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                           <Eye className="w-4 h-4 text-white" />
-                          <span>Inspect Masterpiece</span>
+                          <span>View Details</span>
                         </span>
                       </div>
                     </div>
@@ -272,19 +276,34 @@ export const ArtifactGrid: React.FC<ArtifactGridProps> = ({
                   </div>
 
                   {/* Card Footer Price & Action */}
-                  <div className="px-6 pb-6 pt-3 border-t border-[#B68D40]/20 flex items-center justify-between">
+                  <div className="px-6 pb-6 pt-3 border-t border-[#B68D40]/20 flex items-center justify-between gap-2">
                     <div>
-                      <span className="text-[9px] text-[#D9C7AE]/60 uppercase tracking-widest block font-mono">Vault Valuation</span>
+                      <span className="text-[9px] text-[#D9C7AE]/60 uppercase tracking-widest block font-mono">Price</span>
                       <span className="text-[#B68D40] text-base sm:text-lg font-bold tracking-wider font-mono">{artifact.priceFormatted}</span>
                     </div>
 
-                    <button
-                      onClick={() => onSelectArtifact(artifact)}
-                      className="px-4 py-2 rounded-full bg-[#2A3036] hover:bg-[#B68D40] text-[#D9C7AE] hover:text-white font-serif-heading text-xs uppercase tracking-wider font-semibold border border-[#B68D40]/30 transition-all flex items-center gap-1.5 shadow-sm"
-                    >
-                      <span>View Details</span>
-                      <Compass className="w-3.5 h-3.5 group-hover:rotate-45 transition-transform duration-500" />
-                    </button>
+                    <div className="flex items-center gap-2">
+                      {onAddToCart && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onAddToCart(artifact);
+                          }}
+                          className="p-2 rounded-full bg-[#B68D40]/15 hover:bg-[#B68D40] text-[#FFE270] hover:text-[#121417] border border-[#B68D40]/40 transition-all flex items-center justify-center shadow-sm cursor-pointer"
+                          title="Add to Cart"
+                        >
+                          <ShoppingBag className="w-3.5 h-3.5" />
+                        </button>
+                      )}
+
+                      <button
+                        onClick={() => onSelectArtifact(artifact)}
+                        className="px-3.5 py-2 rounded-full bg-[#2A3036] hover:bg-[#B68D40] text-[#D9C7AE] hover:text-white font-serif-heading text-xs uppercase tracking-wider font-semibold border border-[#B68D40]/30 transition-all flex items-center gap-1.5 shadow-sm cursor-pointer whitespace-nowrap"
+                      >
+                        <span>View Details</span>
+                        <Compass className="w-3.5 h-3.5 group-hover:rotate-45 transition-transform duration-500" />
+                      </button>
+                    </div>
                   </div>
 
                 </motion.div>

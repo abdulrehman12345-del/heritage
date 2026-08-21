@@ -20,6 +20,8 @@ const ArtifactModal = lazy(() => import('./components/ArtifactModal').then(m => 
 const InquiryModal = lazy(() => import('./components/InquiryModal').then(m => ({ default: m.InquiryModal })));
 const CustomerAuthModal = lazy(() => import('./components/CustomerAuthModal').then(m => ({ default: m.CustomerAuthModal })));
 const SavedShortlistModal = lazy(() => import('./components/SavedShortlistModal').then(m => ({ default: m.SavedShortlistModal })));
+const CartDrawer = lazy(() => import('./components/CartDrawer').then(m => ({ default: m.CartDrawer })));
+const CheckoutModal = lazy(() => import('./components/CheckoutModal').then(m => ({ default: m.CheckoutModal })));
 const AdminDashboardLayout = lazy(() => import('./admin/AdminDashboardLayout').then(m => ({ default: m.AdminDashboardLayout })));
 const AdminAuthModal = lazy(() => import('./admin/components/AdminAuthModal').then(m => ({ default: m.AdminAuthModal })));
 
@@ -60,14 +62,99 @@ export default function App() {
   const [inquiryArtifact, setInquiryArtifact] = useState<Artifact | null>(null);
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
   const [isSavedModalOpen, setIsSavedModalOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [checkoutDirectItems, setCheckoutDirectItems] = useState<{ artifact: Artifact; quantity: number }[]>([]);
+
+  // Cart State (persisted in localStorage)
+  const [cartItems, setCartItems] = useState<{ artifact: Artifact; quantity: number }[]>(() => {
+    try {
+      const saved = localStorage.getItem('ha_cart_items');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('ha_cart_items', JSON.stringify(cartItems));
+    } catch {}
+  }, [cartItems]);
+
+  const handleAddToCart = (artifact: Artifact, quantity: number = 1) => {
+    setCartItems(prev => {
+      const existing = prev.find(item => item.artifact.id === artifact.id);
+      if (existing) {
+        return prev.map(item =>
+          item.artifact.id === artifact.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      }
+      return [...prev, { artifact, quantity }];
+    });
+  };
+
+  const handleUpdateCartQuantity = (artifactId: string, delta: number) => {
+    setCartItems(prev => {
+      return prev
+        .map(item => {
+          if (item.artifact.id === artifactId) {
+            const newQty = item.quantity + delta;
+            return newQty > 0 ? { ...item, quantity: newQty } : null;
+          }
+          return item;
+        })
+        .filter(Boolean) as { artifact: Artifact; quantity: number }[];
+    });
+  };
+
+  const handleRemoveFromCart = (artifactId: string) => {
+    setCartItems(prev => prev.filter(item => item.artifact.id !== artifactId));
+  };
+
+  const handleClearCart = () => {
+    setCartItems([]);
+    try { localStorage.removeItem('ha_cart_items'); } catch {}
+  };
+
+  const handleBuyNow = (artifact: Artifact) => {
+    setCheckoutDirectItems([{ artifact, quantity: 1 }]);
+    setIsCheckoutOpen(true);
+  };
+
+  const handleProceedCartCheckout = () => {
+    setCheckoutDirectItems(cartItems);
+    setIsCartOpen(false);
+    setIsCheckoutOpen(true);
+  };
+
+  const handleOrderPlaced = (newOrder: Order) => {
+    const updatedOrders = [newOrder, ...orders];
+    setOrders(updatedOrders);
+    try { localStorage.setItem('ha_orders', JSON.stringify(updatedOrders)); } catch {}
+
+    // Send to backend API
+    ordersApi.createOrder({
+      customerName: newOrder.customerName,
+      customerEmail: newOrder.customerEmail,
+      customerPhone: newOrder.customerPhone,
+      shippingAddress: newOrder.shippingAddress,
+      items: newOrder.items,
+      totalAmount: newOrder.totalAmount,
+      paymentMethod: newOrder.notes?.includes('CARD') ? 'card' : newOrder.notes?.includes('WIRE') ? 'wire' : 'cod',
+      notes: newOrder.notes
+    }).catch(() => {});
+  };
 
   // Saved / Bookmarked Shortlist State (persisted in localStorage)
   const [savedIds, setSavedIds] = useState<string[]>(() => {
     try {
       const saved = localStorage.getItem('ha_saved_artifacts');
-      return saved ? JSON.parse(saved) : ['ha-01'];
+      return saved ? JSON.parse(saved) : [];
     } catch {
-      return ['ha-01'];
+      return [];
     }
   });
 
@@ -568,8 +655,10 @@ export default function App() {
         onNavigateSection={handleNavigateSection}
         onOpenCustomerAuth={() => setIsCustomerAuthOpen(true)}
         customerUser={customerUser}
-        savedCount={savedIds.length}
+        savedCount={savedArtifacts.length}
         onOpenSavedModal={() => setIsSavedModalOpen(true)}
+        cartCount={cartItems.reduce((acc, i) => acc + i.quantity, 0)}
+        onOpenCart={() => setIsCartOpen(true)}
       />
 
       {/* Hero Section */}
@@ -593,6 +682,8 @@ export default function App() {
           onSelectArtifact={(artifact) => setSelectedArtifact(artifact)}
           savedIds={savedIds}
           onToggleSave={handleToggleSave}
+          onAddToCart={handleAddToCart}
+          onBuyNow={handleBuyNow}
         />
       </div>
 
@@ -615,12 +706,40 @@ export default function App() {
       />
 
       <Suspense fallback={null}>
-        {/* Museum Artifact Inspection Modal */}
+        {/* Museum Artifact Inspection Modal with Full Shopping Capabilities */}
         {selectedArtifact && (
           <ArtifactModal
             artifact={selectedArtifact}
             onClose={() => setSelectedArtifact(null)}
             onInquireClick={handleInquireClick}
+            onAddToCart={handleAddToCart}
+            onBuyNow={handleBuyNow}
+          />
+        )}
+
+        {/* Acquisition Cart Drawer */}
+        {isCartOpen && (
+          <CartDrawer
+            isOpen={isCartOpen}
+            onClose={() => setIsCartOpen(false)}
+            cartItems={cartItems}
+            onUpdateQuantity={handleUpdateCartQuantity}
+            onRemoveItem={handleRemoveFromCart}
+            onCheckout={handleProceedCartCheckout}
+            onSelectArtifact={(art) => setSelectedArtifact(art)}
+          />
+        )}
+
+        {/* Secure Acquisition Checkout Modal */}
+        {isCheckoutOpen && (
+          <CheckoutModal
+            isOpen={isCheckoutOpen}
+            onClose={() => setIsCheckoutOpen(false)}
+            items={checkoutDirectItems}
+            customerUser={customerUser}
+            discounts={discounts}
+            onOrderPlaced={handleOrderPlaced}
+            onClearCart={handleClearCart}
           />
         )}
 

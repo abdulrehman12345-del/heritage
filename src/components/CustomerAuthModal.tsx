@@ -125,10 +125,10 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
             <ShieldCheck className="w-6 h-6" />
           </div>
           <h2 className="font-serif text-2xl font-bold text-[#2B2622]">
-            {mode === 'login' ? 'Customer Login' : mode === 'register' ? 'Customer Signup' : 'Reset Password'}
+            {mode === 'login' ? 'Customer Login' : mode === 'register' ? 'Create Account' : 'Reset Password'}
           </h2>
           <p className="text-xs text-[#6A6158]">
-            Access your customer account, order tracking & private inquiries
+            Sign in to manage your orders, track shipments, and view saved items
           </p>
         </div>
 
@@ -137,7 +137,7 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
           <button
             type="button"
             onClick={() => { setMode('login'); setError(''); setSuccessMsg(''); }}
-            className={`flex-1 py-2 rounded-lg transition-all ${
+            className={`flex-1 py-2 rounded-lg transition-all cursor-pointer ${
               mode === 'login'
                 ? 'bg-[#1F2328] text-[#B68D40] shadow-md'
                 : 'text-[#6A6158] hover:text-[#2B2622]'
@@ -148,18 +148,18 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
           <button
             type="button"
             onClick={() => { setMode('register'); setError(''); setSuccessMsg(''); }}
-            className={`flex-1 py-2 rounded-lg transition-all ${
+            className={`flex-1 py-2 rounded-lg transition-all cursor-pointer ${
               mode === 'register'
                 ? 'bg-[#1F2328] text-[#B68D40] shadow-md'
                 : 'text-[#6A6158] hover:text-[#2B2622]'
             }`}
           >
-            Register
+            Sign Up
           </button>
           <button
             type="button"
             onClick={() => { setMode('forgot'); setError(''); setSuccessMsg(''); }}
-            className={`flex-1 py-2 rounded-lg transition-all ${
+            className={`flex-1 py-2 rounded-lg transition-all cursor-pointer ${
               mode === 'forgot'
                 ? 'bg-[#1F2328] text-[#B68D40] shadow-md'
                 : 'text-[#6A6158] hover:text-[#2B2622]'
@@ -197,7 +197,7 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  placeholder="e.g. Lord Edward Harrington"
+                  placeholder="e.g. John Smith"
                   className="w-full bg-[#F8F5EF] border border-[#B68D40]/30 rounded-xl pl-10 pr-4 py-2.5 text-xs font-mono text-[#2B2622] focus:outline-none focus:border-[#B68D40]"
                   required
                 />
@@ -215,7 +215,7 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="e.g. collector@heritage.co.uk"
+                placeholder="e.g. name@example.com"
                 className="w-full bg-[#F8F5EF] border border-[#B68D40]/30 rounded-xl pl-10 pr-4 py-2.5 text-xs font-mono text-[#2B2622] focus:outline-none focus:border-[#B68D40]"
                 required
               />
@@ -261,7 +261,7 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
 
               <div className="space-y-1">
                 <label className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#B68D40] block">
-                  Vault Shipping Address
+                  Delivery Address
                 </label>
                 <div className="relative">
                   <MapPin className="w-4 h-4 text-[#B68D40] absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -269,7 +269,7 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
                     type="text"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Street Address / Manor Estate"
+                    placeholder="Street Address, House No."
                     className="w-full bg-[#F8F5EF] border border-[#B68D40]/30 rounded-xl pl-10 pr-4 py-2.5 text-xs font-mono text-[#2B2622] focus:outline-none focus:border-[#B68D40]"
                   />
                 </div>
@@ -304,17 +304,17 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3.5 bg-[#1F2328] hover:bg-[#B68D40] text-white font-serif text-xs font-bold uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center justify-center gap-2 mt-2"
+            className="w-full py-3.5 bg-[#1F2328] hover:bg-[#B68D40] text-white font-serif text-xs font-bold uppercase tracking-widest rounded-xl transition-all shadow-md flex items-center justify-center gap-2 mt-2 cursor-pointer"
           >
             {loading ? (
               <span className="flex items-center gap-2">
                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Processing Request...
+                Please wait...
               </span>
             ) : (
               <>
                 <span>
-                  {mode === 'login' ? 'Authenticate Collector Access' : mode === 'register' ? 'Complete Profile Registration' : 'Send Password Reset Token'}
+                  {mode === 'login' ? 'Sign In' : mode === 'register' ? 'Create Account' : 'Send Reset Link'}
                 </span>
                 <ArrowRight className="w-4 h-4 text-[#B68D40]" />
               </>
@@ -324,7 +324,7 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
 
         {onOpenAdmin && (
           <div className="pt-3 border-t border-[#B68D40]/20 flex flex-col items-center gap-1.5">
-            <span className="text-[11px] text-[#6A6158]">Are you an administrator or staff?</span>
+            <span className="text-[11px] text-[#6A6158]">Are you a store manager or administrator?</span>
             <button
               type="button"
               onClick={() => {
@@ -334,13 +334,13 @@ export const CustomerAuthModal: React.FC<CustomerAuthModalProps> = ({
               className="w-full py-2.5 rounded-xl bg-[#1F2328] hover:bg-[#A87C32] text-white text-xs font-serif font-bold tracking-wide transition-all flex items-center justify-center gap-2 border border-[#B68D40]/40 shadow-sm cursor-pointer"
             >
               <ShieldCheck className="w-4 h-4 text-[#FFE270]" />
-              <span>Admin Login / Security Portal</span>
+              <span>Admin Login Portal</span>
             </button>
           </div>
         )}
 
         <div className="pt-2 border-t border-[#B68D40]/15 text-center text-[10px] text-[#6A6158] font-mono">
-          Private Escrow Protected • 256-Bit Encrypted Vault Session
+          100% Safe & Secure Encrypted Connection
         </div>
       </div>
     </div>

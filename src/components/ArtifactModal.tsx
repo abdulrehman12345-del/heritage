@@ -1,23 +1,58 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Artifact } from '../types';
-import { X, ShieldCheck, Calendar, MapPin, Award, CheckCircle2, FileText, Lock, Compass, ArrowRight } from 'lucide-react';
+import { 
+  X, 
+  ShieldCheck, 
+  Calendar, 
+  MapPin, 
+  Award, 
+  CheckCircle2, 
+  FileText, 
+  Lock, 
+  ShoppingBag, 
+  CreditCard,
+  Truck,
+  Sparkles
+} from 'lucide-react';
 
 interface ArtifactModalProps {
   artifact: Artifact | null;
   onClose: () => void;
-  onInquireClick: (artifact: Artifact) => void;
+  onInquireClick?: (artifact: Artifact) => void;
+  onAddToCart?: (artifact: Artifact) => void;
+  onBuyNow?: (artifact: Artifact) => void;
 }
 
 export const ArtifactModal: React.FC<ArtifactModalProps> = ({
   artifact,
   onClose,
-  onInquireClick
+  onInquireClick,
+  onAddToCart,
+  onBuyNow
 }) => {
   if (!artifact) return null;
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [addedToast, setAddedToast] = useState(false);
   const images = [artifact.image, ...(artifact.secondaryImages || [])];
+
+  const handleAddToCartClick = () => {
+    if (onAddToCart) {
+      onAddToCart(artifact);
+      setAddedToast(true);
+      setTimeout(() => setAddedToast(false), 2500);
+    }
+  };
+
+  const handleBuyNowClick = () => {
+    onClose();
+    if (onBuyNow) {
+      onBuyNow(artifact);
+    } else if (onAddToCart) {
+      onAddToCart(artifact);
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -46,14 +81,14 @@ export const ArtifactModal: React.FC<ArtifactModalProps> = ({
                 <ShieldCheck className="w-4 h-4" />
               </div>
               <div>
-                <p className="text-[10px] text-[#D9C7AE] font-mono uppercase tracking-widest">Heritage Vault Archive</p>
+                <p className="text-[10px] text-[#D9C7AE] font-mono uppercase tracking-widest">Certificate of Authenticity</p>
                 <p className="text-xs font-semibold text-[#F8F5EF] font-mono">{artifact.certificateNumber}</p>
               </div>
             </div>
 
             <button
               onClick={onClose}
-              className="p-2 rounded-full hover:bg-white/10 text-white/80 hover:text-white transition-colors"
+              className="p-2 rounded-full hover:bg-white/10 text-white/80 hover:text-white transition-colors cursor-pointer"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -79,7 +114,7 @@ export const ArtifactModal: React.FC<ArtifactModalProps> = ({
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                 <span className="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[#D9C7AE] text-[10px] font-mono">
-                  High-Res View {activeImageIndex + 1} of {images.length}
+                  Photo {activeImageIndex + 1} of {images.length}
                 </span>
               </div>
 
@@ -90,7 +125,7 @@ export const ArtifactModal: React.FC<ArtifactModalProps> = ({
                     <button
                       key={idx}
                       onClick={() => setActiveImageIndex(idx)}
-                      className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-all ${
+                      className={`relative w-20 h-20 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
                         activeImageIndex === idx
                           ? 'border-[#B68D40] ring-2 ring-[#B68D40]/30 scale-105'
                           : 'border-transparent opacity-60 hover:opacity-100'
@@ -105,7 +140,7 @@ export const ArtifactModal: React.FC<ArtifactModalProps> = ({
               {/* Artifact Specifications Box */}
               <div className="p-5 rounded-2xl bg-[#F2ECE3] border border-[#B68D40]/20 flex flex-col gap-2.5 text-xs text-[#2B2622]">
                 <h4 className="font-serif-heading font-bold text-sm text-[#B68D40] uppercase tracking-wider mb-1">
-                  Physical Specifications
+                  Product Details
                 </h4>
                 <div className="flex justify-between border-b border-[#B68D40]/15 pb-1.5">
                   <span className="text-[#6B6258]">Category:</span>
@@ -120,11 +155,11 @@ export const ArtifactModal: React.FC<ArtifactModalProps> = ({
                   <span className="font-mono">{artifact.weight}</span>
                 </div>
                 <div className="flex justify-between border-b border-[#B68D40]/15 pb-1.5">
-                  <span className="text-[#6B6258]">Material Alloy:</span>
+                  <span className="text-[#6B6258]">Material:</span>
                   <span className="font-medium text-right max-w-[200px]">{artifact.material}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-[#6B6258]">Preservation:</span>
+                  <span className="text-[#6B6258]">Condition:</span>
                   <span className="font-medium text-right max-w-[200px] text-[#A76B3F]">{artifact.condition}</span>
                 </div>
               </div>
@@ -154,15 +189,15 @@ export const ArtifactModal: React.FC<ArtifactModalProps> = ({
                 {/* Price Display */}
                 <div className="flex items-center gap-4 mb-6 pb-4 border-b border-[#B68D40]/20">
                   <span className="font-serif-heading text-3xl font-bold text-[#A76B3F]">{artifact.priceFormatted}</span>
-                  <span className="px-3 py-1 rounded-full bg-[#B68D40]/10 text-[#B68D40] text-xs font-medium tracking-wide uppercase border border-[#B68D40]/30 flex items-center gap-1.5">
+                  <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-medium tracking-wide border border-emerald-300 flex items-center gap-1.5">
                     <CheckCircle2 className="w-3.5 h-3.5" />
-                    Museum Certified
+                    100% Original & Verified
                   </span>
                 </div>
 
                 {/* Description Narrative */}
                 <div className="mb-6">
-                  <h4 className="font-serif-heading font-semibold text-sm text-[#2B2622] mb-2">Historical Overview</h4>
+                  <h4 className="font-serif-heading font-semibold text-sm text-[#2B2622] mb-2">Description</h4>
                   <p className="text-sm text-[#6B6258] font-light leading-relaxed">
                     {artifact.description}
                   </p>
@@ -172,7 +207,7 @@ export const ArtifactModal: React.FC<ArtifactModalProps> = ({
                 <div className="mb-8 p-4 rounded-2xl bg-[#1F2328] text-white border border-[#B68D40]/30 relative">
                   <div className="flex items-center gap-2 text-[#B68D40] text-xs font-serif-heading font-bold uppercase tracking-wider mb-2">
                     <FileText className="w-4 h-4" />
-                    <span>Senior Curator Analysis & Metallurgy</span>
+                    <span>Expert Curator Notes</span>
                   </div>
                   <p className="text-xs text-[#D9C7AE] font-light leading-relaxed italic">
                     "{artifact.curatorNotes}"
@@ -183,7 +218,7 @@ export const ArtifactModal: React.FC<ArtifactModalProps> = ({
                 <div className="mb-8">
                   <h4 className="font-serif-heading font-semibold text-sm text-[#2B2622] mb-4 flex items-center gap-2">
                     <Award className="w-4 h-4 text-[#B68D40]" />
-                    <span>Documented Lineage of Provenance</span>
+                    <span>History & Ownership Record</span>
                   </h4>
 
                   <div className="relative pl-6 space-y-4 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-[2px] before:bg-[#B68D40]/30">
@@ -201,25 +236,52 @@ export const ArtifactModal: React.FC<ArtifactModalProps> = ({
                 </div>
               </div>
 
-              {/* Action Buttons Footer */}
-              <div className="pt-6 border-t border-[#B68D40]/20 flex flex-wrap items-center gap-4">
-                <button
-                  onClick={() => {
-                    onClose();
-                    onInquireClick(artifact);
-                  }}
-                  className="flex-1 py-4 px-6 rounded-full bg-[#B68D40] hover:bg-[#A76B3F] text-[#F8F5EF] font-serif-heading font-medium text-xs sm:text-sm tracking-wider uppercase transition-all shadow-xl hover:shadow-2xl flex items-center justify-center gap-2"
-                >
-                  <Lock className="w-4 h-4 text-[#F8F5EF]" />
-                  <span>Request Private Viewing & Escrow</span>
-                </button>
+              {/* Action Buttons Footer with Simple Clear Shopping Options */}
+              <div className="pt-6 border-t border-[#B68D40]/20 space-y-4">
+                {/* Instant Purchase & Add to Cart Row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <button
+                    onClick={handleBuyNowClick}
+                    className="py-3.5 px-5 rounded-full bg-gradient-to-r from-[#B68D40] via-[#C89D4B] to-[#966C2A] text-[#121417] font-serif-heading font-bold text-xs uppercase tracking-widest hover:brightness-110 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <CreditCard className="w-4 h-4 text-[#121417]" />
+                    <span>Buy Now • {artifact.priceFormatted}</span>
+                  </button>
 
-                <button
-                  onClick={onClose}
-                  className="px-6 py-4 rounded-full border border-[#B68D40]/40 text-[#2B2622] font-serif-heading text-xs uppercase tracking-wider hover:bg-[#B68D40]/10 transition-colors"
-                >
-                  Return to Vault
-                </button>
+                  <button
+                    onClick={handleAddToCartClick}
+                    className="py-3.5 px-5 rounded-full bg-[#1F2328] hover:bg-[#2A3036] text-[#FFE270] border border-[#B68D40]/50 font-serif-heading font-semibold text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <ShoppingBag className="w-4 h-4 text-[#FFE270]" />
+                    <span>{addedToast ? '✓ Added to Cart!' : 'Add to Cart'}</span>
+                  </button>
+                </div>
+
+                {/* Close/Back button */}
+                <div className="flex justify-end">
+                  <button
+                    onClick={onClose}
+                    className="py-2.5 px-6 rounded-full border border-[#B68D40]/30 text-[#6B6258] hover:text-[#2B2622] font-serif-heading text-xs uppercase tracking-wider hover:bg-[#B68D40]/10 transition-colors cursor-pointer"
+                  >
+                    Back to Gallery
+                  </button>
+                </div>
+
+                {/* Buyer Protection Guarantee Badges */}
+                <div className="pt-2 flex flex-wrap items-center justify-between gap-2 text-[10px] text-[#6B6258] font-mono border-t border-[#B68D40]/15">
+                  <span className="flex items-center gap-1">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#B68D40]" />
+                    <span>30-Day Money Back Guarantee</span>
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Truck className="w-3.5 h-3.5 text-[#B68D40]" />
+                    <span>Free Insured Delivery</span>
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Sparkles className="w-3.5 h-3.5 text-[#B68D40]" />
+                    <span>Original Certificate Included</span>
+                  </span>
+                </div>
               </div>
 
             </div>

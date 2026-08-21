@@ -28,8 +28,8 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="lg:col-span-4 flex flex-col items-start">
             <EmblemLogo variant="dark" size="lg" className="mb-6" />
             <p className="text-xs text-[#D9C7AE]/80 font-light leading-relaxed mb-6 max-w-sm">
-              International purveyors of authenticated ancient bronzes, imperial animal statues, 
-              historical sculptures, and copper masterpieces. Serving private collectors & museums since 1892.
+              Sellers of genuine antique bronzes, animal statues, 
+              historical sculptures, and copper artifacts. Serving collectors & museums worldwide since 1892.
             </p>
             <div className="flex items-center gap-2 text-[11px] font-mono text-[#B68D40]">
               <ShieldCheck className="w-4 h-4 text-[#B68D40]" />
@@ -40,7 +40,7 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Quick Category Links (3 cols) */}
           <div className="lg:col-span-3">
             <h4 className="font-serif-heading font-bold text-sm text-[#F8F5EF] uppercase tracking-wider mb-5">
-              Vault Categories
+              Categories
             </h4>
             <ul className="space-y-3 text-xs text-[#D9C7AE]/80 font-light font-serif-heading">
               {['Animal Statues', 'Bronze Statues', 'Metal Sculptures', 'Antique Vases', 'Copper Artifacts', 'Historical Pieces'].map((cat) => (
@@ -50,7 +50,7 @@ export const Footer: React.FC<FooterProps> = ({
                       onSelectCategory(cat);
                       onNavigateSection('catalog');
                     }}
-                    className="hover:text-[#B68D40] transition-colors"
+                    className="hover:text-[#B68D40] transition-colors cursor-pointer"
                   >
                     {cat}
                   </button>
@@ -62,31 +62,31 @@ export const Footer: React.FC<FooterProps> = ({
           {/* Company Links (2 cols) */}
           <div className="lg:col-span-2">
             <h4 className="font-serif-heading font-bold text-sm text-[#F8F5EF] uppercase tracking-wider mb-5">
-              Curatorial
+              Quick Links
             </h4>
             <ul className="space-y-3 text-xs text-[#D9C7AE]/80 font-light font-serif-heading">
               <li>
-                <button onClick={() => onNavigateSection('hero')} className="hover:text-[#B68D40] transition-colors">
+                <button onClick={() => onNavigateSection('hero')} className="hover:text-[#B68D40] transition-colors cursor-pointer">
                   Home
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigateSection('heritage')} className="hover:text-[#B68D40] transition-colors">
-                  About Our Vault
+                <button onClick={() => onNavigateSection('heritage')} className="hover:text-[#B68D40] transition-colors cursor-pointer">
+                  About Us
                 </button>
               </li>
               <li>
-                <button onClick={() => onNavigateSection('contact')} className="hover:text-[#B68D40] transition-colors">
-                  Private Consultation
+                <button onClick={() => onNavigateSection('contact')} className="hover:text-[#B68D40] transition-colors cursor-pointer">
+                  Contact Us
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Contact & Private Vault Address (3 cols) */}
+          {/* Contact & Address (3 cols) */}
           <div className="lg:col-span-3">
             <h4 className="font-serif-heading font-bold text-sm text-[#F8F5EF] uppercase tracking-wider mb-5">
-              Vault Headquarters
+              Our Headquarters
             </h4>
             <div className="space-y-3 text-xs text-[#D9C7AE]/80 font-light">
               <div className="flex items-start gap-2.5">
@@ -99,7 +99,7 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#B68D40] flex-shrink-0" />
-                <span className="font-mono">curator@heritage-antiques.ch</span>
+                <span className="font-mono">support@heritage-antiques.com</span>
               </div>
             </div>
           </div>

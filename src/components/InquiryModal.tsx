@@ -89,9 +89,9 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
               <Lock className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-[10px] text-[#A76B3F] font-mono uppercase tracking-widest font-bold">Confidential Consultation</p>
+              <p className="text-[10px] text-[#A76B3F] font-mono uppercase tracking-widest font-bold">Contact Us</p>
               <h3 className="font-serif-heading text-xl md:text-2xl font-bold text-[#2B2622]">
-                Private Acquisition Request
+                Ask About This Item
               </h3>
             </div>
           </div>
@@ -100,7 +100,7 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
             <div className="p-4 rounded-2xl bg-[#F2ECE3] border border-[#B68D40]/25 mb-6 flex items-center gap-4">
               <img src={artifact.image} alt={artifact.title} className="w-16 h-16 rounded-xl object-cover" referrerPolicy="no-referrer" />
               <div>
-                <span className="text-[10px] text-[#6B6258] font-mono uppercase">Vault Item: {artifact.certificateNumber}</span>
+                <span className="text-[10px] text-[#6B6258] font-mono uppercase">Item ID: {artifact.certificateNumber}</span>
                 <p className="font-serif-heading text-sm font-bold text-[#2B2622]">{artifact.title}</p>
                 <p className="text-xs text-[#A76B3F] font-bold font-serif-heading">{artifact.priceFormatted}</p>
               </div>
@@ -114,40 +114,40 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
               className="py-12 text-center flex flex-col items-center gap-3"
             >
               <CheckCircle2 className="w-12 h-12 text-[#B68D40]" />
-              <h4 className="font-serif-heading text-2xl font-bold text-[#2B2622]">Inquiry Dispatched</h4>
+              <h4 className="font-serif-heading text-2xl font-bold text-[#2B2622]">Message Sent</h4>
               <p className="text-sm text-[#6B6258] max-w-md font-light leading-relaxed">
-                Thank you. A Senior Partner Curator from our Geneva or London vault will reach out directly within 24 hours to coordinate private viewing and escrow specs.
+                Thank you! Our support team will get back to you within 24 hours to answer your questions.
               </p>
               <button
                 onClick={onClose}
-                className="mt-6 px-8 py-3 rounded-full bg-[#B68D40] text-white font-serif-heading text-xs uppercase tracking-widest"
+                className="mt-6 px-8 py-3 rounded-full bg-[#B68D40] text-white font-serif-heading text-xs uppercase tracking-widest cursor-pointer"
               >
-                Close Window
+                Close
               </button>
             </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs text-[#2B2622] font-semibold block mb-1">Full Legal Name *</label>
+                  <label className="text-xs text-[#2B2622] font-semibold block mb-1">Your Full Name *</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="Lord / Lady / Dr. / Mr. Full Name"
+                    placeholder="e.g. John Smith"
                     className="w-full px-4 py-3 rounded-xl bg-white border border-[#B68D40]/30 text-xs focus:outline-none focus:border-[#B68D40]"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs text-[#2B2622] font-semibold block mb-1">Confidential Email *</label>
+                  <label className="text-xs text-[#2B2622] font-semibold block mb-1">Your Email *</label>
                   <input
                     type="email"
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="patron@estate.com"
+                    placeholder="e.g. name@example.com"
                     className="w-full px-4 py-3 rounded-xl bg-white border border-[#B68D40]/30 text-xs focus:outline-none focus:border-[#B68D40]"
                   />
                 </div>
@@ -155,49 +155,49 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs text-[#2B2622] font-semibold block mb-1">Telephone / Private Line</label>
+                  <label className="text-xs text-[#2B2622] font-semibold block mb-1">Phone Number</label>
                   <input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="+41 22 800 9000"
+                    placeholder="+44 20 7946 0912"
                     className="w-full px-4 py-3 rounded-xl bg-white border border-[#B68D40]/30 text-xs focus:outline-none focus:border-[#B68D40]"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs text-[#2B2622] font-semibold block mb-1">Institution / Family Trust</label>
+                  <label className="text-xs text-[#2B2622] font-semibold block mb-1">Company / Organization (Optional)</label>
                   <input
                     type="text"
                     value={formData.organization}
                     onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
-                    placeholder="Private Estate / Museum Trust"
+                    placeholder="Company Name"
                     className="w-full px-4 py-3 rounded-xl bg-white border border-[#B68D40]/30 text-xs focus:outline-none focus:border-[#B68D40]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs text-[#2B2622] font-semibold block mb-1">Inquiry Purpose</label>
+                <label className="text-xs text-[#2B2622] font-semibold block mb-1">What would you like to know?</label>
                 <select
                   value={formData.inquiryType}
                   onChange={(e) => setFormData({ ...formData, inquiryType: e.target.value })}
                   className="w-full px-4 py-3 rounded-xl bg-white border border-[#B68D40]/30 text-xs focus:outline-none focus:border-[#B68D40]"
                 >
-                  <option>Private Acquisition & Escrow</option>
-                  <option>Geneva / London Private Viewing Request</option>
-                  <option>Estate Appraisal & Valuation Consultation</option>
-                  <option>White-Glove International Transport Specs</option>
+                  <option>Ask about Price & Buying</option>
+                  <option>Ask about Delivery & Shipping</option>
+                  <option>Request Video / More Photos</option>
+                  <option>Other Questions</option>
                 </select>
               </div>
 
               <div>
-                <label className="text-xs text-[#2B2622] font-semibold block mb-1">Specific Curatorial Notes</label>
+                <label className="text-xs text-[#2B2622] font-semibold block mb-1">Your Message</label>
                 <textarea
                   rows={3}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Mention any delivery timelines, framing requests, or private escrow instructions..."
+                  placeholder="Write your questions or notes here..."
                   className="w-full px-4 py-3 rounded-xl bg-white border border-[#B68D40]/30 text-xs focus:outline-none focus:border-[#B68D40]"
                 />
               </div>
@@ -205,10 +205,10 @@ export const InquiryModal: React.FC<InquiryModalProps> = ({
               <div className="pt-3">
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-full bg-[#B68D40] hover:bg-[#A76B3F] text-white font-serif-heading text-xs uppercase tracking-widest font-medium transition-all shadow-lg flex items-center justify-center gap-2"
+                  className="w-full py-4 rounded-full bg-[#B68D40] hover:bg-[#A76B3F] text-white font-serif-heading text-xs uppercase tracking-widest font-medium transition-all shadow-lg flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
-                  <span>Submit Confidential Request</span>
+                  <span>Send Message</span>
                 </button>
               </div>
             </form>

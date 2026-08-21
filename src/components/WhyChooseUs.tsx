@@ -6,28 +6,28 @@ export const WhyChooseUs: React.FC = () => {
   const promises = [
     {
       icon: ShieldCheck,
-      title: 'Authentic Products',
-      description: 'Every artifact is verified via metallurgical XRF analysis, C-14 testing, and microscopic patina inspection.'
+      title: '100% Authentic',
+      description: 'Every antique is inspected and tested by experts to ensure it is completely genuine.'
     },
     {
       icon: Award,
-      title: 'Certified Heritage',
-      description: 'Accompanied by a sealed Museum Certificate of Provenance with unique archival vault serial registration.'
+      title: 'Official Certificate',
+      description: 'Each item comes with an official paper Certificate of Authenticity and serial number.'
     },
     {
       icon: Crown,
-      title: 'Museum Quality',
-      description: 'Selected exclusively by senior antiquarians with decades of curation experience for Sotheby’s & Christie’s.'
+      title: 'Top Quality',
+      description: 'Selected and curated by experienced antique specialists with decades of experience.'
     },
     {
       icon: Globe2,
-      title: 'Worldwide Shipping',
-      description: 'Bespoke wooden crate transport with climate-monitored courier and full door-to-door insurance coverage.'
+      title: 'Safe Worldwide Delivery',
+      description: 'Packed safely in custom protective wooden boxes with free insured shipping to your door.'
     },
     {
       icon: Lock,
-      title: 'Secure Payments',
-      description: 'Discreet institutional wire transfer, attorney escrow holding, and encrypted private acquisition channels.'
+      title: 'Secure & Easy Payment',
+      description: 'Pay safely with Credit Card, Bank Transfer, or Cash on Delivery with full buyer protection.'
     }
   ];
 
@@ -36,14 +36,14 @@ export const WhyChooseUs: React.FC = () => {
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-16">
         <span className="text-xs uppercase font-mono tracking-[0.3em] text-[#B68D40] block mb-2 font-medium">
-          The Heritage Guarantee
+          Our Guarantee
         </span>
         <h2 className="font-serif-heading text-3xl md:text-4xl font-bold text-[#2B2622]">
-          Why Collectors Choose Us
+          Why Buy From Us
         </h2>
         <div className="w-16 h-[2px] bg-[#B68D40] mx-auto mt-4 mb-4" />
         <p className="text-sm text-[#6B6258] font-light">
-          Standards of excellence refined across a century of antiquarian leadership.
+          Trusted by antique lovers and collectors worldwide since 1892.
         </p>
       </div>
 

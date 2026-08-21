@@ -114,35 +114,35 @@ export const MasterpieceSpotlight: React.FC<MasterpieceSpotlightProps> = ({
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#B68D40]/15 border border-[#B68D40]/40 text-[#D9C7AE] text-xs font-mono tracking-widest uppercase mb-4">
               <Sparkles className="w-3.5 h-3.5 text-[#B68D40]" />
-              <span>Curator’s Spotlight Masterpiece</span>
+              <span>Featured Antique of the Week</span>
             </div>
 
             <h2 className="font-serif-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-[#F8F5EF] leading-tight mb-6">
-              The Celestial Dragon <br />
-              <span className="italic font-normal text-[#B68D40]">Imperial Bronze Vessel</span>
+              The Dragon <br />
+              <span className="italic font-normal text-[#B68D40]">Bronze Antique Vase</span>
             </h2>
 
             <p className="text-sm sm:text-base text-[#D9C7AE]/90 font-light leading-relaxed mb-6">
-              Commissioned during the Wanli Era (c. 1620 AD) of the Ming Dynasty for the Imperial Ancestral Temple in Beijing. 
-              Features five-claw imperial dragon handles chasing the flaming pearl amidst repoussé cloud motifs, cast in rich copper-gold bronze.
+              Made in 1620 during the Ming Dynasty for a royal palace in Beijing. 
+              Features hand-carved dragon handles and cloud designs made with heavy gold-coated bronze.
             </p>
 
             {/* Quick Specs Grid */}
             <div className="grid grid-cols-2 gap-4 w-full mb-8 p-5 rounded-2xl bg-[#2A3036] border border-[#B68D40]/30">
               <div>
-                <span className="text-[10px] text-[#D9C7AE]/60 uppercase tracking-widest block font-mono">Era & Reign</span>
+                <span className="text-[10px] text-[#D9C7AE]/60 uppercase tracking-widest block font-mono">Period / Year</span>
                 <span className="text-sm font-semibold text-[#F8F5EF]">Ming Dynasty (c. 1620 AD)</span>
               </div>
               <div>
-                <span className="text-[10px] text-[#D9C7AE]/60 uppercase tracking-widest block font-mono">Metallurgy</span>
-                <span className="text-sm font-semibold text-[#F8F5EF]">Gold-Fired Cast Bronze</span>
+                <span className="text-[10px] text-[#D9C7AE]/60 uppercase tracking-widest block font-mono">Material</span>
+                <span className="text-sm font-semibold text-[#F8F5EF]">Gold-Coated Cast Bronze</span>
               </div>
               <div>
-                <span className="text-[10px] text-[#D9C7AE]/60 uppercase tracking-widest block font-mono">Height & Weight</span>
+                <span className="text-[10px] text-[#D9C7AE]/60 uppercase tracking-widest block font-mono">Size & Weight</span>
                 <span className="text-sm font-semibold text-[#F8F5EF]">58cm • 18.6 kg</span>
               </div>
               <div>
-                <span className="text-[10px] text-[#D9C7AE]/60 uppercase tracking-widest block font-mono">Valuation</span>
+                <span className="text-[10px] text-[#D9C7AE]/60 uppercase tracking-widest block font-mono">Price</span>
                 <span className="text-sm font-bold text-[#B68D40] font-serif-heading">$92,000</span>
               </div>
             </div>
@@ -151,15 +151,15 @@ export const MasterpieceSpotlight: React.FC<MasterpieceSpotlightProps> = ({
             <div className="flex flex-wrap items-center gap-4">
               <button
                 onClick={() => onSelectArtifact(masterpiece)}
-                className="px-8 py-4 rounded-full bg-[#B68D40] text-[#F8F5EF] font-serif-heading font-medium text-xs sm:text-sm tracking-wider uppercase shadow-xl hover:bg-[#A76B3F] transition-all flex items-center gap-2"
+                className="px-8 py-4 rounded-full bg-[#B68D40] text-[#F8F5EF] font-serif-heading font-medium text-xs sm:text-sm tracking-wider uppercase shadow-xl hover:bg-[#A76B3F] transition-all flex items-center gap-2 cursor-pointer"
               >
                 <Eye className="w-4 h-4" />
-                <span>Inspect Masterpiece Details</span>
+                <span>View Item Details</span>
               </button>
 
               <div className="flex items-center gap-2 text-xs text-[#D9C7AE]/70 font-mono">
                 <ShieldCheck className="w-4 h-4 text-[#B68D40]" />
-                <span>UNESCO Compliant Heritage</span>
+                <span>100% Certified Authentic</span>
               </div>
             </div>
 

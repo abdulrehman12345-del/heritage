@@ -47,14 +47,13 @@ export const CertificateVerifier: React.FC<CertificateVerifierProps> = ({
 
         <div className="max-w-3xl mx-auto text-center mb-10">
           <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#B68D40] block mb-2 font-medium">
-            Archival Provenance Vault
+            Official Verification
           </span>
           <h2 className="font-serif-heading text-3xl md:text-4xl font-bold text-[#2B2622]">
-            Certificate Authenticity Verification
+            Check Certificate & Authenticity
           </h2>
           <p className="text-sm text-[#6B6258] mt-3 font-light leading-relaxed">
-            Verify any Heritage Antiques Certificate of Authenticity against our secure archival vault ledger. 
-            Access carbon-dating certificates, X-ray fluorescence metallurgical scans, and ownership records.
+            Enter your Certificate Number below to verify your antique's history, official registration, and authenticity details.
           </p>
         </div>
 
@@ -68,21 +67,21 @@ export const CertificateVerifier: React.FC<CertificateVerifierProps> = ({
               type="text"
               value={inputCode}
               onChange={(e) => setInputCode(e.target.value)}
-              placeholder="Enter Vault Code (e.g. HA-1840-FALCON)"
+              placeholder="Enter Certificate Code (e.g. HA-1840-FALCON)"
               className="flex-1 bg-transparent px-2 py-2 text-sm font-mono text-[#2B2622] placeholder:text-[#6B6258]/50 focus:outline-none uppercase"
             />
             <button
               onClick={() => handleVerify()}
-              className="px-6 py-3 rounded-full bg-[#B68D40] hover:bg-[#A76B3F] text-[#F8F5EF] font-serif-heading text-xs uppercase tracking-wider font-medium transition-all flex items-center gap-2 shadow-md"
+              className="px-6 py-3 rounded-full bg-[#B68D40] hover:bg-[#A76B3F] text-[#F8F5EF] font-serif-heading text-xs uppercase tracking-wider font-medium transition-all flex items-center gap-2 shadow-md cursor-pointer"
             >
               <Search className="w-4 h-4" />
-              <span>Verify</span>
+              <span>Verify Code</span>
             </button>
           </div>
 
           {/* Sample Codes */}
           <div className="flex flex-wrap items-center justify-center gap-2 mt-4">
-            <span className="text-xs text-[#6B6258] font-mono mr-1">Sample Vault Keys:</span>
+            <span className="text-xs text-[#6B6258] font-mono mr-1">Sample Codes:</span>
             {sampleCodes.map((code) => (
               <button
                 key={code}
@@ -90,7 +89,7 @@ export const CertificateVerifier: React.FC<CertificateVerifierProps> = ({
                   setInputCode(code);
                   handleVerify(code);
                 }}
-                className={`px-3 py-1 rounded-full text-[11px] font-mono transition-all ${
+                className={`px-3 py-1 rounded-full text-[11px] font-mono transition-all cursor-pointer ${
                   inputCode.toUpperCase() === code
                     ? 'bg-[#B68D40] text-white'
                     : 'bg-[#F8F5EF] text-[#6B6258] hover:text-[#B68D40] border border-[#B68D40]/20'
@@ -119,8 +118,8 @@ export const CertificateVerifier: React.FC<CertificateVerifierProps> = ({
                   <CheckCircle className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] text-[#A76B3F] font-mono uppercase tracking-widest block font-bold">Verification Status</span>
-                  <span className="font-serif-heading text-sm font-bold text-[#2B2622]">100% Authentic Archival Entry</span>
+                  <span className="text-[10px] text-[#A76B3F] font-mono uppercase tracking-widest block font-bold">Status</span>
+                  <span className="font-serif-heading text-sm font-bold text-[#2B2622]">100% Genuine & Verified</span>
                 </div>
               </div>
               <span className="px-3 py-1 rounded-full bg-[#B68D40]/10 text-[#B68D40] text-xs font-mono font-bold">
@@ -152,10 +151,10 @@ export const CertificateVerifier: React.FC<CertificateVerifierProps> = ({
                 <div className="mt-4 flex items-center gap-3">
                   <button
                     onClick={() => onSelectArtifact(searchedArtifact)}
-                    className="px-4 py-2 rounded-full bg-[#B68D40] text-white text-xs font-serif-heading tracking-wider uppercase hover:bg-[#A76B3F] transition-all flex items-center gap-1.5"
+                    className="px-4 py-2 rounded-full bg-[#B68D40] text-white text-xs font-serif-heading tracking-wider uppercase hover:bg-[#A76B3F] transition-all flex items-center gap-1.5 cursor-pointer"
                   >
                     <FileText className="w-3.5 h-3.5" />
-                    <span>View Certificate Details</span>
+                    <span>View Product Details</span>
                   </button>
                   <span className="text-xs text-[#A76B3F] font-mono font-bold">{searchedArtifact.priceFormatted}</span>
                 </div>

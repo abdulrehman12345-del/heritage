@@ -135,8 +135,8 @@ export const Hero: React.FC<HeroProps> = ({
               {/* Image Frame Container */}
               <div className="relative h-[280px] sm:h-[420px] lg:h-[490px] w-full rounded-[16px] sm:rounded-[24px] overflow-hidden bg-[#15181C]">
                 <img
-                  src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&q=70&w=800"
-                  alt="Edo Period Imperial Bronze Falcon"
+                  src="/golden_horse.jpg"
+                  alt="Imperial Gilded Bronze Horse Sculpture"
                   decoding="async"
                   className="w-full h-full object-cover object-center transform group-hover:scale-105 transition-transform duration-700 filter brightness-95 contrast-105"
                   referrerPolicy="no-referrer"
@@ -154,7 +154,7 @@ export const Hero: React.FC<HeroProps> = ({
 
                   <div className="flex items-center gap-1 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-full bg-[#1F2328]/85 backdrop-blur-md border border-[#B68D40]/50 text-[#D9C7AE] text-[8.5px] sm:text-[10px] font-mono tracking-wider shadow-md">
                     <ShieldCheck className="w-3 h-3 text-[#B68D40] shrink-0" />
-                    <span>HA-1840</span>
+                    <span>HA-100K</span>
                   </div>
                 </div>
 
@@ -162,7 +162,7 @@ export const Hero: React.FC<HeroProps> = ({
                 <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-6 sm:left-6 sm:right-6 text-white bg-[#1F2328]/95 backdrop-blur-md p-3 sm:p-5 rounded-lg sm:rounded-2xl border border-[#B68D40]/30 shadow-xl">
                   <div className="flex items-center justify-between gap-2 mb-1">
                     <span className="text-[#D9C7AE] text-[8.5px] sm:text-[11px] uppercase tracking-widest font-mono truncate">
-                      Edo Period • Japan c. 1840 AD
+                      Imperial Dynastic Collection • c. 1780 AD
                     </span>
                     <span className="text-[8.5px] sm:text-[10px] font-mono text-[#B68D40] uppercase shrink-0">
                       Vault Verified
@@ -170,7 +170,7 @@ export const Hero: React.FC<HeroProps> = ({
                   </div>
 
                   <h3 className="font-serif-heading text-sm sm:text-xl md:text-2xl font-semibold text-[#F8F5EF] group-hover:text-[#B68D40] transition-colors leading-snug truncate">
-                    Imperial Bronze Falcon
+                    Imperial Gilded Horse Sculpture
                   </h3>
 
                   <div className="flex items-center justify-between mt-2 pt-2 border-t border-white/15">
@@ -178,7 +178,7 @@ export const Hero: React.FC<HeroProps> = ({
                       <ShieldCheck className="w-3 h-3 text-[#B68D40]" />
                       <span>Certified</span>
                     </div>
-                    <span className="font-serif-heading text-base sm:text-xl font-bold text-[#B68D40]">$34,500</span>
+                    <span className="font-serif-heading text-base sm:text-xl font-bold text-[#B68D40]">$100,000</span>
                   </div>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'motion/react';
 import { EmblemLogo } from './EmblemLogo';
-import { Menu, X, Compass, ShieldCheck, UserCheck, Heart } from 'lucide-react';
+import { Menu, X, Compass, ShieldCheck, UserCheck, Heart, ShoppingBag } from 'lucide-react';
 
 interface NavbarProps {
   activeCategory: string;
@@ -13,6 +13,8 @@ interface NavbarProps {
   customerUser?: any;
   savedCount?: number;
   onOpenSavedModal?: () => void;
+  cartCount?: number;
+  onOpenCart?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -24,7 +26,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenCustomerAuth,
   customerUser,
   savedCount = 0,
-  onOpenSavedModal
+  onOpenSavedModal,
+  cartCount = 0,
+  onOpenCart
 }) => {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
@@ -67,13 +71,13 @@ export const Navbar: React.FC<NavbarProps> = ({
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1.0] }}
-      className="absolute top-2 sm:top-4 inset-x-2 sm:inset-x-6 md:inset-x-8 z-50 flex items-center justify-center pointer-events-none max-w-full"
+      className="absolute top-2 sm:top-3.5 inset-x-2 sm:inset-x-4 md:inset-x-6 z-50 flex items-center justify-center pointer-events-none max-w-full"
     >
       <div
-        className={`pointer-events-auto w-full max-w-7xl min-h-[50px] sm:min-h-[72px] rounded-full px-3.5 sm:px-6 py-1.5 sm:py-2 flex items-center justify-between gap-2 sm:gap-4 transition-all duration-300 glass-nav overflow-hidden ${
+        className={`pointer-events-auto w-full max-w-5xl lg:max-w-6xl min-h-[44px] sm:min-h-[58px] rounded-full px-3 sm:px-5 py-1 sm:py-1.5 flex items-center justify-between gap-2 sm:gap-3 transition-all duration-300 glass-nav overflow-hidden ${
           isAtTop
-            ? 'shadow-xl border-opacity-50'
-            : 'shadow-2xl border-opacity-80 bg-[#121417]/98 backdrop-blur-2xl'
+            ? 'shadow-lg border-opacity-50'
+            : 'shadow-xl border-opacity-80 bg-[#121417]/98 backdrop-blur-2xl'
         }`}
       >
         {/* Logo */}
@@ -84,22 +88,21 @@ export const Navbar: React.FC<NavbarProps> = ({
             onNavigateSection('hero');
           }}
         >
-          <EmblemLogo variant="dark" size="sm" className="sm:hidden flex items-center" />
-          <EmblemLogo variant="dark" size="md" className="hidden sm:flex items-center" />
+          <EmblemLogo variant="dark" size="sm" className="flex items-center" />
         </div>
 
-        {/* Desktop Navigation Links (XL screens 1280px+) */}
-        <nav className="hidden xl:flex items-center gap-2 2xl:gap-6 shrink-0">
+        {/* Desktop Navigation Links (LG screens 1024px+) */}
+        <nav className="hidden lg:flex items-center gap-1.5 xl:gap-3 shrink-0">
           {navItems.map((item) => {
             const isActive = item.category ? activeCategory === item.category : false;
             return (
               <motion.button
                 key={item.label}
                 onClick={() => handleNavClick(item)}
-                whileHover={{ scale: 1.08, y: -2 }}
+                whileHover={{ scale: 1.05, y: -1 }}
                 whileTap={{ scale: 0.95 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                className={`group relative px-3 py-1.5 text-sm 2xl:text-base font-semibold tracking-wide transition-colors duration-200 whitespace-nowrap cursor-pointer ${
+                className={`group relative px-2.5 py-1 text-xs xl:text-sm font-semibold tracking-wide transition-colors duration-200 whitespace-nowrap cursor-pointer ${
                   isActive
                     ? 'text-[#FFE270] font-bold'
                     : 'text-[#E6DFD5] hover:text-[#FFE270]'
@@ -109,7 +112,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 
                 {/* Dust Neon Golden Glowing Underline on Hover & Active */}
                 <span
-                  className={`absolute -bottom-1 left-1 right-1 h-[3px] rounded-full bg-gradient-to-r from-[#B8860B] via-[#FFE270] to-[#B8860B] shadow-[0_0_12px_rgba(255,226,112,0.95)] transition-all duration-300 transform origin-left ${
+                  className={`absolute -bottom-0.5 left-1 right-1 h-[2px] rounded-full bg-gradient-to-r from-[#B8860B] via-[#FFE270] to-[#B8860B] shadow-[0_0_8px_rgba(255,226,112,0.9)] transition-all duration-300 transform origin-left ${
                     isActive
                       ? 'scale-x-100 opacity-100'
                       : 'scale-x-0 opacity-0 group-hover:scale-x-100 group-hover:opacity-100'
@@ -121,19 +124,36 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* Right Actions: Responsive Actions Layout */}
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {onOpenSavedModal && (
             <motion.button
-              whileHover={{ scale: 1.08 }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onOpenSavedModal}
-              className="relative p-2 sm:p-2.5 rounded-full bg-[#22272E] hover:bg-[#2C333B] text-[#DECFAF] border border-[#A87C32]/40 transition-all flex items-center justify-center shadow-md cursor-pointer shrink-0"
+              className="relative p-1.5 sm:p-2 rounded-full bg-[#22272E] hover:bg-[#2C333B] text-[#DECFAF] border border-[#A87C32]/40 transition-all flex items-center justify-center shadow-sm cursor-pointer shrink-0"
               title="View Collector Saved Shortlist"
             >
-              <Heart className={`w-4 h-4 ${savedCount > 0 ? 'text-[#FFE270] fill-[#FFE270]' : 'text-[#DECFAF]'}`} />
+              <Heart className={`w-3.5 h-3.5 ${savedCount > 0 ? 'text-[#FFE270] fill-[#FFE270]' : 'text-[#DECFAF]'}`} />
               {savedCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-gradient-to-r from-[#B8860B] to-[#FFE270] text-[#121417] text-[10px] font-bold font-mono flex items-center justify-center shadow-md">
+                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-gradient-to-r from-[#B8860B] to-[#FFE270] text-[#121417] text-[9px] font-bold font-mono flex items-center justify-center shadow-md">
                   {savedCount}
+                </span>
+              )}
+            </motion.button>
+          )}
+
+          {onOpenCart && (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onOpenCart}
+              className="relative p-1.5 sm:p-2 rounded-full bg-[#22272E] hover:bg-[#2C333B] text-[#DECFAF] border border-[#A87C32]/40 transition-all flex items-center justify-center shadow-sm cursor-pointer shrink-0"
+              title="View Acquisition Cart"
+            >
+              <ShoppingBag className={`w-3.5 h-3.5 ${cartCount > 0 ? 'text-[#FFE270]' : 'text-[#DECFAF]'}`} />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-gradient-to-r from-[#B8860B] to-[#FFE270] text-[#121417] text-[9px] font-bold font-mono flex items-center justify-center shadow-md">
+                  {cartCount}
                 </span>
               )}
             </motion.button>
@@ -141,36 +161,36 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {onOpenCustomerAuth && (
             <motion.button
-              whileHover={{ scale: 1.03 }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               onClick={onOpenCustomerAuth}
-              className="hidden sm:flex px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full bg-[#22272E] hover:bg-[#2C333B] text-[#DECFAF] hover:text-[#FFE270] text-xs font-semibold uppercase tracking-wider border border-[#A87C32]/40 transition-all items-center gap-1.5 sm:gap-2 shadow-md whitespace-nowrap cursor-pointer"
+              className="hidden sm:flex px-2.5 py-1 sm:py-1.5 rounded-full bg-[#22272E] hover:bg-[#2C333B] text-[#DECFAF] hover:text-[#FFE270] text-[11px] font-semibold uppercase tracking-wider border border-[#A87C32]/40 transition-all items-center gap-1.5 shadow-sm whitespace-nowrap cursor-pointer"
               title="Customer Login & Signup"
             >
-              <UserCheck className="w-3.5 h-3.5 text-[#FFE270] shrink-0" />
-              <span className="max-w-[100px] md:max-w-[130px] truncate">
+              <UserCheck className="w-3 h-3 text-[#FFE270] shrink-0" />
+              <span className="max-w-[90px] md:max-w-[120px] truncate">
                 {customerUser ? (customerUser.fullName || 'Customer') : 'Login'}
               </span>
             </motion.button>
           )}
 
           <motion.button
-            whileHover={{ y: -1, scale: 1.03 }}
+            whileHover={{ y: -1, scale: 1.02 }}
             whileTap={{ scale: 0.97 }}
             onClick={onExploreClick}
-            className="hidden sm:flex group relative px-3.5 sm:px-5 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-[#A87C32] via-[#966C2A] to-[#8C5D26] text-white font-bold text-xs tracking-wider uppercase shadow-lg hover:shadow-[0_0_20px_rgba(168,124,50,0.5)] transition-all duration-300 items-center gap-1.5 whitespace-nowrap cursor-pointer border border-[#FFE270]/30"
+            className="hidden sm:flex group relative px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-gradient-to-r from-[#A87C32] via-[#966C2A] to-[#8C5D26] text-white font-bold text-[11px] tracking-wider uppercase shadow-md hover:shadow-[0_0_15px_rgba(168,124,50,0.4)] transition-all duration-300 items-center gap-1.5 whitespace-nowrap cursor-pointer border border-[#FFE270]/30"
           >
-            <Compass className="w-3.5 h-3.5 text-[#FFE270] group-hover:rotate-45 transition-transform duration-500 shrink-0" />
+            <Compass className="w-3 h-3 text-[#FFE270] group-hover:rotate-45 transition-transform duration-500 shrink-0" />
             <span>Explore</span>
           </motion.button>
 
           {/* Mobile & Tablet Hamburger Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="xl:hidden p-1.5 sm:p-2.5 rounded-full bg-[#22272E] border border-[#A87C32]/40 text-[#FFE270] hover:text-white transition-colors shrink-0 flex items-center justify-center cursor-pointer"
+            className="lg:hidden p-1.5 sm:p-2 rounded-full bg-[#22272E] border border-[#A87C32]/40 text-[#FFE270] hover:text-white transition-colors shrink-0 flex items-center justify-center cursor-pointer"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
+            {mobileMenuOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
           </button>
         </div>
       </div>
@@ -200,6 +220,19 @@ export const Navbar: React.FC<NavbarProps> = ({
             ))}
 
             <div className="pt-3 border-t border-[#A87C32]/30 mt-1 flex flex-col gap-2.5">
+              {onOpenCart && (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onOpenCart();
+                  }}
+                  className="w-full py-3 rounded-xl bg-[#22272E] text-[#DECFAF] font-semibold text-xs tracking-wider uppercase border border-[#A87C32]/40 flex items-center justify-center gap-2 cursor-pointer hover:bg-[#2C333B]"
+                >
+                  <ShoppingBag className={`w-4 h-4 ${cartCount > 0 ? 'text-[#FFE270]' : 'text-[#DECFAF]'}`} />
+                  <span>Acquisition Cart ({cartCount})</span>
+                </button>
+              )}
+
               {onOpenSavedModal && (
                 <button
                   onClick={() => {

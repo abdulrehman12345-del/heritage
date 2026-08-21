@@ -3,30 +3,30 @@ import { Artifact, Testimonial } from '../types';
 export const ARTIFACTS_DATA: Artifact[] = [
   {
     id: 'ha-01',
-    title: 'Edo Period Imperial Bronze Falcon',
+    title: 'Imperial Gilded Bronze Horse Sculpture',
     category: 'Animal Statues',
-    era: 'Edo Period, Japan',
-    origin: 'Kyoto, Japan',
-    periodYear: 'c. 1840 AD',
-    price: 34500,
-    priceFormatted: '$34,500',
-    image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=70&w=600&auto=format&fit=crop',
+    era: 'Imperial Dynastic Era',
+    origin: 'Vienna, Austria',
+    periodYear: 'c. 1780 AD',
+    price: 100000,
+    priceFormatted: '$100,000',
+    image: '/golden_horse.jpg',
     secondaryImages: [
-      'https://images.unsplash.com/photo-1544717305-2782549b5136?q=70&w=400&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=70&w=400&auto=format&fit=crop'
+      '/golden_horse.jpg',
+      'https://images.unsplash.com/photo-1544717305-2782549b5136?q=70&w=400&auto=format&fit=crop'
     ],
-    dimensions: '42cm H x 28cm W x 19cm D',
-    weight: '8.4 kg',
-    material: 'Cast Bronze with Dark Gold Patina & Hand Chiselled Plumage',
-    condition: 'Exceptional museum grade preservation with natural verdigris highlights.',
-    certificateNumber: 'HA-1840-FALCON',
-    description: 'A sublime Edo period bronze falcon sculpture featuring meticulously hand-chiselled feather details, sharp expressive eyes, and a rich dark honey patina earned over nearly two centuries of private reverence.',
-    curatorNotes: 'Comes from a prominent Kyoto samurai estate. The falcon was revered in Edo Japan as a symbol of nobility, keen vision, and decisive leadership. Metal composition testing confirms high copper content with gold leaf traces.',
+    dimensions: '38cm H x 46cm L x 18cm W',
+    weight: '11.8 kg',
+    material: 'Gilded Cast Bronze on Polished Italian Marble Plinth',
+    condition: 'Pristine museum preservation with original lustrous gold leaf patina.',
+    certificateNumber: 'HA-100K-HORSE',
+    description: 'An extraordinary museum-grade antique sculpture depicting a noble golden mare with flowing mane and a foal beneath her arch, set upon a solid polished Italian marble plinth. Cast in bronze with opulent gold leaf gilding.',
+    curatorNotes: 'Originating from an aristocratic Viennese estate. Represents equine nobility and timeless maternal protection. Certified composition shows high-purity bronze with authentic historic fire-gilding.',
     provenance: [
-      { year: '1840', event: 'Commissioned by Daimyo Clan of Yamashiro Province', location: 'Kyoto, Japan' },
-      { year: '1912', event: 'Acquired by Matsukata Private Art Collection', location: 'Tokyo, Japan' },
-      { year: '1978', event: 'Cataloged at Sotheby’s Asian Art Auction', location: 'London, UK' },
-      { year: '2024', event: 'Acquired into Heritage Antiques Collection', location: 'Geneva, Switzerland' }
+      { year: '1780', event: 'Crafted for Imperial Equestrian Salon', location: 'Vienna, Austria' },
+      { year: '1924', event: 'Preserved in Private European Antiquities Trust', location: 'Salzburg, Austria' },
+      { year: '1988', event: 'Exhibited at Fine Art Heritage Exposition', location: 'Zurich, Switzerland' },
+      { year: '2024', event: 'Acquired into Heritage Antiques Private Vault', location: 'Geneva, Switzerland' }
     ],
     featured: true
   },
@@ -129,16 +129,15 @@ export const ARTIFACTS_DATA: Artifact[] = [
     ],
     dimensions: '48cm H x 30cm Diameter',
     weight: '11.5 kg',
-    material: 'Heavy Tinned Copper with Calligraphic Engravings & Floral Arabesque',
-    condition: 'Excellent historical patina showing warm copper glints under tinned coat.',
+    material: 'Heavy Copper with Hand-Engraved Persian Poetry & Flower Patterns',
+    condition: 'Great antique condition with warm copper shine.',
     certificateNumber: 'HA-1680-COPPER',
-    description: 'A masterpiece of Safavid metalworking, hand-hammered from pure copper and elaborately engraved with Persian poetry calligraphy, gazelle hunts, and lush palmette bands.',
-    curatorNotes: 'Inscribed with verses from Hafez celebrating light and everlasting wisdom. The intricate repoussé technique exemplifies Isfahan artisan guild mastery during Shah Abbas II rule.',
+    description: 'A genuine 17th-century copper urn from Persia. Made by hand with detailed engravings of poetry and traditional flower patterns.',
+    curatorNotes: 'Original 17th-century Persian copper piece. Fully authentic and tested.',
     provenance: [
-      { year: '1680', event: 'Crafted in Isfahan Royal Bazaar', location: 'Isfahan, Persia' },
-      { year: '1921', event: 'Acquired by British Orientalist Scholar', location: 'Tehran, Iran' },
-      { year: '1985', event: 'Inherited by Oxford Private Estate', location: 'Oxford, UK' },
-      { year: '2024', event: 'Offered at Heritage Antiques Vault', location: 'London, UK' }
+      { year: '1680', event: 'Crafted in Isfahan, Persia', location: 'Isfahan, Persia' },
+      { year: '1921', event: 'Purchased by collector in London', location: 'London, UK' },
+      { year: 'Present', event: 'Stored in Heritage Vault with Authenticity Certificate', location: 'London, UK' }
     ],
     featured: false
   },
@@ -157,25 +156,24 @@ export const ARTIFACTS_DATA: Artifact[] = [
     ],
     dimensions: '46cm H x 26cm W x 18cm D',
     weight: '13.1 kg',
-    material: 'Panchaloha Five-Metal Bronze Alloy (Gold, Silver, Copper, Zinc, Lead)',
-    condition: 'Superb classical smooth patina with ancient altar ritual oil sheen.',
+    material: 'Traditional Five-Metal Sacred Bronze (Gold, Silver, Copper, Zinc, Lead)',
+    condition: 'Excellent smooth finish with original altar shine.',
     certificateNumber: 'HA-1150-GANESHA',
-    description: 'A celebrated Chola bronze sculpture depicting Nrutta Ganesha dancing atop a lotus pedestal. Cast using the ancient Cire Perdue (lost wax) process, capturing rhythmic grace, fluid trunk curve, and sacred axe & sweets accessories.',
-    curatorNotes: 'Chola bronzes are world-renowned for their unmatched divine grace and metallurgical purity. Certified by Indian Art Conservation Laboratory as authentic 12th Century Chola period casting.',
+    description: 'An ancient 12th-century bronze statue of Dancing Ganesha standing on a lotus base. Hand-cast using the lost-wax method, showing graceful movement and sacred symbols.',
+    curatorNotes: 'Authentic 12th-century Indian bronze. Tested and verified for museum-level quality.',
     provenance: [
-      { year: 'c. 1150 AD', event: 'Consecrated in Tanjore Temple Shrine', location: 'Tamil Nadu, India' },
-      { year: '1910', event: 'Entered Colonial Estate Collection', location: 'Madras, India' },
-      { year: '1962', event: 'Acquired by French Indology Society Founder', location: 'Pondicherry / Paris' },
-      { year: '2023', event: 'Consigned to Heritage Antiques', location: 'Geneva, Switzerland' }
+      { year: 'c. 1150 AD', event: 'Made for temple shrine in South India', location: 'Tamil Nadu, India' },
+      { year: '1962', event: 'Preserved in private collection in Paris', location: 'Paris, France' },
+      { year: 'Present', event: 'Certified in Heritage Vault', location: 'Geneva, Switzerland' }
     ],
     featured: true
   },
   {
     id: 'ha-07',
-    title: 'Gilded Bronze Etruscan Stag Figurine',
+    title: 'Gilded Bronze Ancient Stag Figurine',
     category: 'Animal Statues',
     era: 'Etruscan Civilization',
-    origin: 'Tuscany, Etruria',
+    origin: 'Tuscany, Italy',
     periodYear: 'c. 450 BC',
     price: 52000,
     priceFormatted: '$52,000',
@@ -185,22 +183,21 @@ export const ARTIFACTS_DATA: Artifact[] = [
     ],
     dimensions: '29cm H x 22cm L',
     weight: '4.8 kg',
-    material: 'Solid Cast Bronze with Trace Gold Foil Gilding',
-    condition: 'Museum grade with delicate ancient antler structure preserved intact.',
+    material: 'Solid Bronze with Real Gold Foil Traces',
+    condition: 'Ancient original condition with intact antlers and fine details.',
     certificateNumber: 'HA-0450-STAG',
-    description: 'An exceedingly rare Etruscan bronze votive stag featuring elegant elongated antlers and fine incised geometric torso patterns. Etruscan stag bronzes represented forest spirits and lunar speed.',
-    curatorNotes: 'Metallurgical testing reveals 92% pure copper-bronze with mercury gold fire-gilding remnants around the neck crest. A pristine survival from pre-Roman Italy.',
+    description: 'A very rare ancient bronze deer (stag) statue with long graceful antlers and geometric engravings. Made over 2,400 years ago in ancient Italy.',
+    curatorNotes: 'Verified ancient bronze with original gold foil highlights. Fully tested and certified authentic.',
     provenance: [
-      { year: 'c. 450 BC', event: 'Buried in Etruscan Votive Deposit', location: 'Volterra, Italy' },
-      { year: '1895', event: 'Discovered during agrarian soil turning', location: 'Tuscany, Italy' },
-      { year: '1948', event: 'Documented in Conte Ricasoli Collection', location: 'Florence, Italy' },
-      { year: '2024', event: 'Verified by Heritage Antiques Vault', location: 'Milan, Italy' }
+      { year: 'c. 450 BC', event: 'Created in Ancient Etruria (Italy)', location: 'Tuscany, Italy' },
+      { year: '1948', event: 'Preserved in Florentine private collection', location: 'Florence, Italy' },
+      { year: 'Present', event: 'Secured in Heritage Vault with Certificate', location: 'Milan, Italy' }
     ],
     featured: false
   },
   {
     id: 'ha-08',
-    title: 'Byzantine Hammered Metal Reliquary Casket',
+    title: 'Byzantine Metal Box with Sacred Carvings',
     category: 'Metal Sculptures',
     era: 'Byzantine Empire',
     origin: 'Constantinople',
@@ -213,22 +210,21 @@ export const ARTIFACTS_DATA: Artifact[] = [
     ],
     dimensions: '22cm H x 32cm W x 20cm D',
     weight: '6.5 kg',
-    material: 'Repoussé Copper Alloy with Fire-Gilded Saints Relief',
-    condition: 'Extremely well-preserved lock plate and original interior velvet lining remnant.',
+    material: 'Hand-Hammered Copper Alloy with Gold-Plated Figures',
+    condition: 'Very well preserved with intact vintage latch and box structure.',
     certificateNumber: 'HA-0950-RELIQUARY',
-    description: 'A 10th-Century Byzantine metal reliquary casket adorned with hand-hammered relief figures of archangels and saints framing a central Greek cross latch.',
-    curatorNotes: 'Exhibits quintessential Middle Byzantine imperial court metalwork style. Thermoluminescence and patina chemical analysis confirm authentic medieval Mediterranean origin.',
+    description: 'A 10th-century medieval metal treasure box. It features hand-hammered relief figures of angels and saints with an antique lock.',
+    curatorNotes: 'Authentic 10th-century medieval metalwork. Inspected and verified by experts.',
     provenance: [
-      { year: 'c. 950 AD', event: 'Housed in Imperial Monastery Sanctuary', location: 'Constantinople' },
-      { year: '1204', event: 'Transferred during Fourth Crusade', location: 'Venice, Italy' },
-      { year: '1928', event: 'Acquired by Venetian Noble Family', location: 'Venice, Italy' },
-      { year: '2023', event: 'Curated by Heritage Antiques', location: 'Geneva, Switzerland' }
+      { year: 'c. 950 AD', event: 'Made in ancient Constantinople', location: 'Constantinople' },
+      { year: '1928', event: 'Preserved in private Italian collection', location: 'Venice, Italy' },
+      { year: 'Present', event: 'Secured with Certificate of Authenticity', location: 'Geneva, Switzerland' }
     ],
     featured: false
   },
   {
     id: 'ha-09',
-    title: 'Renaissance Copper & Bronze Ritual Amphora',
+    title: 'Renaissance Copper & Bronze Two-Handled Vase',
     category: 'Antique Vases',
     era: 'Italian Renaissance',
     origin: 'Florence, Italy',
@@ -241,22 +237,21 @@ export const ARTIFACTS_DATA: Artifact[] = [
     ],
     dimensions: '52cm H x 29cm W',
     weight: '10.2 kg',
-    material: 'Hammered Copper Body with Cast Bronze Satyr Handles',
-    condition: 'Rich warm copper patina with deep bronze highlights.',
+    material: 'Hammered Copper Body with Solid Cast Bronze Handles',
+    condition: 'Warm natural copper and bronze finish, strong and undamaged.',
     certificateNumber: 'HA-1520-AMPHORA',
-    description: 'A high Renaissance ceremonial amphora created in Florence. Features twin cast bronze satyr handles grasping the rim, while the copper body is hand-chased with acanthus scrolls and mythological sea beasts.',
-    curatorNotes: 'Style attributed to the circle of Andrea del Verrocchio metalworking workshops. Perfect synthesis of classical Roman revival and Renaissance foundry brilliance.',
+    description: 'A beautiful 16th-century Italian Renaissance vase. Features two solid bronze sculpted handles and a hand-shaped copper body with classical flower carvings.',
+    curatorNotes: 'Genuine 16th-century Renaissance piece made in Florence. Authenticated by specialists.',
     provenance: [
-      { year: '1520', event: 'Commissioned for Medici Suburban Villa', location: 'Florence, Italy' },
-      { year: '1870', event: 'Purchased by Victorian Antiquarian Sir Thomas Hope', location: 'London, UK' },
-      { year: '1982', event: 'Auctioned at Christie’s Fine Decorative Arts', location: 'New York, USA' },
-      { year: '2024', event: 'Added to Heritage Antiques Collection', location: 'London, UK' }
+      { year: '1520', event: 'Created in Florence, Italy', location: 'Florence, Italy' },
+      { year: '1870', event: 'Preserved in London private estate', location: 'London, UK' },
+      { year: 'Present', event: 'Certified in Heritage Vault', location: 'London, UK' }
     ],
     featured: false
   },
   {
     id: 'ha-10',
-    title: 'Historical Ancient Greek Bronze Helmet & Plaque',
+    title: 'Ancient Greek Bronze Warrior Helmet',
     category: 'Historical Pieces',
     era: 'Archaic Greek',
     origin: 'Corinth, Greece',
@@ -269,24 +264,23 @@ export const ARTIFACTS_DATA: Artifact[] = [
     ],
     dimensions: '32cm H x 24cm Depth',
     weight: '2.9 kg',
-    material: 'Sheet Bronze with Incised Eyebrow Borders & Cheek Guard Pin Holes',
-    condition: 'Remarkable structural integrity with vibrant azurite blue-green patina.',
+    material: 'Solid Hammered Sheet Bronze with Eye Slits and Nose Guard',
+    condition: 'Great structural condition with original antique green-blue bronze finish.',
     certificateNumber: 'HA-0520-CORINTH',
-    description: 'An authentic Archaic Greek Corinthian type bronze helmet of magnificent proportions. Hammered from a single ingot of bronze with almond-shaped eye slits and a stylized nasal guard.',
-    curatorNotes: 'A centerpiece artifact of historical warfare. Complete export certification from Ministry of Culture and verified legally compliant provenance documentation dating back to pre-1970 collections.',
+    description: 'An authentic ancient Greek bronze helmet over 2,500 years old. Hammered by hand from a single piece of bronze with classic almond-shaped eye openings.',
+    curatorNotes: 'Genuine ancient Greek helmet. Fully legal, registered, and verified authentic with full documentation.',
     provenance: [
-      { year: 'c. 520 BC', event: 'Votive dedication in Panhellenic sanctuary', location: 'Olympia / Corinth' },
-      { year: '1922', event: 'Discovered in private estate land', location: 'Peloponnese, Greece' },
-      { year: '1968', event: 'Acquired by Dr. Hans Rosenberg Antiquities', location: 'Basel, Switzerland' },
-      { year: '2025', event: 'Available exclusively at Heritage Antiques Vault', location: 'Geneva, Switzerland' }
+      { year: 'c. 520 BC', event: 'Made in Ancient Greece (Corinth)', location: 'Greece' },
+      { year: '1968', event: 'Preserved in Swiss private collection', location: 'Basel, Switzerland' },
+      { year: 'Present', event: 'Secured in Heritage Vault with Certificate', location: 'Geneva, Switzerland' }
     ],
     featured: true
   },
   {
     id: 'ha-11',
-    title: 'Victorian Cast Copper Dragon Candelabra',
+    title: 'Victorian Copper & Bronze Dragon Candle Stand',
     category: 'Decorative Collectibles',
-    era: 'Victorian Gothic Revival',
+    era: 'Victorian Era',
     origin: 'Birmingham, England',
     periodYear: 'c. 1875 AD',
     price: 19800,
@@ -297,25 +291,24 @@ export const ARTIFACTS_DATA: Artifact[] = [
     ],
     dimensions: '62cm H x 38cm W',
     weight: '9.1 kg',
-    material: 'Polished Solid Copper with Darkened Bronze Dragon Base',
-    condition: 'Functions flawlessly with warm hand-buffed copper glow.',
+    material: 'Polished Solid Copper with Sculpted Bronze Dragon Base',
+    condition: 'Works perfectly with a warm, clean hand-polished shine.',
     certificateNumber: 'HA-1875-CANDELABRA',
-    description: 'An imposing five-arm Gothic Revival candelabra featuring winged dragon caryatids upholding candle nozzles, hand-crafted during the height of the English Arts & Crafts movement.',
-    curatorNotes: 'Stamped with foundry mark of Elkington & Co. Birmingham. Celebrates the 19th-Century British obsession with medieval dragon lore and metallic alchemy.',
+    description: 'A grand 5-candle antique candelabra with detailed dragon sculptures holding candle holders. Hand-crafted in 19th-century England.',
+    curatorNotes: 'Stamped with original English maker marks. Fully tested and genuine Victorian piece.',
     provenance: [
-      { year: '1875', event: 'Exhibited at London Industrial Arts Fair', location: 'London, UK' },
-      { year: '1935', event: 'Housed in Manor House Estate', location: 'Cotswolds, UK' },
-      { year: '1998', event: 'Private Collector Acquisition', location: 'Edinburgh, Scotland' },
-      { year: '2024', event: 'Offered at Heritage Antiques Vault', location: 'London, UK' }
+      { year: '1875', event: 'Made in Birmingham, England', location: 'London, UK' },
+      { year: '1935', event: 'Kept in British manor house', location: 'Cotswolds, UK' },
+      { year: 'Present', event: 'Certified in Heritage Vault', location: 'London, UK' }
     ],
     featured: false
   },
   {
     id: 'ha-12',
-    title: 'Ancient Celtic Bronze Boar Totem',
+    title: 'Ancient Celtic Bronze Boar Sculpture',
     category: 'Copper Artifacts',
-    era: 'Iron Age Celtic',
-    origin: 'Gaul (Modern France)',
+    era: 'Ancient Celtic',
+    origin: 'France (Ancient Gaul)',
     periodYear: 'c. 100 BC',
     price: 42000,
     priceFormatted: '$42,000',
@@ -325,16 +318,15 @@ export const ARTIFACTS_DATA: Artifact[] = [
     ],
     dimensions: '18cm H x 28cm L',
     weight: '3.7 kg',
-    material: 'Cast Bronze with Crested Bristle Ridge & Ring Eyes',
-    condition: 'Superb smooth forest-green cuprite crust patina.',
+    material: 'Cast Solid Bronze with Ridge Bristles and Eye Rings',
+    condition: 'Great antique condition with natural smooth green patina.',
     certificateNumber: 'HA-0100-BOAR',
-    description: 'A Celtic military or tribal boar standard finial. The wild boar was the quintessential symbol of Celtic warrior courage, ferocity, and divine forest protection.',
-    curatorNotes: 'Features typical La Tène artistic style with stylized scrollwork along the flank. Authenticated with metallographic microscopic analysis and radiocarbon soil surrounding tests.',
+    description: 'An authentic Celtic bronze wild boar statue over 2,100 years old. In Celtic history, the wild boar was a symbol of courage and strength.',
+    curatorNotes: 'Verified original Celtic bronze sculpture. Tested and confirmed genuine ancient artifact.',
     provenance: [
-      { year: 'c. 100 BC', event: 'Tribal chieftain standard component', location: 'Central Gaul' },
-      { year: '1908', event: 'Excavated near Rhone River valley', location: 'Lyon, France' },
-      { year: '1960', event: 'Acquired by Marquis de La Tour', location: 'Paris, France' },
-      { year: '2024', event: 'Curated by Heritage Antiques Vault', location: 'Geneva, Switzerland' }
+      { year: 'c. 100 BC', event: 'Made in Ancient Gaul', location: 'France' },
+      { year: '1960', event: 'Preserved in private collection in Paris', location: 'Paris, France' },
+      { year: 'Present', event: 'Secured with Official Certificate', location: 'Geneva, Switzerland' }
     ],
     featured: false
   }
@@ -343,25 +335,25 @@ export const ARTIFACTS_DATA: Artifact[] = [
 export const TESTIMONIALS_DATA: Testimonial[] = [
   {
     id: 't-1',
-    quote: 'Heritage Antiques represents the pinnacle of antiquarian stewardship. The Ming Dynasty bronze dragon vase arrived with flawless white-glove transport, complete with pristine archival documentation and metallurgical verification.',
-    author: 'Lord Alistair Sterling',
-    role: 'Senior Trustee, International Antiquities Trust',
+    quote: 'The antique vase arrived safely in perfect packaging with all authenticity certificates and verification reports. Outstanding service and 100% genuine products.',
+    author: 'Alistair Sterling',
+    role: 'Art Collector',
     location: 'London, United Kingdom',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=70&w=150&auto=format&fit=crop'
   },
   {
     id: 't-2',
-    quote: 'Finding certified Hellenistic bronzes with unblemished provenance is remarkably rare today. The team at Heritage Antiques conducts themselves with the rigor of top-tier museum curators and the discretion of private bankers.',
+    quote: 'Finding real, certified bronze antiques with complete history is difficult, but Heritage Antiques makes the entire buying process easy, safe, and transparent.',
     author: 'Dr. Elena Rostova',
-    role: 'Former Curator of Classical Sculpture',
+    role: 'Historian & Antique Enthusiast',
     location: 'Vienna, Austria',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=70&w=150&auto=format&fit=crop'
   },
   {
     id: 't-3',
-    quote: 'The level of craftsmanship, authenticity, and historical transparency offered here is unparalleled. The Edo period bronze falcon is now the centerpiece of our family’s private gallery.',
+    quote: 'The quality of the Japanese bronze falcon is breathtaking. Fast insured delivery and excellent customer support from start to finish.',
     author: 'Henrik Von Bergmann',
-    role: 'Private Art Collector & Patron',
+    role: 'Private Collector',
     location: 'Zurich, Switzerland',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=70&w=150&auto=format&fit=crop'
   }
