@@ -33,6 +33,8 @@ interface AdminDashboardLayoutProps {
   homepageConfig: HomepageCMSConfig;
   websiteSettings: WebsiteSettingsConfig;
   currentUser: AdminUser;
+  theme?: 'light' | 'dark';
+  onToggleTheme?: () => void;
 
   // Handlers
   onAddArtifact: (art: Artifact) => void;
@@ -70,6 +72,8 @@ export const AdminDashboardLayout: React.FC<AdminDashboardLayoutProps> = ({
   homepageConfig,
   websiteSettings,
   currentUser,
+  theme = 'light',
+  onToggleTheme,
   onAddArtifact,
   onUpdateArtifact,
   onDeleteArtifact,
@@ -144,6 +148,8 @@ export const AdminDashboardLayout: React.FC<AdminDashboardLayoutProps> = ({
           onSearchQuery={() => {}}
           unreadInquiriesCount={unreadInquiriesCount}
           recentOrdersCount={recentOrdersCount}
+          theme={theme}
+          onToggleTheme={onToggleTheme}
         />
 
         {/* View Workspace */}

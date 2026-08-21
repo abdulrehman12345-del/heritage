@@ -8,7 +8,9 @@ import {
   User, 
   CheckCircle2, 
   MessageSquare,
-  Sparkles
+  Sparkles,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { AdminUser, Order } from './types';
 
@@ -19,6 +21,8 @@ interface AdminTopbarProps {
   onSearchQuery: (query: string) => void;
   unreadInquiriesCount: number;
   recentOrdersCount: number;
+  theme?: 'light' | 'dark';
+  onToggleTheme?: () => void;
 }
 
 export const AdminTopbar: React.FC<AdminTopbarProps> = ({
@@ -27,7 +31,9 @@ export const AdminTopbar: React.FC<AdminTopbarProps> = ({
   onExitAdmin,
   onSearchQuery,
   unreadInquiriesCount,
-  recentOrdersCount
+  recentOrdersCount,
+  theme = 'light',
+  onToggleTheme
 }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [searchVal, setSearchVal] = useState('');
@@ -75,6 +81,31 @@ export const AdminTopbar: React.FC<AdminTopbarProps> = ({
           <Plus className="w-4 h-4" />
           <span className="hidden sm:inline">Add Product</span>
         </button>
+
+        {/* Day & Night Theme Toggle in Dashboard */}
+        {onToggleTheme && (
+          <button
+            onClick={onToggleTheme}
+            className={`flex items-center gap-2 px-3.5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border shadow-sm cursor-pointer ${
+              theme === 'dark'
+                ? 'bg-[#2A3036] text-[#FFE270] border-[#B68D40]/50 hover:border-[#FFE270]'
+                : 'bg-[#FFFDF8] text-[#B68D40] border-[#B68D40]/30 hover:border-[#B68D40]'
+            }`}
+            title={theme === 'dark' ? 'Switch to Day Theme' : 'Switch to Night Theme'}
+          >
+            {theme === 'dark' ? (
+              <>
+                <Moon className="w-3.5 h-3.5 text-[#FFE270]" />
+                <span className="hidden sm:inline">Night Mode</span>
+              </>
+            ) : (
+              <>
+                <Sun className="w-3.5 h-3.5 text-[#B68D40]" />
+                <span className="hidden sm:inline">Day Mode</span>
+              </>
+            )}
+          </button>
+        )}
 
         {/* View Live Store */}
         <button

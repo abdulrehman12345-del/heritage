@@ -9,6 +9,7 @@ import { WhyChooseUs } from './components/WhyChooseUs';
 import { Testimonials } from './components/Testimonials';
 import { Newsletter } from './components/Newsletter';
 import { Footer } from './components/Footer';
+import { DraggableThemeToggle } from './components/DraggableThemeToggle';
 
 import { ARTIFACTS_DATA } from './data/artifacts';
 import { Artifact, CategoryType } from './types';
@@ -51,6 +52,34 @@ import {
 } from './admin/types';
 
 export default function App() {
+  // Day / Night Theme Mode (persisted in localStorage)
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    try {
+      const saved = localStorage.getItem('ha_theme_mode');
+      if (saved === 'dark' || saved === 'light') return saved;
+      // Default to dark or light
+      return 'light';
+    } catch {
+      return 'light';
+    }
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    try {
+      localStorage.setItem('ha_theme_mode', theme);
+    } catch {}
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
+  };
+
   // Navigation & View Mode State
   const [isAdminView, setIsAdminView] = useState(false);
   const [isAdminAuthOpen, setIsAdminAuthOpen] = useState(false);
@@ -614,6 +643,8 @@ export default function App() {
             homepageConfig={homepageConfig}
             websiteSettings={websiteSettings}
             currentUser={currentUser}
+            theme={theme}
+            onToggleTheme={toggleTheme}
             onAddArtifact={handleAddArtifact}
             onUpdateArtifact={handleUpdateArtifact}
             onDeleteArtifact={handleDeleteArtifact}
@@ -639,6 +670,8 @@ export default function App() {
             onExitAdmin={handleExitAdmin}
             onSelectArtifactToPreviewPublic={handleSelectArtifactToPreviewPublic}
           />
+          {/* Draggable Theme Toggle on Admin Dashboard */}
+          <DraggableThemeToggle theme={theme} onToggleTheme={toggleTheme} />
         </Suspense>
       </ErrorBoundary>
     );
