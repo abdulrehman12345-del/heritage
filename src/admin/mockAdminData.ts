@@ -348,9 +348,9 @@ export const INITIAL_INQUIRIES: CustomerInquiryMessage[] = [
 export const INITIAL_ADMINS: AdminUser[] = [
   {
     id: 'adm-1',
-    name: 'Abdulrehman, Master Curator',
-    email: 'abdulrehman@heritageantiques.com',
-    role: 'Master Curator',
+    name: 'Abdul Rehman Faisal',
+    email: 'abdul..rrehman90123@gmail.com',
+    role: 'Founder & Owner' as any,
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200',
     lastActive: 'Active Now',
     status: 'Active'
@@ -368,12 +368,12 @@ export const INITIAL_ADMINS: AdminUser[] = [
 
 export const INITIAL_HOMEPAGE_CMS: HomepageCMSConfig = {
   heroHeading: 'Own A Piece Of History',
-  heroSubheading: 'Est. 1892 • London',
+  heroSubheading: 'Heritage Antiques',
   heroDescription: 'Curating the world’s most exceptional artifacts. Each piece in our collection is a testament to the master craftsmanship of forgotten eras.',
   heroImage: 'https://images.unsplash.com/photo-1582582621959-48d273528920?auto=format&fit=crop&q=80&w=800',
   featuredCategoryIds: ['cat-1', 'cat-2', 'cat-4'],
-  aboutHeading: 'A Legacy of Provenance & Museum Authenticity',
-  aboutText: 'Founded in Mayfair, London in 1892, Heritage Antiques has spent over a century sourcing, verifying, and preserving extraordinary antiquities for private collectors, museums, and royal estates worldwide.',
+  aboutHeading: 'The Story Behind Heritage Antiques',
+  aboutText: 'Heritage Antiques began with a personal interest in antique pieces and a vision to build a business around something meaningful. Founded by Abdul Rehman Faisal, we connect collectors and enthusiasts with carefully selected pieces at fair and reasonable prices.',
   aboutImage: 'https://images.unsplash.com/photo-1561839561-b13bcfe95249?auto=format&fit=crop&q=80&w=800',
   newsletterTitle: 'The Curator’s Private Dispatch',
   newsletterSubtitle: 'Receive confidential invitations to newly cataloged antiquities before public release.'
@@ -381,16 +381,16 @@ export const INITIAL_HOMEPAGE_CMS: HomepageCMSConfig = {
 
 export const INITIAL_WEBSITE_SETTINGS: WebsiteSettingsConfig = {
   siteName: 'Heritage Antiques',
-  siteTagline: 'Curators of Rare Antiquities & Historic Artifacts',
+  siteTagline: 'Carefully Selected Antiques & Fair Value',
   logoText: 'H',
-  contactEmail: 'curator@heritageantiques.com',
+  contactEmail: 'abdul..rrehman90123@gmail.com',
   contactPhone: '+44 (0) 20 7946 0912',
-  address: '42 Bond Street, Mayfair, London W1S 2XU, United Kingdom',
+  address: 'Heritage Antiques Gallery',
   currency: 'USD ($)',
-  socialInstagram: 'https://instagram.com/heritageantiques',
+  socialInstagram: 'https://www.instagram.com/h_antiques_store/',
   socialPinterest: 'https://pinterest.com/heritageantiques',
   socialLinkedIn: 'https://linkedin.com/company/heritage-antiques',
-  seoTitle: 'Heritage Antiques | Rare Historic Relics & Museum Artifacts',
+  seoTitle: 'Heritage Antiques | Founder Abdul Rehman Faisal',
   seoDescription: 'Discover museum-grade antiquities, ancient bronzes, dynasty vases, and certified relics with complete provenance and white-glove global delivery.',
   enableGuestCheckout: true,
   notifyOnNewOrder: true

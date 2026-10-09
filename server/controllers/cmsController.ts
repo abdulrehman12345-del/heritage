@@ -69,3 +69,52 @@ export const updateWebsiteSettings = async (req: Request, res: Response) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+export const getFounderPhoto = async (req: Request, res: Response) => {
+  try {
+    const fs = await import('fs');
+    const path = await import('path');
+    const photoPath = path.join(process.cwd(), 'public', 'founder.png');
+    if (fs.existsSync(photoPath)) {
+      return res.status(200).json({ success: true, exists: true, url: '/founder.png' });
+    }
+    return res.status(200).json({ success: true, exists: false, url: null });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+export const saveFounderPhoto = async (req: Request, res: Response) => {
+  try {
+    const { image } = req.body;
+    if (!image) {
+      return res.status(400).json({ success: false, message: 'No image data provided' });
+    }
+
+    const fs = await import('fs');
+    const path = await import('path');
+    const publicDir = path.join(process.cwd(), 'public');
+
+    if (!fs.existsSync(publicDir)) {
+      fs.mkdirSync(publicDir, { recursive: true });
+    }
+
+    if (image.startsWith('data:image/')) {
+      const matches = image.match(/^data:image\/([a-zA-Z0-9+]+);base64,(.+)$/);
+      if (matches) {
+        const buffer = Buffer.from(matches[2], 'base64');
+        fs.writeFileSync(path.join(publicDir, 'founder.png'), buffer);
+      }
+    } else if (image.startsWith('http://') || image.startsWith('https://')) {
+      const response = await fetch(image);
+      const arrayBuffer = await response.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+      fs.writeFileSync(path.join(publicDir, 'founder.png'), buffer);
+    }
+
+    res.status(200).json({ success: true, url: '/founder.png' });
+  } catch (error: any) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+

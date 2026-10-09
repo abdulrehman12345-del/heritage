@@ -1,6 +1,6 @@
 import React from 'react';
 import { EmblemLogo } from './EmblemLogo';
-import { ShieldCheck, Mail, Phone, MapPin, Globe, ArrowUp } from 'lucide-react';
+import { ShieldCheck, Mail, Phone, MapPin, Globe, ArrowUp, Instagram } from 'lucide-react';
 
 interface FooterProps {
   onNavigateSection: (sectionId: string) => void;
@@ -99,8 +99,40 @@ export const Footer: React.FC<FooterProps> = ({
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#B68D40] flex-shrink-0" />
-                <span className="font-mono">support@heritage-antiques.com</span>
+                <a
+                  href="mailto:abdul..rrehman90123@gmail.com?subject=Contact%20Heritage%20Antiques"
+                  title="abdul..rrehman90123@gmail.com"
+                  aria-label="Email abdul..rrehman90123@gmail.com"
+                  className="font-mono hover:text-[#B68D40] transition-colors break-all"
+                >
+                  abdul..rrehman90123@gmail.com
+                </a>
               </div>
+            </div>
+
+            {/* Social Connection */}
+            <div className="mt-5 pt-4 border-t border-[#B68D40]/20 flex items-center gap-3">
+              <a
+                href="https://www.instagram.com/h_antiques_store/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="@h_antiques_store on Instagram"
+                aria-label="Visit Instagram profile @h_antiques_store (opens in new tab)"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#2A3036] hover:bg-[#B68D40]/20 border border-[#B68D40]/30 hover:border-[#B68D40] text-[#D9C7AE] hover:text-[#FAF7F2] text-xs font-serif-heading transition-all duration-300 group"
+              >
+                <Instagram className="w-3.5 h-3.5 text-[#B68D40] group-hover:scale-110 transition-transform duration-300 shrink-0" />
+                <span>Instagram</span>
+              </a>
+
+              <a
+                href="mailto:abdul..rrehman90123@gmail.com?subject=Contact%20Heritage%20Antiques"
+                title="Email Us"
+                aria-label="Email Heritage Antiques"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#2A3036] hover:bg-[#B68D40]/20 border border-[#B68D40]/30 hover:border-[#B68D40] text-[#D9C7AE] hover:text-[#FAF7F2] text-xs font-serif-heading transition-all duration-300 group"
+              >
+                <Mail className="w-3.5 h-3.5 text-[#B68D40] group-hover:scale-110 transition-transform duration-300 shrink-0" />
+                <span>Email Us</span>
+              </a>
             </div>
           </div>
 

@@ -1,113 +1,624 @@
-import React from 'react';
-import { motion } from 'motion/react';
-import { ShieldCheck, Award, Crown, Compass } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { 
+  ShieldCheck, 
+  Compass, 
+  Target, 
+  Instagram, 
+  Mail, 
+  Sparkles, 
+  HeartHandshake, 
+  Award,
+  CheckCircle2,
+  ExternalLink,
+  Upload,
+  Lock,
+  Camera,
+  Check,
+  X,
+  Key
+} from 'lucide-react';
 
 export const HeritageStory: React.FC = () => {
+  const [founderPhoto, setFounderPhoto] = useState<string>('');
+  const [photoError, setPhotoError] = useState(false);
+  const [isSetupOpen, setIsSetupOpen] = useState(false);
+  const [urlInput, setUrlInput] = useState('');
+  const [passkeyInput, setPasskeyInput] = useState('');
+  const [isLocked, setIsLocked] = useState(true);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
+  const [uploadError, setUploadError] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    // 1. Check local storage first
+    try {
+      const saved = localStorage.getItem('ha_founder_photo');
+      const locked = localStorage.getItem('ha_founder_photo_locked');
+      if (locked !== null) {
+        setIsLocked(locked === 'true');
+      }
+      if (saved) {
+        setFounderPhoto(saved);
+        setPhotoError(false);
+        return;
+      }
+    } catch {}
+
+    // 2. Check server for /public/founder.png
+    fetch('/api/v1/cms/founder-photo')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.exists && data.url) {
+          setFounderPhoto(data.url);
+          setPhotoError(false);
+        } else {
+          setPhotoError(true);
+        }
+      })
+      .catch(() => {
+        setPhotoError(true);
+      });
+  }, []);
+
+  const handleSavePhoto = async (photoData: string) => {
+    setIsSaving(true);
+    setUploadError('');
+    try {
+      // 1. Save to localStorage
+      localStorage.setItem('ha_founder_photo', photoData);
+      localStorage.setItem('ha_founder_photo_locked', 'true');
+      setIsLocked(true);
+      setFounderPhoto(photoData);
+      setPhotoError(false);
+
+      // 2. Persist to server /public/founder.png
+      await fetch('/api/v1/cms/founder-photo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: photoData }),
+      });
+
+      setUploadSuccess(true);
+      setTimeout(() => {
+        setUploadSuccess(false);
+        setIsSetupOpen(false);
+      }, 1500);
+    } catch (err: any) {
+      setUploadError(err.message || 'Error saving photo');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (!file.type.startsWith('image/')) {
+        setUploadError('Please select a valid image file (JPG, PNG, WEBP).');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result as string;
+        handleSavePhoto(result);
+      };
+      reader.onerror = () => {
+        setUploadError('Failed to read image file.');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleUrlSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!urlInput.trim()) return;
+    handleSavePhoto(urlInput.trim());
+  };
+
   return (
-    <section id="heritage" className="py-24 md:py-36 paper-texture border-t border-[#B68D40]/20">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <section id="heritage" className="py-20 md:py-32 paper-texture border-t border-[#B68D40]/25 relative overflow-hidden">
+      {/* Decorative ambient background glows */}
+      <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#B68D40]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-10 left-10 w-80 h-80 bg-[#A76B3F]/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
-        {/* Top Editorial Quote */}
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
-          <span className="text-xs font-mono uppercase tracking-[0.35em] text-[#B68D40] block mb-3 font-medium">
-            About Our Company
-          </span>
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-20">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#B68D40]/10 border border-[#B68D40]/30 text-[#B68D40] text-xs font-mono uppercase tracking-[0.25em] font-medium mb-4">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>Founder & Brand Heritage</span>
+          </div>
           <h2 className="font-serif-heading text-3xl md:text-5xl lg:text-6xl font-bold text-[#2B2622] leading-tight">
-            Protecting Centuries <br />
-            <span className="italic font-normal text-[#B68D40]">Of World Art & History</span>
+            The Story Behind <br />
+            <span className="italic font-normal text-[#B68D40]">Heritage Antiques</span>
           </h2>
-          <div className="w-20 h-[2px] bg-[#B68D40] mx-auto mt-6 mb-6" />
+          <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#B68D40] to-transparent mx-auto mt-6 mb-6" />
           <p className="text-base md:text-lg text-[#6B6258] font-light leading-relaxed">
-            "We collect, verify, and preserve rare bronze statues, copper artifacts, and historical items from around the world."
+            A venture founded on genuine passion, entrepreneurial vision, and a steadfast commitment to customer trust and fair value.
           </p>
         </div>
 
-        {/* Editorial Split Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        {/* SECTION 1: Meet the Founder & Brand Story Split Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start mb-24">
           
-          {/* Large Left Image Frame (6 cols) */}
+          {/* Founder Portrait & Identity Card (5 cols) */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="lg:col-span-6 relative"
+            className="lg:col-span-5"
           >
-            <div className="relative rounded-[32px] overflow-hidden border border-[#B68D40]/30 shadow-2xl p-3 bg-[#FDFBF7]">
-              <div className="h-[480px] md:h-[560px] w-full rounded-[24px] overflow-hidden bg-[#1F2328]">
-                <img
-                  src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=70&w=600&auto=format&fit=crop"
-                  alt="Ancient Roman Sculpture in Museum Setting"
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover object-center filter contrast-105 brightness-95"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1F2328]/90 via-transparent to-transparent" />
-                
-                {/* Floating Museum Badge */}
-                <div className="absolute bottom-6 left-6 right-6 p-6 rounded-2xl bg-[#1F2328]/90 backdrop-blur-md border border-[#B68D40]/40 text-white">
-                  <p className="font-serif-heading text-lg font-bold text-[#F8F5EF]">Geneva & London Galleries</p>
-                  <p className="text-xs text-[#D9C7AE] font-light mt-1">
-                    Home to over 400 certified animal bronzes, historical sculptures, and copper artifacts preserved in safe condition.
-                  </p>
+            <div className="bg-[#FFFDF8] rounded-[28px] border-2 border-[#B68D40]/30 p-6 md:p-8 shadow-xl relative overflow-hidden">
+              {/* Gold Filigree corner accents */}
+              <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#B68D40]/50" />
+              <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[#B68D40]/50" />
+              <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#B68D40]/50" />
+              <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#B68D40]/50" />
+
+              <div className="text-center mb-6">
+                <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#B68D40] font-semibold">
+                  Meet The Founder
+                </span>
+              </div>
+
+              {/* Founder Photograph Frame */}
+              <div className="relative mx-auto w-60 h-72 sm:w-64 sm:h-80 rounded-[20px] overflow-hidden border-2 border-[#B68D40]/40 shadow-inner bg-[#1F2328] group">
+                {founderPhoto && !photoError ? (
+                  <>
+                    <img
+                      src={founderPhoto}
+                      alt="Abdul Rehman Faisal — Founder of Heritage Antiques"
+                      onError={() => {
+                        setPhotoError(true);
+                      }}
+                      className="w-full h-full object-cover object-center filter contrast-105"
+                      referrerPolicy="no-referrer"
+                    />
+
+                    {/* Permanent Verified Official Founder Seal (Locked - No change or remove option for any visitor) */}
+                    <div 
+                      title="Official Verified Founder Portrait — Authenticated Heritage Antiques"
+                      className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#1F2328]/90 text-[#B68D40] text-[10px] font-mono tracking-wider backdrop-blur-md border border-[#B68D40]/40 flex items-center gap-1.5 shadow-md pointer-events-none select-none"
+                    >
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#B68D40]" />
+                      <span className="font-medium">Verified</span>
+                    </div>
+
+                    {/* Permanent Lock Indicator - completely disables tampering */}
+                    <div 
+                      title="Portrait is permanently locked. No visitor can modify or delete."
+                      className="absolute top-3 left-3 px-2 py-1 rounded-full bg-[#1F2328]/80 text-[#D9C7AE] text-[9px] font-mono tracking-wider backdrop-blur-md border border-[#B68D40]/30 flex items-center gap-1 shadow-sm pointer-events-none select-none"
+                    >
+                      <Lock className="w-3 h-3 text-[#B68D40]" />
+                      <span>Locked</span>
+                    </div>
+
+                    {/* Subtle photo overlay label */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent opacity-90 flex flex-col justify-end p-4 pointer-events-none select-none">
+                      <div className="text-center">
+                        <p className="text-xs font-serif font-bold text-white tracking-wide">Abdul Rehman Faisal</p>
+                        <p className="text-[10px] text-[#D9C7AE] font-mono">Founder of Heritage Antiques</p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  /* Dignified Founder Monogram Seal + One-Time Direct Setup for Founder */
+                  <div className="w-full h-full flex flex-col items-center justify-between p-6 text-center bg-gradient-to-b from-[#2B2622] via-[#1F1C1A] to-[#151312] text-[#F8F5EF]">
+                    <div className="flex-1 flex flex-col items-center justify-center">
+                      <div className="w-20 h-20 rounded-full border-2 border-[#B68D40] flex items-center justify-center bg-[#B68D40]/10 mb-3 shadow-lg">
+                        <span className="font-serif text-2xl font-bold tracking-widest text-[#B68D40]">ARF</span>
+                      </div>
+                      <p className="font-serif-heading font-bold text-base text-[#F8F5EF]">Abdul Rehman Faisal</p>
+                      <p className="text-[10px] text-[#B68D40] uppercase tracking-wider font-mono mt-0.5">Founder</p>
+                      <p className="text-[11px] text-[#A89F91] mt-2 font-light leading-snug">
+                        Heritage Antiques
+                      </p>
+                    </div>
+
+                    {/* Direct Setup Trigger for Abdul Rehman Faisal */}
+                    <button
+                      onClick={() => setIsSetupOpen(true)}
+                      className="w-full mt-2 py-2 px-3 rounded-xl bg-[#B68D40] hover:bg-[#A76B3F] text-white text-xs font-serif font-medium tracking-wide flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer group"
+                    >
+                      <Camera className="w-3.5 h-3.5" />
+                      <span>Attach Founder Photo</span>
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Founder Title & Background */}
+              <div className="mt-6 text-center space-y-2">
+                <h3 className="font-serif-heading text-2xl font-bold text-[#2B2622]">
+                  Abdul Rehman Faisal
+                </h3>
+                <div className="inline-block px-3 py-1 rounded-full bg-[#B68D40]/15 text-[#B68D40] text-xs font-mono font-medium tracking-wide">
+                  Founder of Heritage Antiques
                 </div>
+                <p className="text-xs text-[#6B6258] font-medium tracking-wide">
+                  Businessman and Entrepreneur
+                </p>
+              </div>
+
+              {/* Direct Founder Contact Links */}
+              <div className="mt-6 pt-5 border-t border-[#B68D40]/20 flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a
+                  href="https://www.instagram.com/h_antiques_store/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#F8F5EF] hover:bg-[#B68D40]/10 border border-[#B68D40]/30 text-xs font-medium text-[#2B2622] hover:text-[#B68D40] transition-colors"
+                >
+                  <Instagram className="w-3.5 h-3.5 text-[#B68D40]" />
+                  <span>@h_antiques_store</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+
+                <a
+                  href="mailto:abdul..rrehman90123@gmail.com?subject=Contact%20Heritage%20Antiques%20Founder"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#F8F5EF] hover:bg-[#B68D40]/10 border border-[#B68D40]/30 text-xs font-medium text-[#2B2622] hover:text-[#B68D40] transition-colors"
+                >
+                  <Mail className="w-3.5 h-3.5 text-[#B68D40]" />
+                  <span>Email Founder</span>
+                </a>
               </div>
             </div>
           </motion.div>
 
-          {/* Right Narrative Copy (6 cols) */}
+          {/* Narrative Story & Biography Column (7 cols) */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="lg:col-span-6 flex flex-col items-start"
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="lg:col-span-7 space-y-8"
           >
-            <span className="text-xs font-mono uppercase tracking-widest text-[#A76B3F] mb-3 block">
-              Our Promise
-            </span>
-            
-            <h3 className="font-serif-heading text-2xl md:text-3xl font-bold text-[#2B2622] mb-6 leading-snug">
-              100% Genuine, Verified History, and Safe Delivery.
-            </h3>
+            {/* The Story Behind Heritage Antiques */}
+            <div className="bg-[#FFFDF8] rounded-[28px] border border-[#B68D40]/25 p-6 md:p-8 shadow-sm">
+              <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#A76B3F] font-semibold block mb-2">
+                My Story — Why I Started Heritage Antiques
+              </span>
+              <h3 className="font-serif-heading text-2xl md:text-3xl font-bold text-[#2B2622] mb-6">
+                A Personal Journey & Entrepreneurial Vision
+              </h3>
 
-            <div className="space-y-6 text-sm text-[#6B6258] font-light leading-relaxed mb-8">
-              <p>
-                Founded in 1892, Heritage Antiques helps private collectors, museums, and art lovers find authentic, verified historical antiques.
-              </p>
-              <p>
-                Every statue, bronze sculpture, copper vase, and antique item is carefully tested and inspected by history specialists to guarantee it is 100% genuine.
-              </p>
-            </div>
-
-            {/* Feature Highlights */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full pt-6 border-t border-[#B68D40]/20">
-              <div className="flex items-start gap-3">
-                <div className="p-2.5 rounded-xl bg-[#B68D40]/15 text-[#B68D40] mt-0.5">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-serif-heading font-bold text-sm text-[#2B2622]">Complete Ownership History</h4>
-                  <p className="text-xs text-[#6B6258] mt-0.5 font-light">Each piece includes documented ownership records and paper certificates.</p>
-                </div>
+              <div className="space-y-4 text-sm md:text-[15px] text-[#554D45] font-light leading-relaxed">
+                <p>
+                  "Heritage Antiques began with a personal interest in antique pieces and a vision to build a business around something meaningful."
+                </p>
+                <p>
+                  "I wanted to create a brand for people who understand that antiques are more than decorative objects. They can carry character, craftsmanship, cultural significance, and a sense of history that makes each piece special."
+                </p>
+                <p>
+                  "My goal was to make these pieces more accessible by offering customers a thoughtful selection at reasonable prices, without losing sight of the quality, value, and experience they deserve."
+                </p>
+                <p>
+                  "With hard work, a willingness to learn, and a long-term entrepreneurial mindset, I started Heritage Antiques to turn that vision into reality."
+                </p>
+                <p className="font-normal text-[#2B2622] italic">
+                  "Every step forward is part of a bigger journey: building a brand that people recognize, trust, and feel confident choosing."
+                </p>
               </div>
 
-              <div className="flex items-start gap-3">
-                <div className="p-2.5 rounded-xl bg-[#A76B3F]/15 text-[#A76B3F] mt-0.5">
-                  <Crown className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-serif-heading font-bold text-sm text-[#2B2622]">Expert Verified</h4>
-                  <p className="text-xs text-[#6B6258] mt-0.5 font-light">Inspected and certified by experienced antique specialists.</p>
-                </div>
+              <div className="mt-6 pt-5 border-t border-[#B68D40]/20 flex items-center justify-between text-xs text-[#6B6258]">
+                <span className="font-serif italic text-base text-[#B68D40]">— Abdul Rehman Faisal</span>
+                <span className="font-mono text-[11px] uppercase tracking-wider text-[#A76B3F]">Founder</span>
               </div>
             </div>
 
+            {/* Founder Biography */}
+            <div className="bg-[#FFFDF8] rounded-[28px] border border-[#B68D40]/25 p-6 md:p-8 shadow-sm">
+              <span className="text-xs font-mono uppercase tracking-[0.2em] text-[#B68D40] font-semibold block mb-2">
+                Founder Biography
+              </span>
+              <h3 className="font-serif-heading text-xl md:text-2xl font-bold text-[#2B2622] mb-4">
+                Dedication, Consistency & Customer Trust
+              </h3>
+
+              <div className="space-y-4 text-sm text-[#554D45] font-light leading-relaxed">
+                <p>
+                  Abdul Rehman Faisal is the founder of Heritage Antiques, a brand built on a personal interest in antiques, entrepreneurial ambition, and a vision to make exceptional pieces accessible to people who truly appreciate their value.
+                </p>
+                <p>
+                  As a hardworking and business-minded entrepreneur, Abdul Rehman believes that building a meaningful brand requires dedication, consistency, customer trust, and a genuine understanding of what customers value.
+                </p>
+                <p>
+                  Driven by his interest in antique pieces and the desire to create something of his own, he established Heritage Antiques with a clear purpose: to connect antique enthusiasts and collectors with carefully selected pieces at reasonable and fair prices.
+                </p>
+                <p>
+                  His approach focuses on building lasting customer relationships, conducting business responsibly, and creating a brand that customers can return to with confidence.
+                </p>
+                <p>
+                  For Abdul Rehman, Heritage Antiques is more than a business. It is an opportunity to turn a personal interest and entrepreneurial vision into a growing brand that serves people who appreciate history, craftsmanship, character, and timeless design.
+                </p>
+              </div>
+            </div>
+
+          </motion.div>
+        </div>
+
+        {/* SECTION 2: Our Vision & Our Mission (Side-by-Side Architectural Cards) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 mb-20">
+          
+          {/* Our Vision Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="bg-gradient-to-br from-[#FFFDF8] to-[#F8F3EA] rounded-[28px] border-2 border-[#B68D40]/30 p-8 md:p-10 shadow-lg relative flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-6">
+                <div className="p-3.5 rounded-2xl bg-[#B68D40]/15 text-[#B68D40] border border-[#B68D40]/30">
+                  <Compass className="w-7 h-7" />
+                </div>
+                <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#B68D40] font-bold">
+                  Long-Term Horizon
+                </span>
+              </div>
+
+              <h3 className="font-serif-heading text-2xl md:text-3xl font-bold text-[#2B2622] mb-4">
+                Our Vision
+              </h3>
+
+              <div className="space-y-4 text-sm text-[#554D45] font-light leading-relaxed">
+                <p>
+                  My vision is to grow Heritage Antiques into a recognized, respected, and trusted name in the antique market — a brand that customers associate with quality, fair value, reliability, and a genuine appreciation for timeless pieces.
+                </p>
+                <p>
+                  I aspire to build more than an online store. I want Heritage Antiques to become a destination for antique enthusiasts, collectors, and individuals who value the history, character, and craftsmanship behind the pieces they choose.
+                </p>
+                <p>
+                  Over time, my ambition is to expand our collection, strengthen our digital presence, reach more customers, and establish long-lasting relationships built on trust and satisfaction.
+                </p>
+                <p>
+                  Like every entrepreneur who dreams of building a successful brand, I want Heritage Antiques to grow into a name with its own identity, reputation, and loyal community.
+                </p>
+                <p className="font-normal text-[#2B2622] italic pt-2 border-t border-[#B68D40]/20">
+                  Ultimately, my vision is to build a sustainable brand that customers remember not only for the pieces it offers, but also for the confidence and positive experience they receive when dealing with us.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-4 flex items-center gap-2 text-xs text-[#B68D40] font-mono">
+              <CheckCircle2 className="w-4 h-4" />
+              <span>A Destination for Antique Lovers & Collectors</span>
+            </div>
+          </motion.div>
+
+          {/* Our Mission Card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="bg-gradient-to-br from-[#FFFDF8] to-[#F8F3EA] rounded-[28px] border-2 border-[#A76B3F]/30 p-8 md:p-10 shadow-lg relative flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-6">
+                <div className="p-3.5 rounded-2xl bg-[#A76B3F]/15 text-[#A76B3F] border border-[#A76B3F]/30">
+                  <Target className="w-7 h-7" />
+                </div>
+                <span className="text-[11px] font-mono uppercase tracking-[0.25em] text-[#A76B3F] font-bold">
+                  Guiding Purpose
+                </span>
+              </div>
+
+              <h3 className="font-serif-heading text-2xl md:text-3xl font-bold text-[#2B2622] mb-4">
+                Our Mission
+              </h3>
+
+              <div className="space-y-4 text-sm text-[#554D45] font-light leading-relaxed">
+                <p>
+                  Our mission is to offer customers a trustworthy, transparent, and dependable buying experience by bringing together carefully selected antique pieces and fair, reasonable pricing.
+                </p>
+                <p>
+                  At Heritage Antiques, I want customers to feel confident in their decisions. That means presenting products clearly, communicating honestly, providing accurate information about each item's known characteristics, and treating every customer with respect.
+                </p>
+                <p>
+                  I believe a reliable business relationship begins with clear expectations and continues through responsible service, fair dealing, and consistent communication.
+                </p>
+                <p>
+                  My aim is to help customers discover pieces that match their interests and appreciation for antiques while making the buying process straightforward and comfortable.
+                </p>
+                <p className="font-normal text-[#2B2622] italic pt-2 border-t border-[#A76B3F]/20">
+                  As Heritage Antiques grows, customer trust will remain central to every decision. Our mission is not simply to sell products, but to build relationships that encourage customers to return and recommend our brand with confidence.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-4 flex items-center gap-2 text-xs text-[#A76B3F] font-mono">
+              <ShieldCheck className="w-4 h-4" />
+              <span>Transparent, Dependable & Customer-Centric</span>
+            </div>
           </motion.div>
 
         </div>
+
+        {/* SECTION 3: Guiding Entrepreneurial Values */}
+        <div className="bg-[#1F2328] rounded-[32px] p-8 md:p-12 text-[#F8F5EF] border border-[#B68D40]/30 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#B68D40]/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <span className="text-xs font-mono uppercase tracking-[0.25em] text-[#B68D40] block mb-2 font-medium">
+              Core Principles
+            </span>
+            <h3 className="font-serif-heading text-2xl md:text-3xl font-bold text-white">
+              The Values That Guide Heritage Antiques
+            </h3>
+            <p className="text-xs md:text-sm text-[#D9C7AE] font-light mt-2">
+              Every decision at Heritage Antiques is founded on these commitments.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
+              <div className="w-10 h-10 rounded-xl bg-[#B68D40]/20 text-[#B68D40] flex items-center justify-center mb-4">
+                <HeartHandshake className="w-5 h-5" />
+              </div>
+              <h4 className="font-serif-heading font-bold text-base text-white mb-2">Fair & Reasonable Pricing</h4>
+              <p className="text-xs text-[#D9C7AE] font-light leading-relaxed">
+                Connecting antique lovers with exceptional pieces at fair value, without artificial inflation.
+              </p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
+              <div className="w-10 h-10 rounded-xl bg-[#B68D40]/20 text-[#B68D40] flex items-center justify-center mb-4">
+                <ShieldCheck className="w-5 h-5" />
+              </div>
+              <h4 className="font-serif-heading font-bold text-base text-white mb-2">Customer Trust First</h4>
+              <p className="text-xs text-[#D9C7AE] font-light leading-relaxed">
+                Building lasting relationships through honesty, clear information, and respectful service.
+              </p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
+              <div className="w-10 h-10 rounded-xl bg-[#B68D40]/20 text-[#B68D40] flex items-center justify-center mb-4">
+                <Sparkles className="w-5 h-5" />
+              </div>
+              <h4 className="font-serif-heading font-bold text-base text-white mb-2">Genuine Appreciation</h4>
+              <p className="text-xs text-[#D9C7AE] font-light leading-relaxed">
+                A business driven by an authentic personal interest in the craftsmanship and history behind each piece.
+              </p>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
+              <div className="w-10 h-10 rounded-xl bg-[#B68D40]/20 text-[#B68D40] flex items-center justify-center mb-4">
+                <Award className="w-5 h-5" />
+              </div>
+              <h4 className="font-serif-heading font-bold text-base text-white mb-2">Transparent Buying</h4>
+              <p className="text-xs text-[#D9C7AE] font-light leading-relaxed">
+                Honest communication and clear details about every item's known characteristics.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
       </div>
+
+      {/* Founder Official Portrait Setup Modal */}
+      <AnimatePresence>
+        {isSetupOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="bg-[#FFFDF8] w-full max-w-md rounded-[28px] border-2 border-[#B68D40]/40 p-6 md:p-8 shadow-2xl relative text-[#2B2622] overflow-hidden"
+            >
+              {/* Filigree decorative corners */}
+              <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#B68D40]/50" />
+              <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[#B68D40]/50" />
+              <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#B68D40]/50" />
+              <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#B68D40]/50" />
+
+              {/* Close Button */}
+              <button
+                onClick={() => setIsSetupOpen(false)}
+                className="absolute top-5 right-5 p-2 rounded-full hover:bg-[#B68D40]/15 text-[#6B6258] hover:text-[#2B2622] transition-colors cursor-pointer"
+                aria-label="Close setup modal"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              <div className="text-center mb-6">
+                <div className="w-12 h-12 rounded-full bg-[#B68D40]/15 text-[#B68D40] flex items-center justify-center mx-auto mb-3 border border-[#B68D40]/30 shadow-sm">
+                  <Camera className="w-6 h-6" />
+                </div>
+                <h3 className="font-serif-heading text-xl font-bold text-[#2B2622]">
+                  Set Founder Portrait
+                </h3>
+                <p className="text-xs text-[#6B6258] mt-1 font-sans">
+                  Abdul Rehman Faisal • Heritage Antiques
+                </p>
+                <div className="w-16 h-[1.5px] bg-[#B68D40]/40 mx-auto mt-3" />
+              </div>
+
+              {uploadSuccess ? (
+                <div className="p-4 rounded-2xl bg-[#2F855A]/15 border border-[#2F855A]/40 text-[#2F855A] text-center space-y-2">
+                  <CheckCircle2 className="w-8 h-8 mx-auto text-[#2F855A]" />
+                  <p className="font-serif-heading font-bold text-sm">Portrait Locked & Saved!</p>
+                  <p className="text-xs text-[#2F855A]/80 font-sans">
+                    The official founder portrait has been permanently synchronized. Visitors can no longer change or remove it.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-5">
+                  {uploadError && (
+                    <div className="p-3 rounded-xl bg-red-100 border border-red-300 text-red-700 text-xs">
+                      {uploadError}
+                    </div>
+                  )}
+
+                  {/* Option 1: File selection from device */}
+                  <div>
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      onChange={handleFileChange}
+                      accept="image/*"
+                      className="hidden"
+                    />
+                    <button
+                      type="button"
+                      disabled={isSaving}
+                      onClick={() => fileInputRef.current?.click()}
+                      className="w-full py-3.5 px-4 rounded-xl bg-[#2B2622] hover:bg-[#1A1816] text-[#F8F5EF] text-xs font-serif font-semibold tracking-wider flex items-center justify-center gap-2.5 shadow-md border border-[#B68D40]/40 transition-all cursor-pointer group"
+                    >
+                      <Upload className="w-4 h-4 text-[#B68D40] group-hover:scale-110 transition-transform" />
+                      <span>{isSaving ? 'Processing & Saving...' : 'Choose Photo from Device (Phone/PC)'}</span>
+                    </button>
+                    <p className="text-[10px] text-center text-[#8C8275] mt-1.5 font-sans">
+                      Select your original photo (JPG, PNG, WEBP)
+                    </p>
+                  </div>
+
+                  <div className="relative flex py-1 items-center">
+                    <div className="flex-grow border-t border-[#B68D40]/20"></div>
+                    <span className="flex-shrink mx-3 text-[10px] font-mono text-[#8C8275] uppercase tracking-wider">or image url</span>
+                    <div className="flex-grow border-t border-[#B68D40]/20"></div>
+                  </div>
+
+                  {/* Option 2: Image URL paste */}
+                  <form onSubmit={handleUrlSubmit} className="space-y-3">
+                    <div>
+                      <input
+                        type="url"
+                        value={urlInput}
+                        onChange={(e) => setUrlInput(e.target.value)}
+                        placeholder="https://example.com/your-photo.jpg"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-[#B68D40]/30 bg-white text-xs text-[#2B2622] placeholder:text-[#A89F91] focus:outline-none focus:border-[#B68D40]"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={!urlInput.trim() || isSaving}
+                      className="w-full py-2.5 px-4 rounded-xl bg-[#B68D40] hover:bg-[#A76B3F] disabled:opacity-50 text-white text-xs font-medium tracking-wide flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer"
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                      <span>{isSaving ? 'Saving...' : 'Save & Lock Picture'}</span>
+                    </button>
+                  </form>
+
+                  {/* Permanent Lock Security Guarantee */}
+                  <div className="p-3 rounded-xl bg-[#B68D40]/10 border border-[#B68D40]/25 flex items-start gap-2.5 text-[11px] text-[#6B6258] leading-snug">
+                    <Lock className="w-4 h-4 text-[#B68D40] shrink-0 mt-0.5" />
+                    <span>
+                      <strong>Tamper-Proof Guarantee:</strong> Once your picture is set, the change/remove buttons are removed from the public website so no other person can alter or delete your identity.
+                    </span>
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

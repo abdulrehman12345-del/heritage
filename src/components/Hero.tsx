@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Compass, ShieldCheck, Sparkles, ArrowRight } from 'lucide-react';
+import { Compass, ShieldCheck, Sparkles, ArrowRight, Instagram, Mail } from 'lucide-react';
 
 interface HeroProps {
   onExploreClick: () => void;
@@ -91,6 +91,41 @@ export const Hero: React.FC<HeroProps> = ({
                 <span>Discover Heritage</span>
                 <ArrowRight className="w-4 h-4 text-[#A87C32] group-hover:translate-x-1 transition-transform duration-300" />
               </motion.button>
+            </motion.div>
+
+            {/* Social & Direct Contact Links (Directly below Explore Collection) */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 0.7 }}
+              className="mt-4 sm:mt-5 flex items-center flex-wrap gap-2.5 sm:gap-3"
+              aria-label="Direct Contact Links"
+            >
+              {/* Instagram Link */}
+              <a
+                href="https://www.instagram.com/h_antiques_store/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="@h_antiques_store on Instagram"
+                aria-label="Visit Instagram profile @h_antiques_store (opens in new tab)"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF7F2]/80 dark:bg-[#1E2228]/80 border border-[#B68D40]/30 hover:border-[#B68D40] text-[#2C2723] dark:text-[#E8E1D5] hover:text-[#A87C32] dark:hover:text-[#D4AF37] text-xs font-serif-heading font-medium tracking-wide shadow-sm hover:shadow-[0_0_12px_rgba(182,141,64,0.25)] hover:-translate-y-0.5 transition-all duration-300 group cursor-pointer"
+              >
+                <Instagram className="w-3.5 h-3.5 text-[#A87C32] group-hover:scale-110 group-hover:text-[#B68D40] transition-transform duration-300 shrink-0" />
+                <span className="text-[11px] sm:text-xs">Instagram</span>
+              </a>
+
+              <span className="text-[#B68D40]/40 text-xs select-none">•</span>
+
+              {/* Email Us Link */}
+              <a
+                href="mailto:abdul..rrehman90123@gmail.com?subject=Contact%20Heritage%20Antiques"
+                title="Send email to abdul..rrehman90123@gmail.com"
+                aria-label="Email Us at abdul..rrehman90123@gmail.com"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF7F2]/80 dark:bg-[#1E2228]/80 border border-[#B68D40]/30 hover:border-[#B68D40] text-[#2C2723] dark:text-[#E8E1D5] hover:text-[#A87C32] dark:hover:text-[#D4AF37] text-xs font-serif-heading font-medium tracking-wide shadow-sm hover:shadow-[0_0_12px_rgba(182,141,64,0.25)] hover:-translate-y-0.5 transition-all duration-300 group cursor-pointer"
+              >
+                <Mail className="w-3.5 h-3.5 text-[#A87C32] group-hover:scale-110 group-hover:text-[#B68D40] transition-transform duration-300 shrink-0" />
+                <span className="text-[11px] sm:text-xs">Email Us</span>
+              </a>
             </motion.div>
 
             {/* Trust Metrics Bar */}
