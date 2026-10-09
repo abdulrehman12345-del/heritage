@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'motion/react';
 import { EmblemLogo } from './EmblemLogo';
-import { Menu, X, Compass, ShieldCheck, UserCheck, Heart, ShoppingBag } from 'lucide-react';
+import { Menu, X, Compass, ShieldCheck, UserCheck, Heart, ShoppingBag, Sun, Moon } from 'lucide-react';
 
 interface NavbarProps {
   activeCategory: string;
@@ -15,6 +15,8 @@ interface NavbarProps {
   onOpenSavedModal?: () => void;
   cartCount?: number;
   onOpenCart?: () => void;
+  theme?: 'light' | 'dark';
+  onToggleTheme?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -28,7 +30,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   savedCount = 0,
   onOpenSavedModal,
   cartCount = 0,
-  onOpenCart
+  onOpenCart,
+  theme = 'light',
+  onToggleTheme
 }) => {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
@@ -71,7 +75,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1.0] }}
-      className="absolute top-2 sm:top-3.5 inset-x-2 sm:inset-x-4 md:inset-x-6 z-50 flex items-center justify-center pointer-events-none max-w-full"
+      className="fixed top-2 sm:top-3.5 inset-x-2 sm:inset-x-4 md:inset-x-6 z-50 flex items-center justify-center pointer-events-none max-w-full"
     >
       <div
         className={`pointer-events-auto w-full max-w-5xl lg:max-w-6xl min-h-[44px] sm:min-h-[58px] rounded-full px-3 sm:px-5 py-1 sm:py-1.5 flex items-center justify-between gap-2 sm:gap-3 transition-all duration-300 glass-nav overflow-hidden ${
@@ -125,6 +129,34 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right Actions: Responsive Actions Layout */}
         <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+          {/* Day & Night Theme Toggle (Identical to Dashboard) */}
+          {onToggleTheme && (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onToggleTheme}
+              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border shadow-sm cursor-pointer shrink-0 ${
+                theme === 'dark'
+                  ? 'bg-[#2A3036] text-[#FFE270] border-[#B68D40]/50 hover:border-[#FFE270]'
+                  : 'bg-[#FFFDF8] text-[#B68D40] border-[#B68D40]/30 hover:border-[#B68D40]'
+              }`}
+              title={theme === 'dark' ? 'Switch to Day Theme' : 'Switch to Night Theme'}
+              aria-label={theme === 'dark' ? 'Switch to Day Theme' : 'Switch to Night Theme'}
+            >
+              {theme === 'dark' ? (
+                <>
+                  <Moon className="w-3.5 h-3.5 text-[#FFE270]" />
+                  <span className="hidden md:inline text-[11px]">Night Mode</span>
+                </>
+              ) : (
+                <>
+                  <Sun className="w-3.5 h-3.5 text-[#B68D40]" />
+                  <span className="hidden md:inline text-[11px]">Day Mode</span>
+                </>
+              )}
+            </motion.button>
+          )}
+
           {onOpenSavedModal && (
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -220,6 +252,32 @@ export const Navbar: React.FC<NavbarProps> = ({
             ))}
 
             <div className="pt-3 border-t border-[#A87C32]/30 mt-1 flex flex-col gap-2.5">
+              {/* Day & Night Theme Toggle in Mobile Drawer */}
+              {onToggleTheme && (
+                <button
+                  onClick={() => {
+                    onToggleTheme();
+                  }}
+                  className={`w-full py-3 rounded-xl font-semibold text-xs tracking-wider uppercase border flex items-center justify-center gap-2 cursor-pointer transition-all ${
+                    theme === 'dark'
+                      ? 'bg-[#2A3036] text-[#FFE270] border-[#B68D40]/50 hover:border-[#FFE270]'
+                      : 'bg-[#FFFDF8] text-[#B68D40] border-[#B68D40]/30 hover:border-[#B68D40]'
+                  }`}
+                >
+                  {theme === 'dark' ? (
+                    <>
+                      <Moon className="w-4 h-4 text-[#FFE270]" />
+                      <span>Night Mode (Active) — Switch to Day</span>
+                    </>
+                  ) : (
+                    <>
+                      <Sun className="w-4 h-4 text-[#B68D40]" />
+                      <span>Day Mode (Active) — Switch to Night</span>
+                    </>
+                  )}
+                </button>
+              )}
+
               {onOpenCart && (
                 <button
                   onClick={() => {

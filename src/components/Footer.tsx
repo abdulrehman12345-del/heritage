@@ -1,15 +1,19 @@
 import React from 'react';
 import { EmblemLogo } from './EmblemLogo';
-import { ShieldCheck, Mail, Phone, MapPin, Globe, ArrowUp, Instagram } from 'lucide-react';
+import { ShieldCheck, Mail, Phone, MapPin, Globe, ArrowUp, Instagram, Sun, Moon } from 'lucide-react';
 
 interface FooterProps {
   onNavigateSection: (sectionId: string) => void;
   onSelectCategory: (category: string) => void;
+  theme?: 'light' | 'dark';
+  onToggleTheme?: () => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({
   onNavigateSection,
-  onSelectCategory
+  onSelectCategory,
+  theme = 'light',
+  onToggleTheme
 }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -142,13 +146,38 @@ export const Footer: React.FC<FooterProps> = ({
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#D9C7AE]/60 font-mono">
           <p>© {new Date().getFullYear()} HERITAGE ANTIQUES SA. All Rights Reserved.</p>
 
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6">
             <span>UNESCO 1970 Compliant</span>
             <span>CITES Registered</span>
 
+            {/* Day & Night Theme Toggle in Footer */}
+            {onToggleTheme && (
+              <button
+                onClick={onToggleTheme}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold uppercase tracking-wider transition-all border shadow-sm cursor-pointer ${
+                  theme === 'dark'
+                    ? 'bg-[#2A3036] text-[#FFE270] border-[#B68D40]/50 hover:border-[#FFE270]'
+                    : 'bg-[#FFFDF8] text-[#B68D40] border-[#B68D40]/30 hover:border-[#B68D40]'
+                }`}
+                title={theme === 'dark' ? 'Switch to Day Theme' : 'Switch to Night Theme'}
+              >
+                {theme === 'dark' ? (
+                  <>
+                    <Moon className="w-3.5 h-3.5 text-[#FFE270]" />
+                    <span>Night Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <Sun className="w-3.5 h-3.5 text-[#B68D40]" />
+                    <span>Day Mode</span>
+                  </>
+                )}
+              </button>
+            )}
+
             <button
               onClick={scrollToTop}
-              className="p-2.5 rounded-full bg-[#2A3036] hover:bg-[#B68D40] text-white transition-all shadow-md ml-4"
+              className="p-2.5 rounded-full bg-[#2A3036] hover:bg-[#B68D40] text-white transition-all shadow-md ml-2"
               aria-label="Scroll to top"
             >
               <ArrowUp className="w-4 h-4" />

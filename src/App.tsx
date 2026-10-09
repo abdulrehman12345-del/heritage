@@ -692,6 +692,8 @@ export default function App() {
         onOpenSavedModal={() => setIsSavedModalOpen(true)}
         cartCount={cartItems.reduce((acc, i) => acc + i.quantity, 0)}
         onOpenCart={() => setIsCartOpen(true)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       {/* Hero Section */}
@@ -736,6 +738,8 @@ export default function App() {
       <Footer
         onNavigateSection={handleNavigateSection}
         onSelectCategory={(cat) => setActiveCategory(cat as CategoryType)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       <Suspense fallback={null}>
