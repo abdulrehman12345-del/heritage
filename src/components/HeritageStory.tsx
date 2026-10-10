@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React from 'react';
+import { motion } from 'motion/react';
 import { 
   ShieldCheck, 
   Compass, 
@@ -11,111 +11,11 @@ import {
   Award,
   CheckCircle2,
   ExternalLink,
-  Upload,
-  Lock,
-  Camera,
-  Check,
-  X,
-  Key
+  Lock
 } from 'lucide-react';
+import founderPhotoAsset from '../assets/images/founder.jpg';
 
 export const HeritageStory: React.FC = () => {
-  const [founderPhoto, setFounderPhoto] = useState<string>('');
-  const [photoError, setPhotoError] = useState(false);
-  const [isSetupOpen, setIsSetupOpen] = useState(false);
-  const [urlInput, setUrlInput] = useState('');
-  const [passkeyInput, setPasskeyInput] = useState('');
-  const [isLocked, setIsLocked] = useState(true);
-  const [uploadSuccess, setUploadSuccess] = useState(false);
-  const [uploadError, setUploadError] = useState('');
-  const [isSaving, setIsSaving] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    // 1. Check local storage first
-    try {
-      const saved = localStorage.getItem('ha_founder_photo');
-      const locked = localStorage.getItem('ha_founder_photo_locked');
-      if (locked !== null) {
-        setIsLocked(locked === 'true');
-      }
-      if (saved) {
-        setFounderPhoto(saved);
-        setPhotoError(false);
-        return;
-      }
-    } catch {}
-
-    // 2. Check server for /public/founder.png
-    fetch('/api/v1/cms/founder-photo')
-      .then(res => res.json())
-      .then(data => {
-        if (data.success && data.exists && data.url) {
-          setFounderPhoto(data.url);
-          setPhotoError(false);
-        } else {
-          setPhotoError(true);
-        }
-      })
-      .catch(() => {
-        setPhotoError(true);
-      });
-  }, []);
-
-  const handleSavePhoto = async (photoData: string) => {
-    setIsSaving(true);
-    setUploadError('');
-    try {
-      // 1. Save to localStorage
-      localStorage.setItem('ha_founder_photo', photoData);
-      localStorage.setItem('ha_founder_photo_locked', 'true');
-      setIsLocked(true);
-      setFounderPhoto(photoData);
-      setPhotoError(false);
-
-      // 2. Persist to server /public/founder.png
-      await fetch('/api/v1/cms/founder-photo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ image: photoData }),
-      });
-
-      setUploadSuccess(true);
-      setTimeout(() => {
-        setUploadSuccess(false);
-        setIsSetupOpen(false);
-      }, 1500);
-    } catch (err: any) {
-      setUploadError(err.message || 'Error saving photo');
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (!file.type.startsWith('image/')) {
-        setUploadError('Please select a valid image file (JPG, PNG, WEBP).');
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = () => {
-        const result = reader.result as string;
-        handleSavePhoto(result);
-      };
-      reader.onerror = () => {
-        setUploadError('Failed to read image file.');
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleUrlSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!urlInput.trim()) return;
-    handleSavePhoto(urlInput.trim());
-  };
 
   return (
     <section id="heritage" className="py-20 md:py-32 paper-texture border-t border-[#B68D40]/25 relative overflow-hidden">
@@ -165,70 +65,40 @@ export const HeritageStory: React.FC = () => {
                 </span>
               </div>
 
-              {/* Founder Photograph Frame */}
-              <div className="relative mx-auto w-60 h-72 sm:w-64 sm:h-80 rounded-[20px] overflow-hidden border-2 border-[#B68D40]/40 shadow-inner bg-[#1F2328] group">
-                {founderPhoto && !photoError ? (
-                  <>
-                    <img
-                      src={founderPhoto}
-                      alt="Abdul Rehman Faisal — Founder of Heritage Antiques"
-                      onError={() => {
-                        setPhotoError(true);
-                      }}
-                      className="w-full h-full object-cover object-center filter contrast-105"
-                      referrerPolicy="no-referrer"
-                    />
+              {/* Permanent Founder Photograph Frame */}
+              <div className="relative mx-auto w-60 h-72 sm:w-64 sm:h-80 rounded-[20px] overflow-hidden border-2 border-[#B68D40]/40 shadow-2xl bg-[#1F2328] group">
+                <img
+                  src={founderPhotoAsset}
+                  alt="Abdul Rehman Faisal — Founder of Heritage Antiques"
+                  className="w-full h-full object-cover object-top filter contrast-105"
+                  referrerPolicy="no-referrer"
+                />
 
-                    {/* Permanent Verified Official Founder Seal (Locked - No change or remove option for any visitor) */}
-                    <div 
-                      title="Official Verified Founder Portrait — Authenticated Heritage Antiques"
-                      className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#1F2328]/90 text-[#B68D40] text-[10px] font-mono tracking-wider backdrop-blur-md border border-[#B68D40]/40 flex items-center gap-1.5 shadow-md pointer-events-none select-none"
-                    >
-                      <ShieldCheck className="w-3.5 h-3.5 text-[#B68D40]" />
-                      <span className="font-medium">Verified</span>
-                    </div>
+                {/* Permanent Verified Official Founder Seal */}
+                <div 
+                  title="Official Verified Founder Portrait — Authenticated Heritage Antiques"
+                  className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-[#1F2328]/90 text-[#B68D40] text-[10px] font-mono tracking-wider backdrop-blur-md border border-[#B68D40]/40 flex items-center gap-1.5 shadow-md pointer-events-none select-none"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#B68D40]" />
+                  <span className="font-medium">Verified</span>
+                </div>
 
-                    {/* Permanent Lock Indicator - completely disables tampering */}
-                    <div 
-                      title="Portrait is permanently locked. No visitor can modify or delete."
-                      className="absolute top-3 left-3 px-2 py-1 rounded-full bg-[#1F2328]/80 text-[#D9C7AE] text-[9px] font-mono tracking-wider backdrop-blur-md border border-[#B68D40]/30 flex items-center gap-1 shadow-sm pointer-events-none select-none"
-                    >
-                      <Lock className="w-3 h-3 text-[#B68D40]" />
-                      <span>Locked</span>
-                    </div>
+                {/* Permanent Verified Badge */}
+                <div 
+                  title="Official founder portrait permanently integrated into the core assets."
+                  className="absolute top-3 left-3 px-2 py-1 rounded-full bg-[#1F2328]/80 text-[#D9C7AE] text-[9px] font-mono tracking-wider backdrop-blur-md border border-[#B68D40]/30 flex items-center gap-1 shadow-sm pointer-events-none select-none"
+                >
+                  <Lock className="w-3 h-3 text-[#B68D40]" />
+                  <span>Permanent</span>
+                </div>
 
-                    {/* Subtle photo overlay label */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent opacity-90 flex flex-col justify-end p-4 pointer-events-none select-none">
-                      <div className="text-center">
-                        <p className="text-xs font-serif font-bold text-white tracking-wide">Abdul Rehman Faisal</p>
-                        <p className="text-[10px] text-[#D9C7AE] font-mono">Founder of Heritage Antiques</p>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  /* Dignified Founder Monogram Seal + One-Time Direct Setup for Founder */
-                  <div className="w-full h-full flex flex-col items-center justify-between p-6 text-center bg-gradient-to-b from-[#2B2622] via-[#1F1C1A] to-[#151312] text-[#F8F5EF]">
-                    <div className="flex-1 flex flex-col items-center justify-center">
-                      <div className="w-20 h-20 rounded-full border-2 border-[#B68D40] flex items-center justify-center bg-[#B68D40]/10 mb-3 shadow-lg">
-                        <span className="font-serif text-2xl font-bold tracking-widest text-[#B68D40]">ARF</span>
-                      </div>
-                      <p className="font-serif-heading font-bold text-base text-[#F8F5EF]">Abdul Rehman Faisal</p>
-                      <p className="text-[10px] text-[#B68D40] uppercase tracking-wider font-mono mt-0.5">Founder</p>
-                      <p className="text-[11px] text-[#A89F91] mt-2 font-light leading-snug">
-                        Heritage Antiques
-                      </p>
-                    </div>
-
-                    {/* Direct Setup Trigger for Abdul Rehman Faisal */}
-                    <button
-                      onClick={() => setIsSetupOpen(true)}
-                      className="w-full mt-2 py-2 px-3 rounded-xl bg-[#B68D40] hover:bg-[#A76B3F] text-white text-xs font-serif font-medium tracking-wide flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer group"
-                    >
-                      <Camera className="w-3.5 h-3.5" />
-                      <span>Attach Founder Photo</span>
-                    </button>
+                {/* Subtle photo overlay label */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent opacity-90 flex flex-col justify-end p-4 pointer-events-none select-none">
+                  <div className="text-center">
+                    <p className="text-xs font-serif font-bold text-white tracking-wide">Abdul Rehman Faisal</p>
+                    <p className="text-[10px] text-[#D9C7AE] font-mono">Founder of Heritage Antiques</p>
                   </div>
-                )}
+                </div>
               </div>
 
               {/* Founder Title & Background */}
@@ -502,123 +372,6 @@ export const HeritageStory: React.FC = () => {
 
       </div>
 
-      {/* Founder Official Portrait Setup Modal */}
-      <AnimatePresence>
-        {isSetupOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-[#FFFDF8] w-full max-w-md rounded-[28px] border-2 border-[#B68D40]/40 p-6 md:p-8 shadow-2xl relative text-[#2B2622] overflow-hidden"
-            >
-              {/* Filigree decorative corners */}
-              <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#B68D40]/50" />
-              <div className="absolute top-3 right-3 w-4 h-4 border-t-2 border-r-2 border-[#B68D40]/50" />
-              <div className="absolute bottom-3 left-3 w-4 h-4 border-b-2 border-l-2 border-[#B68D40]/50" />
-              <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#B68D40]/50" />
-
-              {/* Close Button */}
-              <button
-                onClick={() => setIsSetupOpen(false)}
-                className="absolute top-5 right-5 p-2 rounded-full hover:bg-[#B68D40]/15 text-[#6B6258] hover:text-[#2B2622] transition-colors cursor-pointer"
-                aria-label="Close setup modal"
-              >
-                <X className="w-4 h-4" />
-              </button>
-
-              <div className="text-center mb-6">
-                <div className="w-12 h-12 rounded-full bg-[#B68D40]/15 text-[#B68D40] flex items-center justify-center mx-auto mb-3 border border-[#B68D40]/30 shadow-sm">
-                  <Camera className="w-6 h-6" />
-                </div>
-                <h3 className="font-serif-heading text-xl font-bold text-[#2B2622]">
-                  Set Founder Portrait
-                </h3>
-                <p className="text-xs text-[#6B6258] mt-1 font-sans">
-                  Abdul Rehman Faisal • Heritage Antiques
-                </p>
-                <div className="w-16 h-[1.5px] bg-[#B68D40]/40 mx-auto mt-3" />
-              </div>
-
-              {uploadSuccess ? (
-                <div className="p-4 rounded-2xl bg-[#2F855A]/15 border border-[#2F855A]/40 text-[#2F855A] text-center space-y-2">
-                  <CheckCircle2 className="w-8 h-8 mx-auto text-[#2F855A]" />
-                  <p className="font-serif-heading font-bold text-sm">Portrait Locked & Saved!</p>
-                  <p className="text-xs text-[#2F855A]/80 font-sans">
-                    The official founder portrait has been permanently synchronized. Visitors can no longer change or remove it.
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-5">
-                  {uploadError && (
-                    <div className="p-3 rounded-xl bg-red-100 border border-red-300 text-red-700 text-xs">
-                      {uploadError}
-                    </div>
-                  )}
-
-                  {/* Option 1: File selection from device */}
-                  <div>
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      onChange={handleFileChange}
-                      accept="image/*"
-                      className="hidden"
-                    />
-                    <button
-                      type="button"
-                      disabled={isSaving}
-                      onClick={() => fileInputRef.current?.click()}
-                      className="w-full py-3.5 px-4 rounded-xl bg-[#2B2622] hover:bg-[#1A1816] text-[#F8F5EF] text-xs font-serif font-semibold tracking-wider flex items-center justify-center gap-2.5 shadow-md border border-[#B68D40]/40 transition-all cursor-pointer group"
-                    >
-                      <Upload className="w-4 h-4 text-[#B68D40] group-hover:scale-110 transition-transform" />
-                      <span>{isSaving ? 'Processing & Saving...' : 'Choose Photo from Device (Phone/PC)'}</span>
-                    </button>
-                    <p className="text-[10px] text-center text-[#8C8275] mt-1.5 font-sans">
-                      Select your original photo (JPG, PNG, WEBP)
-                    </p>
-                  </div>
-
-                  <div className="relative flex py-1 items-center">
-                    <div className="flex-grow border-t border-[#B68D40]/20"></div>
-                    <span className="flex-shrink mx-3 text-[10px] font-mono text-[#8C8275] uppercase tracking-wider">or image url</span>
-                    <div className="flex-grow border-t border-[#B68D40]/20"></div>
-                  </div>
-
-                  {/* Option 2: Image URL paste */}
-                  <form onSubmit={handleUrlSubmit} className="space-y-3">
-                    <div>
-                      <input
-                        type="url"
-                        value={urlInput}
-                        onChange={(e) => setUrlInput(e.target.value)}
-                        placeholder="https://example.com/your-photo.jpg"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-[#B68D40]/30 bg-white text-xs text-[#2B2622] placeholder:text-[#A89F91] focus:outline-none focus:border-[#B68D40]"
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      disabled={!urlInput.trim() || isSaving}
-                      className="w-full py-2.5 px-4 rounded-xl bg-[#B68D40] hover:bg-[#A76B3F] disabled:opacity-50 text-white text-xs font-medium tracking-wide flex items-center justify-center gap-2 shadow-sm transition-colors cursor-pointer"
-                    >
-                      <Check className="w-3.5 h-3.5" />
-                      <span>{isSaving ? 'Saving...' : 'Save & Lock Picture'}</span>
-                    </button>
-                  </form>
-
-                  {/* Permanent Lock Security Guarantee */}
-                  <div className="p-3 rounded-xl bg-[#B68D40]/10 border border-[#B68D40]/25 flex items-start gap-2.5 text-[11px] text-[#6B6258] leading-snug">
-                    <Lock className="w-4 h-4 text-[#B68D40] shrink-0 mt-0.5" />
-                    <span>
-                      <strong>Tamper-Proof Guarantee:</strong> Once your picture is set, the change/remove buttons are removed from the public website so no other person can alter or delete your identity.
-                    </span>
-                  </div>
-                </div>
-              )}
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
     </section>
   );
 };

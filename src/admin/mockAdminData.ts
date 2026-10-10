@@ -351,7 +351,7 @@ export const INITIAL_ADMINS: AdminUser[] = [
     name: 'Abdul Rehman Faisal',
     email: 'abdul..rrehman90123@gmail.com',
     role: 'Founder & Owner' as any,
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200',
+    avatar: '/founder.png',
     lastActive: 'Active Now',
     status: 'Active'
   },

@@ -1,6 +1,6 @@
 # Heritage Antiques — Founder Profile & Brand Story
 
-![Abdul Rehman Faisal — Founder](image.png)
+![Abdul Rehman Faisal](/.aistudio/artifacts/brain/fdc9d38a-0e7e-4e18-85f2-ba72a80c386a/founder.png)
 
 ## Abdul Rehman Faisal
 **Founder of Heritage Antiques**  
